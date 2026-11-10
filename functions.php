@@ -31,7 +31,7 @@ function efcradio_enqueue() {
         'efcradio-tailwind',
         get_template_directory_uri() . $css,
         array(),
-        filemtime( get_template_directory() . $css ) // évite le cache après chaque build
+        file_exists( get_template_directory() . $css ) ? filemtime( get_template_directory() . $css ) : null // évite le cache après chaque build
     );
 }
 add_action( 'wp_enqueue_scripts', 'efcradio_enqueue' );
