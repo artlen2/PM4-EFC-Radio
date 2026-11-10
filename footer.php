@@ -1,9 +1,11 @@
     </main>
-    <footer>
-        <div class="container">
-            <?php echo esc_html( get_bloginfo('name')); ?>, tous droits réservés &copy; <?php echo(date('Y')) ?>
-        </div>    
+
+    <footer class="border-t border-neutral-700 py-8">
+        <div class="container mx-auto px-4">
+            <?php bloginfo( 'name' ); ?>, tous droits réservés &copy; <?php echo esc_html( date( 'Y' ) ); ?>
+        </div>
     </footer>
+
     <?php wp_footer(); ?>
-    </body>
+</body>
 </html>
