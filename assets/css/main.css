@@ -1,5 +1,5 @@
 /*!
-Theme Name: Radio La Matanie
+Theme Name: Radio Communautaire de La Matanie
 Author: Lucioles
 Version: 1.0
 */
@@ -12,9 +12,7 @@ Version: 1.0
 */
 
 @import "tailwindcss";
-
-/* Fichiers à scanner pour les classes Tailwind */
-@source "../../**/*.php";
+@source "../../**/*.php"; /* Fichiers à scanner pour les classes Tailwind */
 
 
 /* Fonts titres */
@@ -30,4 +28,59 @@ Version: 1.0
   src: url("../fonts/Inter-VariableFont_opsz\,wght.ttf") format("truetype");
   font-weight: 400 900;
   font-style: normal;
+}
+
+
+@theme {
+  --font-title: "Moderniz", serif;
+  --font-sans: "Inter", sans-serif;
+
+  --color-orange: #FF8600;
+  --color-yellow: #FDBE00;
+  --color-beige: #FEF2CA;
+  --color-violet: #A768F4;
+  --color-purple: #540D6E;
+  --color-black: #0F0E0F;
+  --color-white: #FEFDFD;
+  --color-blue: #639ED1;
+}
+
+@layer base {
+  * {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+  }
+
+  html {
+    background-color: var(--color-white);
+    body {
+      @apply font-sans;
+
+      h1,
+      h2,
+      h3 {
+        @apply font-title;
+      }
+      h1 {
+        @apply text-5xl;
+      }
+      h2 {
+        @apply text-4xl;
+      }
+      h3 {
+        @apply text-3xl;
+      }
+      h4 {
+        @apply text-2xl;
+        @apply 
+      }
+    }
+  }
+}
+
+
+/* -------- NAVIGATION -------- */
+.main-menu li a{
+  @apply ;
 }
