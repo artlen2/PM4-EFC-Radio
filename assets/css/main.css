@@ -1,0 +1,17 @@
+/*!
+Theme Name: Radio La Matanie
+Author: Lucioles
+Version: 1.0
+*/
+
+/*
+  Source Tailwind du thème, compilée dans /style.css.
+  npm run dev   → recompile à chaque modification
+  npm run build → version minifiée
+  L'en-tête ci-dessus (commentaire /*!) est conservé dans style.css pour que WordPress reconnaisse le thème.
+*/
+
+@import "tailwindcss";
+
+/* Fichiers à scanner pour les classes Tailwind */
+@source "../../**/*.php";

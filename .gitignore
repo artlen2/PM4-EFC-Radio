@@ -9,5 +9,3 @@ node_modules/
 .DS_Store
 Thumbs.db
 
-# CSS compilé par Tailwind (npm run build)
-assets/css/output.css

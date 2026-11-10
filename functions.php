@@ -26,7 +26,7 @@ add_action( 'after_setup_theme', 'efcradio_setup' );
 
 // Fichiers CSS / JS
 function efcradio_enqueue() {
-    $css = '/assets/css/output.css';
+    $css = '/style.css';
     wp_enqueue_style(
         'efcradio-tailwind',
         get_template_directory_uri() . $css,
