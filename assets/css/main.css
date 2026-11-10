@@ -53,7 +53,7 @@ Version: 1.0
   }
 
   html {
-    background-color: var(--color-white);
+    background-color: var(--color-beige);
     body {
       @apply font-sans;
 
@@ -73,7 +73,7 @@ Version: 1.0
       }
       h4 {
         @apply text-2xl;
-        @apply 
+        @apply text-black;
       }
     }
   }
@@ -81,6 +81,3 @@ Version: 1.0
 
 
 /* -------- NAVIGATION -------- */
-.main-menu li a{
-  @apply ;
-}
