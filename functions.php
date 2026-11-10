@@ -35,21 +35,27 @@
     }
     add_action('after_setup_theme','basetheme_setup');
 
-    // Placer dans la file les fichiers à charger
-    function basetheme_enqueue(){
+// Placer dans la file les fichiers à charger
+function basetheme_enqueue()
+{
 
-        wp_enqueue_style("gridcss", get_template_directory_uri() . '/styles/grid.css' );
+    // Fichier compilé par Tailwind (jamais main.css, qui est la source)
+    $tailwind_path = get_template_directory() . '/styles/tailwind.css';
+    wp_enqueue_style(
+        'tailwindcss',
+        get_template_directory_uri() . '/styles/tailwind.css',
+        array(),
+        file_exists($tailwind_path) ? filemtime($tailwind_path) : null
+    );
 
-        // Le fichier css "mais.css" a une dépendance au fichier "grid.css"
-        wp_enqueue_style("maincss", get_template_directory_uri() . '/styles/main.css', array('gridcss') );
-
-        // Lier le fichier JS seulement quand le template demo-js est utilisé
-        if( is_page_template('templates/demo-js-template.php')){
-            wp_enqueue_script('clickerscript', get_template_directory_uri() . '/scripts/clicker.js');
-          }
-
+    // Lier le fichier JS seulement quand le template demo-js est utilisé
+    if (is_page_template('templates/demo-js-template.php')) {
+        wp_enqueue_script('clickerscript', get_template_directory_uri() . '/scripts/clicker.js');
     }
-    add_action('wp_enqueue_scripts','basetheme_enqueue');
+}
+add_action('wp_enqueue_scripts', 'basetheme_enqueue');
+
+    
 
 
 
