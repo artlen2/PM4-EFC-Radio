@@ -32,7 +32,7 @@
             wp_nav_menu(array(
                 'theme_location' => 'main-menu',
                 'container'      => false,
-                'menu_class'     => 'flex flex-wrap items-center gap-2 md:gap-6 font-bold [&_a]:block [&_a]:px-2 [&_a]:py-1 [&_a:hover]:text-purple [&_.current-menu-item>a]:text-purple',
+                'menu_class'     => ' flex flex-wrap items-center gap-2 md:gap-6 font-bold inter [&_a]:block [&_a]:px-2 [&_a]:py-1 [&_a:hover]:text-violet [&_.current-menu-item>a]:text-purple [&_.current-menu-item>a]:rotate-3 [&_.current-menu-item>a]:font-bold',
             ));
             ?>
 

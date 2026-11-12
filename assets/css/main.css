@@ -30,6 +30,14 @@ Version: 1.0
   font-style: normal;
 }
 
+.inter {
+  font-family: "Inter", sans-serif;
+}
+
+.moderniz {
+  font-family: "Moderniz", serif;
+}
+
 
 @theme {
   --font-title: "Moderniz", serif;
