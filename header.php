@@ -10,35 +10,44 @@
 <body <?php body_class(); ?>>
     <?php wp_body_open(); ?>
 
-    <header class="flex items-center h-90 md:h-96 bg-cover bg-center text-white bg-no-repeat bg-fixed place-items-center"
-        style="background-image: url(<?php header_image(); ?>);">
-        <div class="container mx-auto px-4">
-            <h1 class="text-4xl font-bold">
-                <a href="<?php echo esc_url(home_url('/')); ?>"><?php bloginfo('name'); ?></a>
-            </h1>
-            <p><?php bloginfo('description'); ?></p>
-        </div>
-    </header>
 
-    <div class="bg-neutral-800 text-neutral-100">
-        <nav class="container mx-auto px-4 py-2 flex flex-col md:flex-row items-center justify-between gap-4">
-            <a href="<?php echo esc_url(home_url('/')); ?>" class="[&_img]:size-9">
+    <header class="<?php echo is_front_page() ? 'absolute inset-x-0 top-0' : 'relative bg-orange'; ?> z-30 text-beige">
+        <nav class="flex items-center justify-between gap-4 px-4 py-3 md:px-8">
+
+
+            <a href="<?php echo esc_url(home_url('/')); ?>" class="shrink-0 [&_img]:size-12">
                 <?php the_custom_logo(); ?>
             </a>
-            <div class="flex flex-col md:flex-row items-center gap-4">
-                <?php
-                wp_nav_menu(array(
-                    'theme_location' => 'main-menu',
-                    'container'      => false,
-                    'menu_class'     => 'flex gap-1 [&_a]:block [&_a]:px-2 [&_a]:py-2 [&_a:hover]:bg-neutral-100 [&_a:hover]:text-neutral-800',
-                ));
-                ?>
-                <!-- Résultats affichés par search.php -->
-                <form action="<?php echo esc_url(home_url('/')); ?>" method="get">
-                    <input name="s" type="search" placeholder="Rechercher" class="px-2 py-1 rounded bg-white text-neutral-800">
-                </form>
-            </div>
+
+
+            <?php
+            wp_nav_menu(array(
+                'theme_location' => 'main-menu',
+                'container'      => false,
+                'menu_class'     => 'flex flex-wrap items-center gap-2 md:gap-6 font-bold [&_a]:block [&_a]:px-2 [&_a]:py-1 [&_a:hover]:text-purple [&_.current-menu-item>a]:text-purple',
+            ));
+            ?>
+
+
+            <a href="<?php echo esc_url(home_url('/?s=')); ?>" aria-label="Rechercher"
+                class="block size-8 rounded-full border-2 border-dashed border-beige"></a>
         </nav>
-    </div>
+    </header>
+
+    <?php if (is_front_page()) : ?>
+
+
+        <section class="relative h-svh overflow-hidden">
+            <video class="absolute inset-0 size-full object-cover" autoplay muted loop playsinline>
+                <source src="https://projet4.timmatane.ca/2026/efc/eq1/wp-content/uploads/2026/11/hero-2mb.mp4" type="video/mp4">
+            </video>
+        </section>
+
+        <svg class="-mt-px block h-16 w-full rotate-180 text-yellow md:h-24" viewBox="0 0 1440 100"
+            preserveAspectRatio="none" aria-hidden="true">
+            <path fill="currentColor"
+                d="M0 40 Q 60 0 120 40 T 240 40 T 360 40 T 480 40 T 600 40 T 720 40 T 840 40 T 960 40 T 1080 40 T 1200 40 T 1320 40 T 1440 40 V100 H0 Z" />
+        </svg>
+    <?php endif; ?>
 
     <main class="container mx-auto px-4 py-12">
