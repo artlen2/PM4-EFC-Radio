@@ -10,16 +10,16 @@
 <body <?php body_class(); ?>>
     <?php wp_body_open(); ?>
 
-
+    <!-- Accueil -->
     <header class="<?php echo is_front_page() ? 'absolute inset-x-0 top-0' : 'relative bg-orange'; ?> z-30 text-beige">
         <nav class="flex items-center justify-between gap-4 px-4 py-3 md:px-8">
 
-
+            <!-- Logo -->
             <a href="<?php echo esc_url(home_url('/')); ?>" class="shrink-0 [&_img]:size-12">
                 <?php the_custom_logo(); ?>
             </a>
 
-
+            <!-- Menu principal -->
             <?php
             wp_nav_menu(array(
                 'theme_location' => 'main-menu',
@@ -28,7 +28,7 @@
             ));
             ?>
 
-
+            <!-- placeholder en attendant l'icône -->
             <a href="<?php echo esc_url(home_url('/?s=')); ?>" aria-label="Rechercher"
                 class="block size-8 rounded-full border-2 border-dashed border-beige"></a>
         </nav>
@@ -36,13 +36,14 @@
 
     <?php if (is_front_page()) : ?>
 
-
+        <!-- vidéo en arrière-plan -->
         <section class="relative h-svh overflow-hidden">
             <video class="absolute inset-0 size-full object-cover" autoplay muted loop playsinline>
                 <source src="https://projet4.timmatane.ca/2026/efc/eq1/wp-content/uploads/2026/11/hero-2mb.mp4" type="video/mp4">
             </video>
         </section>
 
+        <!-- jaune du bas de la vidéo-->
         <svg class="-mt-px block h-16 w-full rotate-180 text-yellow md:h-24" viewBox="0 0 1440 100"
             preserveAspectRatio="none" aria-hidden="true">
             <path fill="currentColor"
