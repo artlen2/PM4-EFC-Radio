@@ -38,7 +38,7 @@
 
             <!-- placeholder en attendant l'icône -->
             <a href="<?php echo esc_url(home_url('/?s=')); ?>" aria-label="Rechercher"
-                class="block size-8 rounded-full border-2 border-dashed border-beige"></a>
+                class="">Icon</a>
         </nav>
     </header>
 
