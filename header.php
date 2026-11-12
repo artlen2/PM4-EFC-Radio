@@ -47,7 +47,7 @@
         <!-- vidéo en arrière-plan -->
         <section class="relative h-svh overflow-hidden">
             <video class="absolute inset-0 size-full object-cover" autoplay muted loop playsinline>
-                <source src="./assets/objets/hero.mp4" type="video/mp4">
+                <source src="<?php echo esc_url(get_template_directory_uri() . '/assets/objets/hero.mp4'); ?>" type="video/mp4">
             </video>
         </section>
         </div>
