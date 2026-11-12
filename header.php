@@ -19,8 +19,6 @@
             <!-- Logo -->
             <a href="<?php echo esc_url(home_url('/')); ?>" class="shrink-0 [&_img]:size-12 [&_img]:object-contain">
                 <?php
-                // 1) Logo (Personnaliser > Identité du site > Logo)
-                // 2) sinon l'icône du site (Personnaliser > Identité du site > Icône du site)
                 if (has_custom_logo()) {
                     echo wp_get_attachment_image(get_theme_mod('custom_logo'), 'medium', false, ['alt' => get_bloginfo('name')]);
                 } elseif (has_site_icon()) {
@@ -49,7 +47,7 @@
         <!-- vidéo en arrière-plan -->
         <section class="relative h-svh overflow-hidden">
             <video class="absolute inset-0 size-full object-cover" autoplay muted loop playsinline>
-                <source src="../assets/objets/hero.mp4" type="video/mp4">
+                <source src="./assets/objets/hero.mp4" type="video/mp4">
             </video>
         </section>
         </div>
