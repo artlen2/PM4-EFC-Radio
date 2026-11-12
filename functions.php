@@ -4,7 +4,7 @@ require_once "includes/post-types.php";
 
 function efc_enqueue_scripts()
 {
-    wp_enqueue_style("main", get_stylesheet_uri());
+    wp_enqueue_style("main", get_stylesheet_uri(), [], filemtime(get_stylesheet_directory() . "/style.css"));
 
     // Script navigation mobile (toutes les pages)
     wp_enqueue_script(
