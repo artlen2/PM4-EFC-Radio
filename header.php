@@ -11,12 +11,22 @@
     <?php wp_body_open(); ?>
 
     <!-- Accueil -->
+    <?php if (is_front_page()) : ?><div class="relative"><?php endif; ?>
+
     <header class="<?php echo is_front_page() ? 'absolute inset-x-0 top-0' : 'relative bg-orange'; ?> z-30 text-beige">
         <nav class="flex items-center justify-between gap-4 px-4 py-3 md:px-8">
 
             <!-- Logo -->
-            <a href="<?php echo esc_url(home_url('/')); ?>" class="shrink-0 [&_img]:size-12">
-                <?php the_custom_logo(); ?>
+            <a href="<?php echo esc_url(home_url('/')); ?>" class="shrink-0 [&_img]:size-12 [&_img]:object-contain">
+                <?php
+                // 1) Logo (Personnaliser > Identité du site > Logo)
+                // 2) sinon l'icône du site (Personnaliser > Identité du site > Icône du site)
+                if (has_custom_logo()) {
+                    echo wp_get_attachment_image(get_theme_mod('custom_logo'), 'medium', false, ['alt' => get_bloginfo('name')]);
+                } elseif (has_site_icon()) {
+                    echo '<img src="' . esc_url(get_site_icon_url(192)) . '" alt="' . esc_attr(get_bloginfo('name')) . '">';
+                }
+                ?>
             </a>
 
             <!-- Menu principal -->
@@ -39,9 +49,10 @@
         <!-- vidéo en arrière-plan -->
         <section class="relative h-svh overflow-hidden">
             <video class="absolute inset-0 size-full object-cover" autoplay muted loop playsinline>
-                <source src="https://projet4.timmatane.ca/2026/efc/eq1/wp-content/uploads/2026/11/hero-2mb.mp4" type="video/mp4">
+                <source src="../assets/objets/hero.mp4" type="video/mp4">
             </video>
         </section>
+        </div>
 
         <!-- jaune du bas de la vidéo -->
         <svg class="-mt-px block h-16 w-full rotate-180 text-yellow md:h-24" viewBox="0 0 1440 100"
