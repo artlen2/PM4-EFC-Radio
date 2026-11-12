@@ -43,7 +43,7 @@
             </video>
         </section>
 
-        <!-- jaune du bas de la vidéo-->
+        <!-- jaune du bas de la vidéo -->
         <svg class="-mt-px block h-16 w-full rotate-180 text-yellow md:h-24" viewBox="0 0 1440 100"
             preserveAspectRatio="none" aria-hidden="true">
             <path fill="currentColor"
