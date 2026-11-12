@@ -3,21 +3,21 @@ if (! defined('ABSPATH')) {
     exit; // Block direct access if WordPress isn't loaded
 }
 
-function radio_enqueue_scripts()
+function efcradio_enqueue()
 {
     // Compiled Tailwind file (styles/main.css is only the source)
-    $css = '/styles/tailwind.css';
+    $css = '/style.css';
     wp_enqueue_style(
-        'radio-tailwind',
+        'efcradio-tailwind',
         get_template_directory_uri() . $css,
         array(),
         file_exists(get_template_directory() . $css) ? filemtime(get_template_directory() . $css) : null
     );
 }
-add_action('wp_enqueue_scripts', 'radio_enqueue_scripts');
+add_action('wp_enqueue_scripts', 'efcradio_enqueue');
 
 
-// Theme support 
+// Supports du thème 
 function radio_setup_scripts()
 {
     add_theme_support('title-tag');
@@ -48,11 +48,9 @@ function radio_setup_scripts()
         "script",
     ]);
 
-    // Add a menu
-    register_nav_menu("main-menu", __("Menu principal"));
+    register_nav_menu('main-menu', 'Menu principal');
 }
-add_action("after_setup_theme", "radio_setup_scripts");
-
+add_action('after_setup_theme', 'radio_setup_scripts');
 
 
 // Cleaning code #SqueakyClean
