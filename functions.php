@@ -1,13 +1,37 @@
 <?php
 if (! defined('ABSPATH')) {
-    exit; // Bloque l'accès si WordPress n'est pas chargé 
+    exit; // Block direct access if WordPress isn't loaded
 }
 
-// Supports du thème 
-function fmi_theme()
+function radio_enqueue_scripts()
+{
+    // Compiled Tailwind file (styles/main.css is only the source)
+    $css = '/styles/tailwind.css';
+    wp_enqueue_style(
+        'radio-tailwind',
+        get_template_directory_uri() . $css,
+        array(),
+        file_exists(get_template_directory() . $css) ? filemtime(get_template_directory() . $css) : null
+    );
+}
+add_action('wp_enqueue_scripts', 'radio_enqueue_scripts');
+
+
+// Theme support 
+function radio_setup_scripts()
 {
     add_theme_support('title-tag');
     add_theme_support('post-thumbnails');
+
+    // Add custom header
+    add_theme_support("custom-header", [
+        "width" => 1920,
+        "height" => 1080,
+        "flex-width" => true,
+        "flex-height" => true,
+    ]);
+
+    // Custom Logo
     add_theme_support('custom-logo', [
         'width'               => 200,
         'height'              => 200,
@@ -15,57 +39,50 @@ function fmi_theme()
         'flex-height'         => true,
         'unlink-homepage-logo' => true
     ]);
-    add_theme_support('html5', ['search-form', 'style', 'script', 'meta']);
 
-    register_nav_menu('main-menu', 'Menu principal');
+    // HTML5
+    add_theme_support("html5", [
+        "search-form",
+        "style",
+        "meta",
+        "script",
+    ]);
+
+    // Add a menu
+    register_nav_menu("main-menu", __("Menu principal"));
 }
-add_action('after_setup_theme', 'fmi_theme');
+add_action("after_setup_theme", "radio_setup_scripts");
 
-// Fichiers CSS / JS 
-function efcradio_enqueue()
+
+
+// Cleaning code #SqueakyClean
+
+// Remove the 'rsd_link' from the head
+remove_action('wp_head', 'rsd_link');
+
+// Remove the WordPress version from the generated code
+add_filter('the_generator', function () {
+    return '';
+});
+
+// Remove the wlwmanifest link (formerly used by Windows Live Writer)
+remove_action('wp_head', 'wlwmanifest_link');
+
+// Remove the shortlink
+remove_action('wp_head', 'wp_shortlink_wp_head');
+
+// Remove oEmbed discovery links
+remove_action('wp_head', 'wp_oembed_add_discovery_links', 10);
+
+// Remove emojis (both backend and frontend)
+function radio_remove_emojis()
 {
-    $css = '/style.css';
-    wp_enqueue_style(
-        'efcradio-tailwind',
-        get_template_directory_uri() . $css,
-        array(),
-        file_exists(get_template_directory() . $css) ? filemtime(get_template_directory() . $css) : null
-    );
+    remove_action('wp_head', 'print_emoji_detection_script', 7);
+    remove_action('admin_print_scripts', 'print_emoji_detection_script');
+    remove_action('wp_print_styles', 'print_emoji_styles');
+    remove_action('admin_print_styles', 'print_emoji_styles');
+    remove_filter('the_content_feed', 'wp_staticize_emoji');
+    remove_filter('comment_text_rss', 'wp_staticize_emoji');
+    remove_filter('wp_mail', 'wp_staticize_emoji_for_email');
 }
-add_action('wp_enqueue_scripts', 'efcradio_enqueue');
-
-// if ( ! defined( 'ABSPATH' ) ) {
-//     exit; // Bloque l'accès si WordPress n'est pas chargé
-// }
-
-// // Supports du thème
-// function efcradio_setup() {
-//     add_theme_support( 'title-tag' );
-//     add_theme_support( 'post-thumbnails' );
-
-//     add_theme_support( 'custom-logo', array(
-//         'width'  => 100,
-//         'height' => 100,
-//     ) );
-
-//     add_theme_support( 'custom-header', array(
-//         'default-image' => get_template_directory_uri() . '/assets/images/default.jpg',
-//     ) );
-
-//     register_nav_menus( array(
-//         'main-menu' => __( 'Menu principal' ),
-//     ) );
-// }
-// add_action( 'after_setup_theme', 'efcradio_setup' );
-
-// // Fichiers CSS / JS
-// function efcradio_enqueue() {
-//     $css = '/style.css';
-//     wp_enqueue_style(
-//         'efcradio-tailwind',
-//         get_template_directory_uri() . $css,
-//         array(),
-//         file_exists( get_template_directory() . $css ) ? filemtime( get_template_directory() . $css ) : null // évite le cache après chaque build
-//     );
-// }
-// add_action( 'wp_enqueue_scripts', 'efcradio_enqueue' );
+add_action('init', 'radio_remove_emojis');
