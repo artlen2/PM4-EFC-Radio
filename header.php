@@ -32,7 +32,7 @@
             wp_nav_menu(array(
                 'theme_location' => 'main-menu',
                 'container'      => false,
-                'menu_class'     => 'flex flex-wrap items-center gap-4 md:gap-10 text-xl md:text-2xl font-extrabold [&_a]:block [&_a]:px-2 [&_a]:py-1 [&_a]:transition-colors [&_a:hover]:text-violet [&_.current-menu-item>a]:text-purple [&_.current-menu-item>a]:-rotate-6',
+                'menu_class'     => 'flex flex-wrap items-center gap-4 md:gap-10 text-xl md:text-2xl font-extrabold [&_a]:block [&_a]:px-2 [&_a]:py-1 [&_a]:transition-[color] [&_a]:duration-300 [&_a]:ease-in-out [&_a:hover]:text-black [&_.current-menu-item>a]:text-purple [&_.current-menu-item>a]:-rotate-6',
             ));
             ?>
 
