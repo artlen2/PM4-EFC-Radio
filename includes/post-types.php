@@ -52,7 +52,7 @@ function efc_register_programme()
         "show_in_admin_bar" => true,                            // Afficher dans la barre d'admin du haut
         "show_in_rest" => true,                                 // Active la possibilité de récupérer le post par REST API
         "menu_position" => 9,                                   // Emplacement dans le menu de Wordpress
-        "menu_icon" => "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgZmlsbD0iY3VycmVudENvbG9yIiBjbGFzcz0iYmkgYmktYmFuazIiIHZpZXdCb3g9IjAgMCAxNiAxNiI+CiAgPHBhdGggZD0iTTguMjc3LjA4NGEuNS41IDAgMCAwLS41NTQgMGwtNy41IDVBLjUuNSAwIDAgMCAuNSA2aDEuODc1djdIMS41YS41LjUgMCAwIDAgMCAxaDEzYS41LjUgMCAxIDAgMC0xaC0uODc1VjZIMTUuNWEuNS41IDAgMCAwIC4yNzctLjkxNnpNMTIuMzc1IDZ2N2gtMS4yNVY2em0tMi41IDB2N2gtMS4yNVY2em0tMi41IDB2N2gtMS4yNVY2em0tMi41IDB2N2gtMS4yNVY2ek04IDRhMSAxIDAgMSAxIDAtMiAxIDEgMCAwIDEgMCAyTS41IDE1YS41LjUgMCAwIDAgMCAxaDE1YS41LjUgMCAxIDAgMC0xeiIvPgo8L3N2Zz4=",
+        "menu_icon" => "dashicons-microphone",
         "supports" => ["title"],                                // Quel theme_support voulez vous autoriser dans l'interface admin .. ici on aura juste le input de titre sans zone de contenu
     ];
 
@@ -112,7 +112,7 @@ function efc_register_concours()
         "show_in_admin_bar" => true,
         "show_in_rest" => true,
         "menu_position" => 8,
-        "menu_icon" => "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgZmlsbD0iY3VycmVudENvbG9yIiBjbGFzcz0iYmkgYmktY2FsZW5kYXIzIiB2aWV3Qm94PSIwIDAgMTYgMTYiPgogIDxwYXRoIGQ9Ik0xNCAwSDJhMiAyIDAgMCAwLTIgMnYxMmEyIDIgMCAwIDAgMiAyaDEyYTIgMiAwIDAgMCAyLTJWMmEyIDIgMCAwIDAtMi0yTTEgMy44NTdDMSAzLjM4NCAxLjQ0OCAzIDIgM2gxMmMuNTUyIDAgMSAuMzg0IDEgLjg1N3YxMC4yODZjMCAuNDczLS40NDguODU3LTEgLjg1N0gyYy0uNTUyIDAtMS0uMzg0LTEtLjg1N3oiLz4KICA8cGF0aCBkPSJNNi41IDdhMSAxIDAgMSAwIDAtMiAxIDEgMCAwIDAgMCAybTMgMGExIDEgMCAxIDAgMC0yIDEgMSAwIDAgMCAwIDJtMyAwYTEgMSAwIDEgMCAwLTIgMSAxIDAgMCAwIDAgMm0tOSAzYTEgMSAwIDEgMCAwLTIgMSAxIDAgMCAwIDAgMm0zIDBhMSAxIDAgMSAwIDAtMiAxIDEgMCAwIDAgMCAybTMgMGExIDEgMCAxIDAgMC0yIDEgMSAwIDAgMCAwIDJtMyAwYTEgMSAwIDEgMCAwLTIgMSAxIDAgMCAwIDAgMm0tOSAzYTEgMSAwIDEgMCAwLTIgMSAxIDAgMCAwIDAgMm0zIDBhMSAxIDAgMSAwIDAtMiAxIDEgMCAwIDAgMCAybTMgMGExIDEgMCAxIDAgMC0yIDEgMSAwIDAgMCAwIDIiLz4KPC9zdmc+",
+        "menu_icon" => "dashicons-awards",
         "supports" => ["title", "editor", "thumbnail"],
     ];
 
