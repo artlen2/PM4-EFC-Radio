@@ -13,7 +13,7 @@
     <!-- Accueil -->
     <?php if (is_front_page()) : ?><div class="relative"><?php endif; ?>
 
-        <header class="<?php echo is_front_page() ? 'absolute inset-x-0 top-0' : 'relative'; ?> z-30 text-beige">
+        <header class="<?php echo is_front_page() ? 'absolute inset-x-0 top-0 bg-transparent' : 'relative bg-purple'; ?> z-30 text-beige">
             <nav class="flex items-center justify-between gap-4 px-4 py-3 md:px-8">
 
                 <!-- Logo -->
