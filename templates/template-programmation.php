@@ -1,8 +1,8 @@
 <?php
-$jour = get_field('jour');
-$heure_debut = get_field('heure_debut');
-$heure_fin = get_field('heure_fin'); 
-$titre = get_field('titre');
+$jour = get_field('date');
+$heure_debut = get_field('time_start');
+$heure_fin = get_field('time_end'); 
+$titre = get_field('title');
 $description = get_field('description');
 $image = get_field('image');  // je récupère tout les champs SCF pour l'utiliser dans le code
 
@@ -20,15 +20,15 @@ $wrapper = get_block_wrapper_attributes(['class' => 'class']);
 
 <div class="card__body bg-black block max-w-sm p-6 border border-default rounded-base shadow-xs">  <!--    appelle le corps de la carte avec l'horaire défini dans le SCF -->
     <p class="card__horaire">
-      <?php echo esc_html($jour); ?>
-      <?php if ($heure_debut) : ?>
-        · <?php echo esc_html($heure_debut); ?>
-        <?php if ($heure_fin) : ?> – <?php echo esc_html($heure_fin); ?><?php endif; ?>
+      <?php echo esc_html($date); ?>
+      <?php if ($time_start) : ?>
+        · <?php echo esc_html($time_start); ?>
+        <?php if ($time_end) : ?> – <?php echo esc_html($time_end); ?><?php endif; ?>
       <?php endif; ?>
     </p>
 
-    <?php if ($titre) : ?> <!--  appelle le titre -->
-      <h3 class="card__titre mb-3 text-2xl font-semibold tracking-tight text-heading leading-8 color-white"><?php echo esc_html($titre); ?></h3>
+    <?php if ($title) : ?> <!--  appelle le titre -->
+      <h3 class="card__titre mb-3 text-2xl font-semibold tracking-tight text-heading leading-8 color-white"><?php echo esc_html($title); ?></h3>
     <?php endif; ?>
 
     <?php if ($description) : ?> <!--  appelle la description -->
