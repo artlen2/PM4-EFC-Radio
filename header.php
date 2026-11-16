@@ -11,9 +11,9 @@
     <?php wp_body_open(); ?>
 
     <!-- Accueil -->
-    <?php if (is_front_page()) : ?><div class="relative"><?php endif; ?>
+    <div class="relative">
 
-        <header class="<?php echo is_front_page() ? 'absolute inset-x-0 top-0' : 'relative'; ?> bg-transparent z-30 text-beige">
+        <header class="absolute inset-x-0 top-0 bg-transparent z-30 text-beige">
             <nav class="flex items-center justify-between gap-4 px-4 py-3 md:px-8">
 
                 <!-- Logo -->
