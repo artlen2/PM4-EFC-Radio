@@ -1,8 +1,8 @@
 <?php
-$jour = get_field('date');
-$heure_debut = get_field('time_start');
-$heure_fin = get_field('time_end'); 
-$titre = get_field('title');
+$date = get_field('date');
+$time_start = get_field('time_start');
+$time_end = get_field('time_end'); 
+$title = get_field('title');
 $description = get_field('description');
 $image = get_field('image');  // je récupère tout les champs SCF pour l'utiliser dans le code
  
