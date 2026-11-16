@@ -13,34 +13,34 @@
     <!-- Accueil -->
     <?php if (is_front_page()) : ?><div class="relative"><?php endif; ?>
 
-    <header class="<?php echo is_front_page() ? 'absolute inset-x-0 top-0' : 'relative bg-orange'; ?> z-30 text-beige">
-        <nav class="flex items-center justify-between gap-4 px-4 py-3 md:px-8">
+        <header class="<?php echo is_front_page() ? 'absolute inset-x-0 top-0' : 'relative'; ?> z-30 text-beige">
+            <nav class="flex items-center justify-between gap-4 px-4 py-3 md:px-8">
 
-            <!-- Logo -->
-            <a href="<?php echo esc_url(home_url('/')); ?>" class="shrink-0 [&_img]:size-12 [&_img]:object-contain">
+                <!-- Logo -->
+                <a href="<?php echo esc_url(home_url('/')); ?>" class="shrink-0 [&_img]:size-12 [&_img]:object-contain">
+                    <?php
+                    if (has_custom_logo()) {
+                        echo wp_get_attachment_image(get_theme_mod('custom_logo'), 'medium', false, ['alt' => get_bloginfo('name')]);
+                    } elseif (has_site_icon()) {
+                        echo '<img src="' . esc_url(get_site_icon_url(192)) . '" alt="' . esc_attr(get_bloginfo('name')) . '">';
+                    }
+                    ?>
+                </a>
+
+                <!-- Menu principal -->
                 <?php
-                if (has_custom_logo()) {
-                    echo wp_get_attachment_image(get_theme_mod('custom_logo'), 'medium', false, ['alt' => get_bloginfo('name')]);
-                } elseif (has_site_icon()) {
-                    echo '<img src="' . esc_url(get_site_icon_url(192)) . '" alt="' . esc_attr(get_bloginfo('name')) . '">';
-                }
+                wp_nav_menu(array(
+                    'theme_location' => 'main-menu',
+                    'container'      => false,
+                    'menu_class'     => 'flex flex-wrap items-center gap-4 md:gap-10 text-xl md:text-2xl font-extrabold [&_a]:block [&_a]:px-2 [&_a]:py-1 [&_a]:transition-[color] [&_a]:duration-300 [&_a]:ease-in-out [&_a:hover]:text-black [&_.current-menu-item>a]:text-purple [&_.current-menu-item>a]:-rotate-6',
+                ));
                 ?>
-            </a>
 
-            <!-- Menu principal -->
-            <?php
-            wp_nav_menu(array(
-                'theme_location' => 'main-menu',
-                'container'      => false,
-                'menu_class'     => 'flex flex-wrap items-center gap-4 md:gap-10 text-xl md:text-2xl font-extrabold [&_a]:block [&_a]:px-2 [&_a]:py-1 [&_a]:transition-[color] [&_a]:duration-300 [&_a]:ease-in-out [&_a:hover]:text-black [&_.current-menu-item>a]:text-purple [&_.current-menu-item>a]:-rotate-6',
-            ));
-            ?>
-
-            <!-- placeholder en attendant l'icône -->
-            <a href="<?php echo esc_url(home_url('/?s=')); ?>" aria-label="Rechercher"
-                class="">Icon</a>
-        </nav>
-    </header>
+                <!-- placeholder en attendant l'icône -->
+                <a href="<?php echo esc_url(home_url('/?s=')); ?>" aria-label="Rechercher"
+                    class="">Icon</a>
+            </nav>
+        </header>
 
     <?php if (is_front_page()) : ?>
 
@@ -60,4 +60,4 @@
         </svg>
     <?php endif; ?>
 
-    <main class="container mx-auto px-4 py-12">
+        <main class="container mx-auto px-4 py-12">
