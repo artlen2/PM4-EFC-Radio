@@ -1,5 +1,6 @@
 <?php get_header(); ?>
 
-<?php get_template_part( 'templates/main-loop' ); ?>
+<?php the_content(); ?>
+
 
 <?php get_footer(); ?>
