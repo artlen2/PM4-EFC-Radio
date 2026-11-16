@@ -42,8 +42,6 @@
             </nav>
         </header>
 
-    <?php if (is_front_page()) : ?>
-
         <!-- vidéo en arrière-plan -->
         <section class="relative h-svh overflow-hidden">
             <video class="absolute inset-0 size-full object-cover" autoplay muted loop playsinline>
@@ -58,6 +56,5 @@
             <path fill="currentColor"
                 d="M0 40 Q 60 0 120 40 T 240 40 T 360 40 T 480 40 T 600 40 T 720 40 T 840 40 T 960 40 T 1080 40 T 1200 40 T 1320 40 T 1440 40 V100 H0 Z" />
         </svg>
-    <?php endif; ?>
 
         <main class="container mx-auto px-4 py-12">
