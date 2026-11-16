@@ -5,8 +5,7 @@ $heure_fin = get_field('time_end');
 $titre = get_field('title');
 $description = get_field('description');
 $image = get_field('image');  // je récupère tout les champs SCF pour l'utiliser dans le code
-
-$wrapper = get_block_wrapper_attributes(['class' => 'class']); 
+ 
 ?>
  
 <div> 

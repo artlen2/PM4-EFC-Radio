@@ -10,7 +10,7 @@ get_header(); ?>
         'post_type' => 'programmation',
         'posts_per_page' => -1,
         'orderby' => 'meta_value',
-        'meta_key' => 'jour',
+        'meta_key' => 'date',
         'order' => 'ASC'
     ]);
 
