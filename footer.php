@@ -28,9 +28,9 @@
 
           <!-- réseaux sociaux icons -->
          <div class="flex mt-8 justify-start items-center gap-4  ">
-            <a href="https://www.facebook.com/radiolamatanie"><img class="w-8 h-8 " src="https://projet4.timmatane.ca/2026/efc/eq1/wp-content/uploads/2026/11/facebook-app-symbol.png" alt="icon facebook" ></a>
+            <a href="https://www.facebook.com/radiolamatanie"><img class="w-8 h-8 hover:scale-110 ease-in-out duration-200" src="https://projet4.timmatane.ca/2026/efc/eq1/wp-content/uploads/2026/11/facebook-app-symbol.png" alt="icon facebook" ></a>
             
-             <a href=""><img class="w-8 h-8  " src="https://projet4.timmatane.ca/2026/efc/eq1/wp-content/uploads/2026/11/youtube.png" alt="icon youtube" ></a> 
+             <a href=""><img class="w-8 h-8 hover:scale-110 ease-in-out duration-200" src="https://projet4.timmatane.ca/2026/efc/eq1/wp-content/uploads/2026/11/youtube.png" alt="icon youtube" ></a> 
             
           </div>
         </div>
