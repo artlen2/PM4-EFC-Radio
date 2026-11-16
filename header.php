@@ -50,9 +50,6 @@
                 <source src="<?php echo esc_url(get_template_directory_uri() . '/assets/objets/hero.mp4'); ?>" type="video/mp4">
             </video>
         </section>
-        <!-- dégradé jaune en bas de la vidéo pour fondre avec le SVG -->
-        <div class="absolute inset-x-0 bottom-0 h-35 bg-linear-to-b from-transparent to-[#fdbe00] z-10"></div>
-        </div>
         <!-- jaune du bas de la vidéo -->
         <svg class="-mt-px block h-16 w-full rotate-180 text-[#fdbe00] md:h-24" viewBox="0 0 1440 100"
             preserveAspectRatio="none" aria-hidden="true">
