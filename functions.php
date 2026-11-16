@@ -106,3 +106,5 @@ function mytheme_remove_emojis()
     remove_filter('wp_mail', 'wp_staticize_emoji_for_email');
 }
 add_action('init', 'mytheme_remove_emojis');
+
+
