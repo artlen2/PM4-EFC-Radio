@@ -51,10 +51,10 @@
             </video>
         </section>
         <!-- dégradé jaune en bas de la vidéo pour fondre avec le SVG -->
-        <div class="absolute inset-x-0 bottom-0 h-25 bg-linear-to-b from-transparent to-yellow z-10"></div>
+        <div class="absolute inset-x-0 bottom-0 h-25 bg-linear-to-b from-transparent to-[#fdbe00] z-10"></div>
         </div>
         <!-- jaune du bas de la vidéo -->
-        <svg class="-mt-px block h-16 w-full rotate-180 text-yellow md:h-24" viewBox="0 0 1440 100"
+        <svg class="-mt-px block h-16 w-full rotate-180 text-[#fdbe00] md:h-24" viewBox="0 0 1440 100"
             preserveAspectRatio="none" aria-hidden="true">
             <path fill="currentColor"
                 d="M0 40 Q 60 0 120 40 T 240 40 T 360 40 T 480 40 T 600 40 T 720 40 T 840 40 T 960 40 T 1080 40 T 1200 40 T 1320 40 T 1440 40 V100 H0 Z" />
