@@ -48,13 +48,13 @@
         <section class="relative h-svh overflow-hidden">
             <!-- bg -->
             <img class="absolute inset-0 size-full object-cover" src="<?php echo esc_url(get_template_directory_uri() . '/assets/objets/background.png'); ?>" alt="">
-
+            <!-- titre et boule -->
+            <div class="absolute left-1/2 top-[10%] z-10 aspect-[1440/900] w-[min(77vw,130svh)] -translate-x-1/2 lg:scale-115">
+                <img class="size-full" src="<?php echo esc_url(get_template_directory_uri() . '/assets/objets/title.png'); ?>" alt="<?php echo esc_attr(get_bloginfo('name')); ?>">
+                <img class="disco-swing absolute left-[80%] bottom-[20%] w-[17%] max-w-none" src="<?php echo esc_url(get_template_directory_uri() . '/assets/objets/disco-ball.png'); ?>" alt="">
+            </div>
             <?php if (is_front_page()) : ?>
-                <!-- titre et boule -->
-                <div class="absolute left-1/2 top-[10%] z-10 aspect-[1440/900] w-[min(77vw,130svh)] -translate-x-1/2 lg:scale-115">
-                    <img class="size-full" src="<?php echo esc_url(get_template_directory_uri() . '/assets/objets/title.png'); ?>" alt="<?php echo esc_attr(get_bloginfo('name')); ?>">
-                    <img class="disco-swing absolute left-[80%] bottom-[20%] w-[17%] max-w-none" src="<?php echo esc_url(get_template_directory_uri() . '/assets/objets/disco-ball.png'); ?>" alt="">
-                </div>
+
 
                 <!-- description page d'accueil du site -->
                 <div class="absolute inset-x-0 bottom-[18%] z-10 px-4 md:pl-[20%] md:pr-8">
@@ -63,6 +63,7 @@
                     </div>
                 </div>
             <?php else : ?>
+
                 <!-- titre des autres pages -->
                 <div class="absolute inset-x-0 bottom-[22%] z-10 px-4 md:pl-[20%] md:pr-8">
                     <h1 class="inter text-6xl -rotate-3 font-extrabold text-violet max-w-3xl">
