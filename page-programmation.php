@@ -18,7 +18,7 @@ get_header(); ?>
 
  
     <?php if ($programmes->have_posts()) : ?>
-        <div class="grid gap-6 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1 size: 100% rounded-lg overflow-hidden shadow-lg text-white;">
+        <div class="grid gap-6 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1 size: 100% rounded-[40px] overflow-hidden justify-center items-center margin: 0 auto;">
             <?php
             while ($programmes->have_posts()) :
                 $programmes->the_post();
