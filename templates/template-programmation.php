@@ -18,7 +18,7 @@ if (is_array($date)) {
 $image_alt = get_the_title();
 ?> 
 
-<article class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 rounded-lg overflow-hidden shadow-lg bg-black">
+<article class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 rounded-[40px] overflow-hidden bg-black mt-25">
     <?php if ($image) : ?>
         <figure class="">
             <?php if (is_array($image) && !empty($image['ID'])) : ?>
@@ -73,10 +73,10 @@ $image_alt = get_the_title();
 
         <?php if ($description) : ?>
             <div class="text-sm text-white text-align-left"><?php echo wp_kses_post($description); ?></div>
-        <?php endif; ?>
-
-        <a class="margin-top-30 text-sm text-white bg-orange hover:text-black hover:bg-violet transition-colors duration-300 rounded-md py-2 px-4 transition-colors duration-300 font-weight:800" href="<?php echo esc_url(get_permalink()); ?>">
+        <?php endif; ?> <a class="text-sm text-white bg-orange hover:text-black hover:bg-violet transition-colors duration-300 rounded-[30px] py-2 px-4 transition-colors duration-300 font-weight:800 w-[200px] text-center h-[40px] hover:scale-105 ease-in-out" href="<?php echo esc_url(get_permalink()); ?>">
             Voir plus 
         </a>
-    </div>
+</div>
+       
+    
 </article>
