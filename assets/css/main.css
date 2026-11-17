@@ -94,7 +94,7 @@ Version: 1.0
 
 
 
-/* Boule disco du hero : balancement léger, pivot au haut de la corde */
+/* Boule disco du hero */
 .disco-swing {
   transform-origin: 50% 0;
   animation: disco-swing 3s ease-in-out infinite alternate;
