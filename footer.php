@@ -3,12 +3,12 @@
 <footer class="border-t border-neutral-700 py-10 md:py-24 px-4" style="background-image: linear-gradient(rgba(255,255,255,0.85), rgba(255,255,255,0.82)), url('https://projet4.timmatane.ca/2026/efc/eq1/wp-content/uploads/2026/11/pape-bg.jpg'); ">
 
   <!-- card footer container -->
-  <div class="card-container bg-beige max-w-[1600px] mx-auto rounded-[24px] md:rounded-[40px] p-6 md:p-10 border-t-2 border-x-2 border-b-8 border-black">
+  <div class="card-container bg-beige max-w-[1600px] mx-auto rounded-[24px] md:rounded-[40px] p-6 md:p-10 border-t-2 border-x-2 border-b-8 border-black lg:scale-115">
 
     <div class="grid gap-20 md:grid-cols-2 lg:grid-cols-4">
 
       <!-- logo + description + réseaux sociaux -->
-      <div class="flex flex-col md:items-center items-center gap-4 text-center md:text-left">
+      <div class="flex flex-col gap-4 text-center text-left">
         <img class="w-48 md:w-64 h-auto" src="https://projet4.timmatane.ca/2026/efc/eq1/wp-content/uploads/2026/11/Logo-horizontal-pop-lilas-scaled.png" alt="logo mauve">
 
         <p class="text-lg text-black mt-4">
