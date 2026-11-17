@@ -19,7 +19,7 @@ Version: 1.0
 @font-face {
   font-family: "Archivo";
   src: url("./assets/fonts/Archivo-VariableFont_wdth\,wght.ttf") format("truetype");
-  font-weight: 100 900;
+  font-weight: 500 900;
   font-stretch: 62% 125%;
   font-style: normal;
 }
@@ -27,13 +27,14 @@ Version: 1.0
 @font-face {
   font-family: "Inter";
   src: url("./assets/fonts/Inter-VariableFont_opsz\,wght.ttf") format("truetype");
-  font-weight: 400 900;
+  font-weight: 100 900;
   font-style: normal;
 }
 
 .inter {
   font-family: "Inter", sans-serif;
 }
+
 
 .archivo {
   font-family: "Archivo", sans-serif;
