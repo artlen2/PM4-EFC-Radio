@@ -18,9 +18,9 @@ if (is_array($date)) {
 $image_alt = get_the_title();
 ?> 
 
-<article class="programme-card<?php echo $has_image ? '' : ' programme-card--no-image'; ?>">
+<article class="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 rounded-lg overflow-hidden shadow-lg bg-black <?php echo $has_image ? '' : ' programme-card--no-image'; ?>">
     <?php if ($image) : ?>
-        <figure class="programme-card__image">
+        <figure class="bg-black">
             <?php if (is_array($image) && !empty($image['ID'])) : ?>
                 <?php
                 $image_alt = !empty($image['alt']) ? $image['alt'] : $image_alt;
@@ -48,14 +48,14 @@ $image_alt = get_the_title();
             <?php endif; ?>
         </figure>
     <?php elseif (has_post_thumbnail()) : ?>
-        <figure class="programme-card__image">
+        <figure class="grid col-span-1 sm:col-span-1 md:col-span-1 lg:col-span-1 overflow-hidden display: block max-width: 100% height: 100% min-height: 15rem object-fit: cover; ">
             <?php the_post_thumbnail('large', ['alt' => $image_alt]); ?>
         </figure>
     <?php endif; ?>
 
-    <div class="programme-card__content">
+    <div class="flex flex-col gap-2 p-4 justify-content space-between">
         <?php if ($date || $time_start || $time_end) : ?>
-            <p class="programme-card__schedule">
+            <p class="mg-0.5 color_orange text-sm text-align-left font-weight:700;">
                 <?php if ($date) : ?>
                     <?php echo esc_html($date); ?>
                 <?php endif; ?>
@@ -69,13 +69,13 @@ $image_alt = get_the_title();
             </p>
         <?php endif; ?>
 
-        <h2 class="programme-card__title"><?php echo esc_html($title); ?></h2>
+        <h2 class="text-sm text-white text-align-left"><?php echo esc_html($title); ?></h2>
 
         <?php if ($description) : ?>
-            <div class="programme-card__description"><?php echo wp_kses_post($description); ?></div>
+            <div class="text-sm text-white text-align-left"><?php echo wp_kses_post($description); ?></div>
         <?php endif; ?>
 
-        <a class="programme-card__link" href="<?php echo esc_url(get_permalink()); ?>">
+        <a class="text-sm text-white hover:text-black transition-colors duration-300 bg-orange rounded-md py-2 px-4 transition-colors duration-300" href="<?php echo esc_url(get_permalink()); ?>">
             Voir plus <span aria-hidden="true">→</span>
         </a>
     </div>

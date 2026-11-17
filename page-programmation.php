@@ -2,8 +2,8 @@
 /* Template Name: Programmation */
 get_header(); ?>
 
-<main class="max-w-6xl mx-auto px-4 py-12">
-    <h1 class="color_white text-lg text-align block"><?php the_title(); ?></h1>
+<main class="max-w-6xl mx-auto px-4 py-12 bg-black">
+    <h1 class="text-lg text-align block text-white"><?php the_title(); ?></h1>
 
     <?php
     $programmes = new WP_Query([
@@ -18,7 +18,7 @@ get_header(); ?>
 
  
     <?php if ($programmes->have_posts()) : ?>
-        <div class="programmation__cards">
+        <div class="grid gap-6 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1 size: 100% rounded-lg overflow-hidden shadow-lg bg-black text-white;">
             <?php
             while ($programmes->have_posts()) :
                 $programmes->the_post();
