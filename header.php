@@ -53,7 +53,7 @@
                 <!-- titre et boule -->
                 <div class="absolute left-1/2 top-[5%] z-10 aspect-[1440/900] w-[min(77vw,130svh)] -translate-x-1/2">
                     <img class="size-full" src="<?php echo esc_url(get_template_directory_uri() . '/assets/objets/title.png'); ?>" alt="<?php echo esc_attr(get_bloginfo('name')); ?>">
-                    <img class="absolute left-[80%] bottom-[23%] w-[17%] max-w-none" src="<?php echo esc_url(get_template_directory_uri() . '/assets/objets/disco ball.png'); ?>" alt="">
+                    <img class="absolute left-[80%] bottom-[23%] w-[17%] max-w-none" src="<?php echo esc_url(get_template_directory_uri() . '/assets/objets/disco-ball.png'); ?>" alt="">
                 </div>
 
                 <!-- description page d'accueil du site -->
