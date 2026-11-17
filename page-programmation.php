@@ -2,7 +2,7 @@
 /* Template Name: Programmation */
 get_header(); ?>
 
-<main class="max-w-6xl mx-auto px-4 py-12 bg-black">
+<main class="max-w-6xl mx-auto px-4 py-12">
     <h1 class="text-lg text-align block text-white"><?php the_title(); ?></h1>
 
     <?php
@@ -18,7 +18,7 @@ get_header(); ?>
 
  
     <?php if ($programmes->have_posts()) : ?>
-        <div class="grid gap-6 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1 size: 100% rounded-lg overflow-hidden shadow-lg bg-black text-white;">
+        <div class="grid gap-6 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1 size: 100% rounded-lg overflow-hidden shadow-lg text-white;">
             <?php
             while ($programmes->have_posts()) :
                 $programmes->the_post();
@@ -27,7 +27,7 @@ get_header(); ?>
             ?>
         </div>
     <?php else : ?>
-        <p class="programmation__empty">Aucun programme ici à date.</p>
+        <p class="">Aucun programme ici à date.</p>
     <?php endif; ?>
 
     <?php wp_reset_postdata(); ?>

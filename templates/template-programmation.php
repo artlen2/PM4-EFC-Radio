@@ -53,9 +53,9 @@ $image_alt = get_the_title();
         </figure>
     <?php endif; ?>
 
-    <div class="flex flex-col gap-2 p-4 justify-content space-between">
+    <div class="flex flex-col gap-2 p-4 justify-content space-between text-orange font-weight:900 font-bold">
         <?php if ($date || $time_start || $time_end) : ?>
-            <p class="mg-0.5 color_orange text-sm text-align-left font-weight:700;">
+            <p class="mg-0.5 text-sm text-align-left font-weight:900 text-orange font-bold;">
                 <?php if ($date) : ?>
                     <?php echo esc_html($date); ?>
                 <?php endif; ?>
@@ -75,8 +75,8 @@ $image_alt = get_the_title();
             <div class="text-sm text-white text-align-left"><?php echo wp_kses_post($description); ?></div>
         <?php endif; ?>
 
-        <a class="text-sm text-white hover:text-black transition-colors duration-300 bg-orange rounded-md py-2 px-4 transition-colors duration-300" href="<?php echo esc_url(get_permalink()); ?>">
-            Voir plus <span aria-hidden="true">→</span>
+        <a class="margin-top-50 text-sm text-white bg-orange hover:text-black hover:bg-violet transition-colors duration-300 rounded-md py-2 px-4 transition-colors duration-300" href="<?php echo esc_url(get_permalink()); ?>">
+            Voir plus 
         </a>
     </div>
 </article>
