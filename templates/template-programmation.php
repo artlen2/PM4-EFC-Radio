@@ -18,9 +18,9 @@ if (is_array($date)) {
 $image_alt = get_the_title();
 ?> 
 
-<article class="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 rounded-lg overflow-hidden shadow-lg bg-black <?php echo $has_image ? '' : ' programme-card--no-image'; ?>">
+<article class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 rounded-lg overflow-hidden shadow-lg bg-black">
     <?php if ($image) : ?>
-        <figure class="bg-black">
+        <figure class="">
             <?php if (is_array($image) && !empty($image['ID'])) : ?>
                 <?php
                 $image_alt = !empty($image['alt']) ? $image['alt'] : $image_alt;
@@ -66,7 +66,7 @@ $image_alt = get_the_title();
                         – <?php echo esc_html($time_end); ?>
                     <?php endif; ?>
                 <?php endif; ?>
-            </p>
+            </p> 
         <?php endif; ?>
 
         <h2 class="text-sm text-white text-align-left"><?php echo esc_html($title); ?></h2>
@@ -75,7 +75,7 @@ $image_alt = get_the_title();
             <div class="text-sm text-white text-align-left"><?php echo wp_kses_post($description); ?></div>
         <?php endif; ?>
 
-        <a class="margin-top-50 text-sm text-white bg-orange hover:text-black hover:bg-violet transition-colors duration-300 rounded-md py-2 px-4 transition-colors duration-300" href="<?php echo esc_url(get_permalink()); ?>">
+        <a class="margin-top-30 text-sm text-white bg-orange hover:text-black hover:bg-violet transition-colors duration-300 rounded-md py-2 px-4 transition-colors duration-300 font-weight:800" href="<?php echo esc_url(get_permalink()); ?>">
             Voir plus 
         </a>
     </div>
