@@ -18,12 +18,15 @@ if (is_array($date)) {
 $image_alt = get_the_title();
 $figure_order = $reverse ? 'md:order-2' : 'md:order-1';
 $content_order = $reverse ? 'md:order-1' : 'md:order-2';
+$grid_columns = $reverse
+    ? 'md:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)]'
+    : 'md:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)]';
 ?>
 <!-- pour change l'ordre du display -->
 
-<article class="grid grid-cols-1 overflow-hidden rounded-[2.5rem] bg-black text-white md:min-h-40 md:grid-cols-[minmax(0,1.35fr)_minmax(13rem,0.65fr)]">
+<article class="grid grid-cols-1 overflow-hidden rounded-[2.5rem] bg-black text-white md:min-h-40 <?php echo esc_attr($grid_columns); ?>">
     <?php if ($image) : ?>
-        <figure class="<?php echo esc_attr($figure_order); ?> order-1 min-h-48 overflow-hidden md:min-h-0">
+        <figure class="<?php echo esc_attr($figure_order); ?> order-1 min-h-48 overflow-hidden p-2 md:min-h-0">
             <?php if (is_array($image) && !empty($image['ID'])) : ?>
                 <?php
                 $image_alt = !empty($image['alt']) ? $image['alt'] : $image_alt;
@@ -31,7 +34,7 @@ $content_order = $reverse ? 'md:order-1' : 'md:order-2';
                     absint($image['ID']),
                     'large',
                     false,
-                    ['alt' => $image_alt, 'class' => 'block size-full object-cover']
+                    ['alt' => $image_alt, 'class' => 'block size-full rounded-[1.75rem] object-cover']
                 );
                 ?>
             <?php elseif (is_numeric($image)) : ?>
@@ -40,19 +43,19 @@ $content_order = $reverse ? 'md:order-1' : 'md:order-2';
                     absint($image),
                     'large',
                     false,
-                    ['alt' => $image_alt, 'class' => 'block size-full object-cover']
+                    ['alt' => $image_alt, 'class' => 'block size-full rounded-[1.75rem] object-cover']
                 );
                 ?>
             <?php elseif (is_array($image) && !empty($image['url'])) : ?>
                 <?php $image_alt = !empty($image['alt']) ? $image['alt'] : $image_alt; ?>
-                <img class="block size-full object-cover" src="<?php echo esc_url($image['url']); ?>" alt="<?php echo esc_attr($image_alt); ?>">
+                <img class="block size-full rounded-[1.75rem] object-cover" src="<?php echo esc_url($image['url']); ?>" alt="<?php echo esc_attr($image_alt); ?>">
             <?php elseif (is_string($image)) : ?>
-                <img class="block size-full object-cover" src="<?php echo esc_url($image); ?>" alt="<?php echo esc_attr($image_alt); ?>">
+                <img class="block size-full rounded-[1.75rem] object-cover" src="<?php echo esc_url($image); ?>" alt="<?php echo esc_attr($image_alt); ?>">
             <?php endif; ?>
         </figure>
     <?php elseif (has_post_thumbnail()) : ?>
-        <figure class="<?php echo esc_attr($figure_order); ?> order-1 min-h-48 overflow-hidden md:min-h-0">
-            <?php the_post_thumbnail('large', ['alt' => $image_alt, 'class' => 'block size-full object-cover']); ?>
+        <figure class="<?php echo esc_attr($figure_order); ?> order-1 min-h-48 overflow-hidden p-2 md:min-h-0">
+            <?php the_post_thumbnail('large', ['alt' => $image_alt, 'class' => 'block size-full rounded-[1.75rem] object-cover']); ?>
         </figure>
     <?php endif; ?>
 
@@ -68,17 +71,19 @@ $content_order = $reverse ? 'md:order-1' : 'md:order-2';
                         <?php echo $date ? ' · ' : ''; ?>
                         <?php echo esc_html($time_start); ?>
                         <?php if ($time_end) : ?>
-                            – <?php echo esc_html($time_end); ?>
+                            - <?php echo esc_html($time_end); ?>
                         <?php endif; ?>
                     <?php endif; ?>
                 </p>
             <?php endif; ?>
         </div>
 
+      <!-- partie description -->
         <?php if ($description) : ?>
             <div class="text-xs leading-relaxed text-white/75"><?php echo wp_kses_post($description); ?></div>
         <?php endif; ?>
 
+        <!-- bouton voir plus -->
         <a class="inline-flex min-h-8 items-center justify-center rounded-full bg-orange px-5 py-2 text-xs font-extrabold text-white transition-colors duration-300 hover:bg-yellow hover:text-black focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange" href="<?php echo esc_url(get_permalink()); ?>">
             Voir plus
         </a>
