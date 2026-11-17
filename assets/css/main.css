@@ -228,3 +228,16 @@ Version: 1.0
     align-items: flex-start;
   }
 }
+
+/* Boule disco du hero : balancement léger, pivot au haut de la corde */
+.disco-swing {
+  transform-origin: 50% 0;
+  animation: disco-swing 3s ease-in-out infinite alternate;
+}
+
+@keyframes disco-swing {
+  from { transform: rotate(-2deg); }
+  to   { transform: rotate(2deg); }
+}
+
+
