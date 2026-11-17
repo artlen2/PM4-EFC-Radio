@@ -8,19 +8,25 @@ $time_start = $get_programme_field('time_start') ?: $get_programme_field('heure_
 $time_end = $get_programme_field('time_end') ?: $get_programme_field('heure_fin');
 $title = $get_programme_field('title') ?: get_the_title();
 $description = $get_programme_field('description') ?: get_the_excerpt();
-$image = $get_programme_field('image'); // débuggage : les cartes apparaissaient que si elles avaient une date donc on a appeler tout les programmes
-$has_image = $image || has_post_thumbnail();
+$image = $get_programme_field('image');
+$reverse = !empty($args['reverse']);
 
 if (is_array($date)) {
     $date = implode(', ', array_map('ucfirst', $date));
 }
 
 $image_alt = get_the_title();
-?> 
+$figure_order = $reverse ? 'md:order-2' : 'md:order-1';
+$content_order = $reverse ? 'md:order-1' : 'md:order-2';
+$grid_columns = $reverse
+    ? 'md:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)]'
+    : 'md:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)]';
+?>
+<!-- pour change l'ordre du display -->
 
-<article class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 rounded-[40px] overflow-hidden bg-black mt-25">
+<article class="grid grid-cols-1 overflow-hidden rounded-[2.5rem] bg-black text-white md:min-h-40 <?php echo esc_attr($grid_columns); ?>">
     <?php if ($image) : ?>
-        <figure class="">
+        <figure class="<?php echo esc_attr($figure_order); ?> order-1 min-h-48 overflow-hidden p-2 md:min-h-0">
             <?php if (is_array($image) && !empty($image['ID'])) : ?>
                 <?php
                 $image_alt = !empty($image['alt']) ? $image['alt'] : $image_alt;
@@ -28,7 +34,7 @@ $image_alt = get_the_title();
                     absint($image['ID']),
                     'large',
                     false,
-                    ['alt' => $image_alt]
+                    ['alt' => $image_alt, 'class' => 'block size-full rounded-[1.75rem] object-cover']
                 );
                 ?>
             <?php elseif (is_numeric($image)) : ?>
@@ -37,46 +43,49 @@ $image_alt = get_the_title();
                     absint($image),
                     'large',
                     false,
-                    ['alt' => $image_alt]
+                    ['alt' => $image_alt, 'class' => 'block size-full rounded-[1.75rem] object-cover']
                 );
                 ?>
             <?php elseif (is_array($image) && !empty($image['url'])) : ?>
                 <?php $image_alt = !empty($image['alt']) ? $image['alt'] : $image_alt; ?>
-                <img src="<?php echo esc_url($image['url']); ?>" alt="<?php echo esc_attr($image_alt); ?>">
+                <img class="block size-full rounded-[1.75rem] object-cover" src="<?php echo esc_url($image['url']); ?>" alt="<?php echo esc_attr($image_alt); ?>">
             <?php elseif (is_string($image)) : ?>
-                <img src="<?php echo esc_url($image); ?>" alt="<?php echo esc_attr($image_alt); ?>">
+                <img class="block size-full rounded-[1.75rem] object-cover" src="<?php echo esc_url($image); ?>" alt="<?php echo esc_attr($image_alt); ?>">
             <?php endif; ?>
         </figure>
     <?php elseif (has_post_thumbnail()) : ?>
-        <figure class="grid col-span-1 sm:col-span-1 md:col-span-1 lg:col-span-1 overflow-hidden display: block max-width: 100% height: 100% min-height: 15rem object-fit: cover; ">
-            <?php the_post_thumbnail('large', ['alt' => $image_alt]); ?>
+        <figure class="<?php echo esc_attr($figure_order); ?> order-1 min-h-48 overflow-hidden p-2 md:min-h-0">
+            <?php the_post_thumbnail('large', ['alt' => $image_alt, 'class' => 'block size-full rounded-[1.75rem] object-cover']); ?>
         </figure>
     <?php endif; ?>
 
-    <div class="flex flex-col gap-2 p-4 justify-content space-between text-orange font-weight:900 font-bold">
-        <?php if ($date || $time_start || $time_end) : ?>
-            <p class="mg-0.5 text-sm text-align-left font-weight:900 text-orange font-bold;">
-                <?php if ($date) : ?>
-                    <?php echo esc_html($date); ?>
-                <?php endif; ?>
-                <?php if ($time_start) : ?>
-                    <?php echo $date ? ' · ' : ''; ?>
-                    <?php echo esc_html($time_start); ?>
-                    <?php if ($time_end) : ?>
-                        – <?php echo esc_html($time_end); ?>
+    <div class="<?php echo esc_attr($content_order); ?> order-2 flex flex-col items-start justify-center gap-3 p-6 text-left md:p-8 <?php echo $reverse ? 'md:items-end md:text-right' : ''; ?>">
+        <div class="flex flex-wrap items-baseline gap-x-2 gap-y-1">
+            <h2 class="font-title text-base font-black uppercase leading-tight text-white"><?php echo esc_html($title); ?></h2>
+            <?php if ($date || $time_start || $time_end) : ?>
+                <p class="text-xs font-bold text-orange">
+                    <?php if ($date) : ?>
+                        <?php echo esc_html($date); ?>
                     <?php endif; ?>
-                <?php endif; ?>
-            </p> 
+                    <?php if ($time_start) : ?>
+                        <?php echo $date ? ' · ' : ''; ?>
+                        <?php echo esc_html($time_start); ?>
+                        <?php if ($time_end) : ?>
+                            - <?php echo esc_html($time_end); ?>
+                        <?php endif; ?>
+                    <?php endif; ?>
+                </p>
+            <?php endif; ?>
+        </div>
+
+      <!-- partie description -->
+        <?php if ($description) : ?>
+            <div class="text-xs leading-relaxed text-white/75"><?php echo wp_kses_post($description); ?></div>
         <?php endif; ?>
 
-        <h2 class="text-sm text-white text-align-left"><?php echo esc_html($title); ?></h2>
-
-        <?php if ($description) : ?>
-            <div class="text-sm text-white text-align-left"><?php echo wp_kses_post($description); ?></div>
-        <?php endif; ?> <a class="text-sm text-white bg-orange hover:text-black hover:bg-violet transition-colors duration-300 rounded-[30px] py-2 px-4 transition-colors duration-300 font-weight:800 w-[200px] text-center h-[40px] hover:scale-102 ease-in-out" href="<?php echo esc_url(get_permalink()); ?>">
-            Voir plus 
+        <!-- bouton voir plus -->
+        <a class="inline-flex min-h-8 items-center justify-center rounded-full bg-orange px-5 py-2 text-xs font-extrabold text-white transition-colors duration-300 hover:bg-yellow hover:text-black focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange" href="<?php echo esc_url(get_permalink()); ?>">
+            Voir plus
         </a>
-</div>
-       
-    
+    </div>
 </article>
