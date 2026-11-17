@@ -59,11 +59,11 @@
     </div>
 
     <!-- copyright -->
-    <div class="mt-10 pt-6 border-t-2 border-neutral-400 flex flex-col sm:flex-row sm:justify-between gap-2">
-      <p class="text-sm text-black opacity-60">
+    <div class="mt-10 pt-6 border-t-2 border-black opacity-40 flex flex-col sm:flex-row sm:justify-between gap-2">
+      <p class="text-sm text-black ">
         <?php bloginfo( 'name' ); ?>, tous droits réservés &copy; <?php echo esc_html( date( 'Y' ) ); ?>
       </p>
-      <a href="https://projet4.timmatane.ca/2026/efc/eq1/confidentialite/" class="text-sm text-black opacity-60">
+      <a href="https://projet4.timmatane.ca/2026/efc/eq1/confidentialite/" class="text-sm text-black ">
         politique de confidentialité
       </a>
     </div>
