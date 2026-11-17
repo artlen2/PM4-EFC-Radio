@@ -90,4 +90,4 @@
         </svg>
 
 
-        <main class="container mx-auto px-4 py-12">
+        <main class="<?php echo is_page_template('page-annonceurs.php') ? '' : 'container mx-auto px-4 py-12'; ?>">

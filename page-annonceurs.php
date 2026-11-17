@@ -19,7 +19,7 @@ while (have_posts()) : the_post();
     $typo_url    = kit_media_url(get_field('typographie'));
 ?>
 
-<main class=" bg-orange">
+<div class="bg-orange">
 
   <section class="max-w-5xl mx-auto px-4 py-10  ">
 
@@ -53,7 +53,7 @@ while (have_posts()) : the_post();
 
     </div>
    </section>
-</main>
+</div>
 
 <?php endwhile; ?>
 
