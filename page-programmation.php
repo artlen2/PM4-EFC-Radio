@@ -3,7 +3,7 @@
 get_header(); ?>
 
 <main class="max-w-6xl mx-auto px-4 py-12">
-    <h1 class="text-lg text-align block text-white"><?php the_title(); ?></h1>
+    <h1 class="font-archivo font-bold text-4xl text-align block text-orange"><?php the_title(); ?></h1>
 
     <?php
     $programmes = new WP_Query([
