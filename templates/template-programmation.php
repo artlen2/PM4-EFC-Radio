@@ -1,44 +1,82 @@
 <?php
-$date = get_field('date');
-$time_start = get_field('time_start');
-$time_end = get_field('time_end'); 
-$title = get_field('title');
-$description = get_field('description');
-$image = get_field('image');  // je récupère tout les champs SCF pour l'utiliser dans le code
- 
-?>
- 
-<div> 
-    <?php echo $wrapper; ?>> 
+$get_programme_field = static function ($name) {
+    return function_exists('get_field') ? get_field($name) : null;
+};
 
-    <?php if ($image) : ?>  <!--  appelle l'image pour l'afficher, et choisi la taille  -->
-        <div class="card__image"> 
-            <?php echo wp_get_attachment_image($image['ID'], 'medium_large'); ?> 
-        </div>
+$date = $get_programme_field('date') ?: $get_programme_field('jour');
+$time_start = $get_programme_field('time_start') ?: $get_programme_field('heure_debut');
+$time_end = $get_programme_field('time_end') ?: $get_programme_field('heure_fin');
+$title = $get_programme_field('title') ?: get_the_title();
+$description = $get_programme_field('description') ?: get_the_excerpt();
+$image = $get_programme_field('image'); // débuggage : les cartes apparaissaient que si elles avaient une date donc on a appeler tout les programmes
+$has_image = $image || has_post_thumbnail();
+
+if (is_array($date)) {
+    $date = implode(', ', array_map('ucfirst', $date));
+}
+
+$image_alt = get_the_title();
+?> 
+
+<article class="programme-card<?php echo $has_image ? '' : ' programme-card--no-image'; ?>">
+    <?php if ($image) : ?>
+        <figure class="programme-card__image">
+            <?php if (is_array($image) && !empty($image['ID'])) : ?>
+                <?php
+                $image_alt = !empty($image['alt']) ? $image['alt'] : $image_alt;
+                echo wp_get_attachment_image(
+                    absint($image['ID']),
+                    'large',
+                    false,
+                    ['alt' => $image_alt]
+                );
+                ?>
+            <?php elseif (is_numeric($image)) : ?>
+                <?php
+                echo wp_get_attachment_image(
+                    absint($image),
+                    'large',
+                    false,
+                    ['alt' => $image_alt]
+                );
+                ?>
+            <?php elseif (is_array($image) && !empty($image['url'])) : ?>
+                <?php $image_alt = !empty($image['alt']) ? $image['alt'] : $image_alt; ?>
+                <img src="<?php echo esc_url($image['url']); ?>" alt="<?php echo esc_attr($image_alt); ?>">
+            <?php elseif (is_string($image)) : ?>
+                <img src="<?php echo esc_url($image); ?>" alt="<?php echo esc_attr($image_alt); ?>">
+            <?php endif; ?>
+        </figure>
+    <?php elseif (has_post_thumbnail()) : ?>
+        <figure class="programme-card__image">
+            <?php the_post_thumbnail('large', ['alt' => $image_alt]); ?>
+        </figure>
     <?php endif; ?>
 
-<div class="card__body bg-black block max-w-sm p-6 border border-default rounded-base shadow-xs">  <!--    appelle le corps de la carte avec l'horaire défini dans le SCF -->
-    <p class="card__horaire">
-      <?php echo esc_html($date); ?>
-      <?php if ($time_start) : ?>
-        · <?php echo esc_html($time_start); ?>
-        <?php if ($time_end) : ?> – <?php echo esc_html($time_end); ?><?php endif; ?>
-      <?php endif; ?>
-    </p>
+    <div class="programme-card__content">
+        <?php if ($date || $time_start || $time_end) : ?>
+            <p class="programme-card__schedule">
+                <?php if ($date) : ?>
+                    <?php echo esc_html($date); ?>
+                <?php endif; ?>
+                <?php if ($time_start) : ?>
+                    <?php echo $date ? ' · ' : ''; ?>
+                    <?php echo esc_html($time_start); ?>
+                    <?php if ($time_end) : ?>
+                        – <?php echo esc_html($time_end); ?>
+                    <?php endif; ?>
+                <?php endif; ?>
+            </p>
+        <?php endif; ?>
 
-    <?php if ($title) : ?> <!--  appelle le titre -->
-      <h3 class="card__titre mb-3 text-2xl font-semibold tracking-tight text-heading leading-8 color-white"><?php echo esc_html($title); ?></h3>
-    <?php endif; ?>
+        <h2 class="programme-card__title"><?php echo esc_html($title); ?></h2>
 
-    <?php if ($description) : ?> <!--  appelle la description -->
-      <div class="card__description text-body mb-6 color-white"><?php echo wp_kses_post($description); ?>
-    </div> <!-- supprime les scripts dans la description -->
-    <?php endif; ?>
+        <?php if ($description) : ?>
+            <div class="programme-card__description"><?php echo wp_kses_post($description); ?></div>
+        <?php endif; ?>
 
-    <div>
-    <svg class="w-4 h-4 ms-1.5 rlt:rotate-1800 -me-0.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-        <path stroke="color-orange" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 8l4 4 4-4"/> </svg>  </div>
-    
-  </div>
-</div>
-
+        <a class="programme-card__link" href="<?php echo esc_url(get_permalink()); ?>">
+            Voir plus <span aria-hidden="true">→</span>
+        </a>
+    </div>
+</article>
