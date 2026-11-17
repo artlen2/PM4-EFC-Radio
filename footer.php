@@ -29,7 +29,7 @@
 
       <!-- menu footer -->
       <nav class="text-black">
-        <h3 class="mb-4 text-orange text-[1.5rem] font-bold">Navigation</h3>
+        <h3 class="mb-4 text-orange text-[1.5rem] font-bold archivo">Navigation</h3>
         <ul class="flex flex-col gap-4 font-bold">
           <li><a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="hover:text-orange ease-in-out duration-200 text-[1.25rem]">Accueil</a></li>
           <li><a href="<?php echo esc_url( home_url( '/programmation/' ) ); ?>" class="hover:text-orange ease-in-out duration-200 text-[1.25rem]">Programmation</a></li>
@@ -41,7 +41,7 @@
 
       <!-- contact -->
       <div class="flex flex-col gap-4 text-black">
-        <h3 class="mb-0 text-orange text-[1.5rem] font-bold">Contact</h3>
+        <h3 class="mb-0 text-orange text-[1.5rem] font-bold archivo">Contact</h3>
         <p class="text-lg">Matane (Québec)</p>
         <p class="text-lg">418 000-0000</p>
         <p class="text-lg break-words">courriel@radiolamatanie.ca</p>
@@ -49,7 +49,7 @@
 
       <!-- en ondes -->
       <div class="flex flex-col gap-4 text-black">
-        <h3 class="mb-0 text-orange text-[1.5rem] font-bold">En ondes</h3>
+        <h3 class="mb-0 text-orange text-[1.5rem] font-bold archivo">En ondes</h3>
         <p class="text-lg">Écoutez-nous en direct, partout dans La Matanie!</p>
 <!-- btn faire un don -->
         <a href="<?php echo esc_url( home_url( '/' ) ); ?>"
