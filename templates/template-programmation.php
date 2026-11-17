@@ -73,7 +73,7 @@ $image_alt = get_the_title();
 
         <?php if ($description) : ?>
             <div class="text-sm text-white text-align-left"><?php echo wp_kses_post($description); ?></div>
-        <?php endif; ?> <a class="text-sm text-white bg-orange hover:text-black hover:bg-violet transition-colors duration-300 rounded-[30px] py-2 px-4 transition-colors duration-300 font-weight:800 w-[200px] text-center h-[40px] hover:scale-105 ease-in-out" href="<?php echo esc_url(get_permalink()); ?>">
+        <?php endif; ?> <a class="text-sm text-white bg-orange hover:text-black hover:bg-violet transition-colors duration-300 rounded-[30px] py-2 px-4 transition-colors duration-300 font-weight:800 w-[200px] text-center h-[40px] hover:scale-102 ease-in-out" href="<?php echo esc_url(get_permalink()); ?>">
             Voir plus 
         </a>
 </div>
