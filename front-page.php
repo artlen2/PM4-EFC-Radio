@@ -6,6 +6,9 @@ $meteo_text         = get_field('meteo-text');
 $meteo_announcement = get_field('meteo-announcement');
 $meteo_date         = get_field('meteo-date');
 
+// météo en direct (includes/meteo.php)
+$meteo = function_exists('efc_get_meteo') ? efc_get_meteo() : null;
+
 if ($meteo_title || $meteo_text || $meteo_announcement) : ?>
     <section>
         <div>
@@ -31,6 +34,75 @@ if ($meteo_title || $meteo_text || $meteo_announcement) : ?>
                     <p><?php echo nl2br(esc_html($meteo_announcement)); ?></p>
                 <?php endif; ?>
             </div>
+
+            <!-- météo en direct -->
+            <?php if ($meteo) : ?>
+                <div>
+
+                    <!-- maintenant -->
+                    <div>
+                        <h3>Matane, QC</h3>
+                        <!-- doc human_time_diff : https://developer.wordpress.org/reference/functions/human_time_diff/ -->
+                        <p>Mis à jour il y a <?php echo esc_html(human_time_diff($meteo['mis_a_jour'])); ?></p>
+                        <img src="<?php echo esc_url(efc_meteo_icone($meteo['code'], $meteo['jour'])); ?>" alt="<?php echo esc_attr(efc_meteo_description($meteo['code'])); ?>">
+                        <p><?php echo esc_html($meteo['temp']); ?>°</p>
+                        <p>Ressenti <?php echo esc_html($meteo['ressenti']); ?>° · Max <?php echo esc_html($meteo['max']); ?>° · Min <?php echo esc_html($meteo['min']); ?>°</p>
+                    </div>
+
+                    <!-- prochaines heures -->
+                    <div>
+                        <h4>Prochaines heures</h4>
+                        <ul>
+                            <?php foreach ($meteo['prochaines'] as $i => $heure) : ?>
+                                <li>
+                                    <p><?php echo $i === 0 ? 'Maintenant' : esc_html(wp_date('G \h', $heure['heure'], new DateTimeZone(EFC_METEO_FUSEAU))); ?></p>
+                                    <img src="<?php echo esc_url(efc_meteo_icone($heure['code'], $heure['jour'])); ?>" alt="<?php echo esc_attr(efc_meteo_description($heure['code'])); ?>">
+                                    <p><?php echo esc_html($heure['temp']); ?>°</p>
+                                    <p><?php echo esc_html($heure['pluie']); ?> %</p>
+                                </li>
+                            <?php endforeach; ?>
+                        </ul>
+                    </div>
+
+                    <!-- vent -->
+                    <div>
+                        <h4>Vent</h4>
+                        <p><?php echo esc_html($meteo['vent']); ?> km/h</p>
+                        <p>Rafales <?php echo esc_html($meteo['rafales']); ?> km/h · <?php echo esc_html($meteo['direction']); ?></p>
+                    </div>
+
+                    <!-- humidité -->
+                    <div>
+                        <h4>Humidité</h4>
+                        <p><?php echo esc_html($meteo['humidite']); ?> %</p>
+                        <progress max="100" value="<?php echo esc_attr($meteo['humidite']); ?>"></progress>
+                        <p>Point de rosée <?php echo esc_html($meteo['rosee']); ?>°</p>
+                    </div>
+
+                    <!-- marée -->
+                    <?php if ($meteo['maree']) : ?>
+                        <div>
+                            <h4>Marée</h4>
+                            <p><?php echo $meteo['maree']['montante'] ? 'Montante' : 'Descendante'; ?></p>
+                            <p>
+                                <?php echo $meteo['maree']['montante'] ? 'Pleine mer' : 'Basse mer'; ?>
+                                à <?php echo esc_html(efc_meteo_heure($meteo['maree']['heure'])); ?>
+                            </p>
+                        </div>
+                    <?php endif; ?>
+
+                    <!-- soleil -->
+                    <div>
+                        <h4>Soleil</h4>
+                        <p>Lever <?php echo esc_html(efc_meteo_heure($meteo['lever'])); ?></p>
+                        <p>Coucher <?php echo esc_html(efc_meteo_heure($meteo['coucher'])); ?></p>
+                    </div>
+
+                    <!-- lien vers un site météo -->
+                    <a href="https://meteo.gc.ca/fr/location/index.html?coords=48.849,-67.533" target="_blank" rel="noopener noreferrer">Voir plus</a>
+
+                </div>
+            <?php endif; ?>
 
         </div>
 

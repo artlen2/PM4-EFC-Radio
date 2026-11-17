@@ -1,6 +1,7 @@
 <?php
 
 require_once "includes/post-types.php";
+require_once "includes/meteo.php";
 
 function efc_enqueue_scripts()
 {
