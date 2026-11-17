@@ -44,11 +44,42 @@
 
 
 
-        <!-- vidéo en arrière-plan -->
+        <!-- hero -->
         <section class="relative h-svh overflow-hidden">
-            <video class="absolute inset-0 size-full object-cover" autoplay muted loop playsinline>
-                <source src="<?php echo esc_url(get_template_directory_uri() . '/assets/objets/hero.mp4'); ?>" type="video/mp4">
-            </video>
+            <!-- bg -->
+            <img class="absolute inset-0 size-full object-cover" src="<?php echo esc_url(get_template_directory_uri() . '/assets/objets/background.png'); ?>" alt="">
+
+            <?php if (is_front_page()) : ?>
+                <!-- titre et boule -->
+                <div class="absolute left-1/2 top-[5%] z-10 aspect-[1440/900] w-[min(77vw,130svh)] -translate-x-1/2">
+                    <img class="size-full" src="<?php echo esc_url(get_template_directory_uri() . '/assets/objets/title.png'); ?>" alt="<?php echo esc_attr(get_bloginfo('name')); ?>">
+                    <img class="absolute left-[80%] bottom-[23%] w-[17%] max-w-none" src="<?php echo esc_url(get_template_directory_uri() . '/assets/objets/disco ball.png'); ?>" alt="">
+                </div>
+
+                <!-- description page d'accueil du site -->
+                <div class="absolute inset-x-0 bottom-[18%] z-10 px-4 md:pl-[20%] md:pr-8">
+                    <div class="inter text-2xl md:text-3xl -rotate-2 font-extrabold text-violet max-w-2xl">
+                        <?php echo apply_filters('the_content', get_post_field('post_content', get_queried_object_id())); ?>
+                    </div>
+                </div>
+            <?php else : ?>
+                <!-- titre des autres pages -->
+                <div class="absolute inset-x-0 bottom-[22%] z-10 px-4 md:pl-[20%] md:pr-8">
+                    <h1 class="inter text-6xl -rotate-3 font-extrabold text-violet max-w-3xl">
+                        <?php
+                        if (is_singular()) {
+                            echo esc_html(get_the_title());
+                        } elseif (is_search()) {
+                            echo 'Recherche : ' . esc_html(get_search_query());
+                        } elseif (is_404()) {
+                            echo 'Page introuvable';
+                        } else {
+                            echo esc_html(wp_strip_all_tags(get_the_archive_title()));
+                        }
+                        ?>
+                    </h1>
+                </div>
+            <?php endif; ?>
         </section>
         <!-- jaune du bas de la vidéo -->
         <svg class="-mt-px block h-16 w-full rotate-180 text-[#fdbe00] md:h-24" viewBox="0 0 1440 100"
