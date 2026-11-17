@@ -17,9 +17,10 @@ Version: 1.0
 
 /* Fonts titres */
 @font-face {
-  font-family: "Moderniz";
-  src: url("./assets/fonts/Moderniz.otf") format("opentype");
-  font-weight: 500;
+  font-family: "Archivo";
+  src: url("./assets/fonts/Archivo-VariableFont_wdth\,wght.ttf") format("truetype");
+  font-weight: 100 900;
+  font-stretch: 62% 125%;
   font-style: normal;
 }
 /* Inter */
@@ -34,13 +35,13 @@ Version: 1.0
   font-family: "Inter", sans-serif;
 }
 
-.moderniz {
-  font-family: "Moderniz", serif;
+.archivo {
+  font-family: "Archivo", sans-serif;
 }
 
 
 @theme {
-  --font-title: "Moderniz", serif;
+  --font-title: "Archivo", sans-serif;
   --font-sans: "Inter", sans-serif;
 
   --color-orange: #FF8600;

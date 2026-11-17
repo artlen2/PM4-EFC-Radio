@@ -15,21 +15,22 @@ if ($meteo_title || $meteo_text || $meteo_announcement) : ?>
 
             <!-- titre et texte -->
             <div>
+                <div>
                 <?php if ($meteo_title) : ?>
                     <h2><?php echo esc_html($meteo_title); ?></h2>
                 <?php endif; ?>
-
-                <?php if ($meteo_date) : ?>
-                    <p><?php echo esc_html($meteo_date); ?></p>
-                <?php endif; ?>
-
+                <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/objets/Personnage2.png'); ?>" alt="img-météo">
+                </div>
                 <?php if ($meteo_text) : ?>
                     <p><?php echo nl2br(esc_html($meteo_text)); ?></p>
                 <?php endif; ?>
             </div>
 
             <!-- annonce -->
-            <div>
+            <div>                
+                <?php if ($meteo_date) : ?>
+                    <p><?php echo esc_html($meteo_date); ?></p>
+                <?php endif; ?>
                 <?php if ($meteo_announcement) : ?>
                     <p><?php echo nl2br(esc_html($meteo_announcement)); ?></p>
                 <?php endif; ?>
