@@ -2,8 +2,8 @@
 /* Template Name: Programmation */
 get_header(); ?>
 
-<main class="programmation">
-    <h1 class="programmation__title"><?php the_title(); ?></h1>
+<main class="max-w-6xl mx-auto px-4 py-12">
+    <h1 class="color_white text-lg text-align block"><?php the_title(); ?></h1>
 
     <?php
     $programmes = new WP_Query([
