@@ -27,6 +27,45 @@ function efc_enqueue_scripts()
 }
 add_action("wp_enqueue_scripts", "efc_enqueue_scripts");
 
+
+// formulaire pour déposer son projet
+
+function efc_redirect_project_submission($status)
+{
+    $redirect_url = wp_get_referer() ?: home_url('/');
+    wp_safe_redirect(add_query_arg('projet', $status, $redirect_url));
+    exit;
+}
+
+function efc_handle_project_submission()
+{
+    $nonce = isset($_POST['efc_project_nonce']) ? sanitize_text_field(wp_unslash($_POST['efc_project_nonce'])) : '';
+    if (!$nonce || !wp_verify_nonce($nonce, 'efc_submit_project')) {
+        efc_redirect_project_submission('securite');
+    }
+
+    $name = isset($_POST['project_name']) ? sanitize_text_field(wp_unslash($_POST['project_name'])) : '';
+    $email = isset($_POST['project_email']) ? sanitize_email(wp_unslash($_POST['project_email'])) : '';
+    $title = isset($_POST['project_title']) ? sanitize_text_field(wp_unslash($_POST['project_title'])) : '';
+    $message = isset($_POST['project_message']) ? sanitize_textarea_field(wp_unslash($_POST['project_message'])) : '';
+
+    if (!$name || !is_email($email) || !$title || !$message) {
+        efc_redirect_project_submission('invalide');
+    }
+
+    $body = "Nom : {$name}\nCourriel : {$email}\n\nProjet : {$title}\n\n{$message}";
+    $sent = wp_mail(
+        'courriel@radiolamatanie.ca',
+        'Nouvelle proposition de projet : ' . $title,
+        $body,
+        ['Reply-To: ' . $email]
+    );
+
+    efc_redirect_project_submission($sent ? 'envoye' : 'erreur');
+}
+add_action('admin_post_efc_submit_project', 'efc_handle_project_submission');
+add_action('admin_post_nopriv_efc_submit_project', 'efc_handle_project_submission');
+
 // Expose les champs SCF dans la REST API
 add_filter('acf/rest/format_value_for_rest', '__return_true');
 
@@ -107,5 +146,3 @@ function mytheme_remove_emojis()
     remove_filter('wp_mail', 'wp_staticize_emoji_for_email');
 }
 add_action('init', 'mytheme_remove_emojis');
-
-

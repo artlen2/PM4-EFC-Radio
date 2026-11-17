@@ -57,8 +57,8 @@
 
 
                 <!-- description page d'accueil du site -->
-                <div class="absolute inset-x-0 bottom-[18%] z-10 px-4 md:pl-[20%] md:pr-8">
-                    <div class="inter text-2xl md:text-3xl -rotate-2 font-extrabold text-violet max-w-2xl">
+                <div class="absolute inset-x-0 bottom-[11%] z-10 px-4 md:pl-[21.5%] md:pr-8">
+                    <div class="inter text-xl md:text-xl font-extrabold text-violet max-w-2xl">
                         <?php echo apply_filters('the_content', get_post_field('post_content', get_queried_object_id())); ?>
                     </div>
                 </div>

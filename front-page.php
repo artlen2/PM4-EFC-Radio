@@ -14,15 +14,15 @@ if ($meteo_title || $meteo_text || $meteo_announcement) : ?>
         <div>
 
             <!-- titre et texte -->
-            <div>
+            <div class="mt-20 mb-50 -rotate-3 scale-110">
                 <div>
-                <?php if ($meteo_title) : ?>
-                    <h2><?php echo esc_html($meteo_title); ?></h2>
-                <?php endif; ?>
-                <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/objets/Personnage2.png'); ?>" alt="img-météo">
+                    <?php if ($meteo_title) : ?>
+                        <h2 class="text-orange text-6xl w-110 text-right leading-14"><?php echo esc_html($meteo_title); ?></h2>
+                    <?php endif; ?>
+                    <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/objets/Personnage2.png'); ?>" alt="img-météo" class="w-50 -mt-35 -translate-x-10 rotate-2">
                 </div>
                 <?php if ($meteo_text) : ?>
-                    <p><?php echo nl2br(esc_html($meteo_text)); ?></p>
+                    <p class="text-3xl font-light ml-10"><?php echo nl2br(esc_html($meteo_text)); ?></p>
                 <?php endif; ?>
             </div>
 
