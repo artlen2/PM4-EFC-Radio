@@ -16,17 +16,7 @@ get_header(); ?>
     ]); // Query pour appeler tout les programmes et les faires apparaitres dans l'ordre et la date et du menu (lun-ven)
     ?>
 
-    <?php
-if (current_user_can('manage_options')) {
-    echo '<pre style="background:#fff;padding:1rem;">';
-    echo 'Trouvés : ' . $programmes->found_posts . "\n";
-    echo 'Requête : ' . esc_html($programmes->request) . "\n";
-    echo 'Types enregistrés : ' . implode(', ', get_post_types(['public' => true])) . "\n";
-    echo 'Template part : ' . (locate_template('templates/template-programmation.php') ?: 'INTROUVABLE');
-    echo '</pre>';
-}
-?>
-
+ 
     <?php if ($programmes->have_posts()) : ?>
         <div class="programmation__cards">
             <?php
