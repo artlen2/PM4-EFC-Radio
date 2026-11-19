@@ -16,6 +16,17 @@ function efc_enqueue_scripts()
         true // charger en footer
     );
 
+    if (is_page_template('templates/template-programmation.php')) {
+        $programme_filter_script = get_template_directory() . '/assets/scripts/programme-filter.js';
+        wp_enqueue_script(
+            'efc-programme-filter',
+            get_template_directory_uri() . '/assets/scripts/programme-filter.js',
+            [],
+            filemtime($programme_filter_script),
+            true
+        );
+    }
+
     // Vue.js 
     if (is_page_template("templates/template-evenements-vue.php")) {
         wp_enqueue_script("vue-lib", "https://unpkg.com/vue@3/dist/vue.global.js");

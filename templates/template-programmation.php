@@ -11,24 +11,105 @@ get_header();
             <?php
             $programmes = new WP_Query([
                 'post_type' => 'programme',
+                'post_status' => 'publish',
                 'posts_per_page' => -1,
                 'orderby' => [
                     'menu_order' => 'ASC',
                     'date' => 'ASC',
                 ],
-            ]); // Query pour appeler tout les programmes et les faires apparaitres dans l'ordre et la date et du menu (lun-ven)
+            ]);
             ?>
 
-
             <?php if ($programmes->have_posts()) : ?>
+                <?php
+                $weekdays = [
+                    'lundi' => 'Lundi',
+                    'mardi' => 'Mardi',
+                    'mercredi' => 'Mercredi',
+                    'jeudi' => 'Jeudi',
+                    'vendredi' => 'Vendredi',
+                    'samedi' => 'Samedi',
+                    'dimanche' => 'Dimanche',
+                ];
+                $weekday_aliases = [
+                    'lundi' => 'lundi',
+                    'lun' => 'lundi',
+                    'monday' => 'lundi',
+                    'mon' => 'lundi',
+                    'mardi' => 'mardi',
+                    'mar' => 'mardi',
+                    'tuesday' => 'mardi',
+                    'tue' => 'mardi',
+                    'mercredi' => 'mercredi',
+                    'mer' => 'mercredi',
+                    'wednesday' => 'mercredi',
+                    'wed' => 'mercredi',
+                    'jeudi' => 'jeudi',
+                    'jeu' => 'jeudi',
+                    'thursday' => 'jeudi',
+                    'thu' => 'jeudi',
+                    'vendredi' => 'vendredi',
+                    'ven' => 'vendredi',
+                    'friday' => 'vendredi',
+                    'fri' => 'vendredi',
+                    'samedi' => 'samedi',
+                    'sam' => 'samedi',
+                    'saturday' => 'samedi',
+                    'sat' => 'samedi',
+                    'dimanche' => 'dimanche',
+                    'dim' => 'dimanche',
+                    'sunday' => 'dimanche',
+                    'sun' => 'dimanche',
+                ];
+                ?>
+                <nav class="mb-10 overflow-x-auto" aria-label="Filtrer les programmations par jour">
+                    <div class="flex min-w-max gap-2 sm:gap-4" role="group">
+                        <?php foreach ($weekdays as $day_slug => $day_label) : ?>
+                            <button
+                                class="rounded-full border-2 border-orange px-3 py-1 text-[0.7rem] font-extrabold uppercase text-black transition-colors hover:bg-orange hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange aria-pressed:bg-orange aria-pressed:text-white sm:px-4"
+                                type="button"
+                                data-programme-day="<?php echo esc_attr($day_slug); ?>"
+                                aria-pressed="<?php echo $day_slug === 'lundi' ? 'true' : 'false'; ?>"
+                            ><?php echo esc_html($day_label); ?></button>
+                        <?php endforeach; ?>
+                    </div>
+                </nav>
+
                 <div class="grid gap-12 md:gap-16">
                     <?php
                     $program_index = 0;
                     while ($programmes->have_posts()) :
                         $programmes->the_post();
                         $reverse = $program_index % 2 === 0;
+                        $programme_days = function_exists('get_field') ? (get_field('date') ?: get_field('jour')) : [];
+                        $programme_days = is_array($programme_days) ? $programme_days : [$programme_days];
+                        $programme_day_slugs = [];
+
+                        foreach ($programme_days as $programme_day) {
+                            if (is_array($programme_day)) {
+                                $programme_day = array_filter(
+                                    [$programme_day['value'] ?? null, $programme_day['label'] ?? null],
+                                    'is_scalar'
+                                );
+                            } elseif (is_scalar($programme_day)) {
+                                $programme_day = [$programme_day];
+                            } else {
+                                $programme_day = [];
+                            }
+
+                            foreach ($programme_day as $day_value) {
+                                $normalized_days = preg_split('/[^a-z0-9]+/', sanitize_title((string) $day_value), -1, PREG_SPLIT_NO_EMPTY);
+                                foreach ($normalized_days as $normalized_day) {
+                                    if (isset($weekday_aliases[$normalized_day])) {
+                                        $programme_day_slugs[] = $weekday_aliases[$normalized_day];
+                                    }
+                                }
+                            }
+                        }
+
+                        $programme_day_slugs = array_values(array_unique($programme_day_slugs));
                     ?>
-                        <div class="relative mx-auto w-full md:w-[91%] <?php echo $reverse ? 'md:mr-auto' : 'md:ml-auto'; ?>">
+                        <div class="programme-card relative mx-auto w-full md:w-[91%] <?php echo $reverse ? 'md:mr-auto' : 'md:ml-auto'; ?>" data-programme-days="<?php echo esc_attr(implode(' ', $programme_day_slugs)); ?>">
                             <?php if ($program_index === 0) : ?>
                                 <img class="pointer-events-none absolute -right-12 -top-12 z-10 hidden w-28 rotate-6 lg:block" src="<?php echo esc_url(get_template_directory_uri() . '/assets/objets/radio.png'); ?>" alt="" aria-hidden="true">
                             <?php elseif ($program_index === 1) : ?>
@@ -41,6 +122,7 @@ get_header();
                     endwhile;
                     ?>
                 </div>
+                <p class="programme-empty-state mt-8 hidden text-center font-bold text-purple" role="status" aria-live="polite">Aucune programmation publiée pour ce jour.</p>
             <?php else : ?>
                 <p class="">Aucun programme ici à date.</p>
             <?php endif; ?>
@@ -81,12 +163,12 @@ get_header();
                     <?php wp_nonce_field('efc_submit_project', 'efc_project_nonce'); ?>
 
                     <label class="grid gap-1 text-xs font-bold text-purple">
-                        Ton nom
+                        Nom
                         <input class="min-h-10 rounded-full bg-[#f1f1f1] px-4 text-sm font-normal text-black outline-none focus-visible:ring-2 focus-visible:ring-violet" type="text" name="project_name" autocomplete="name" required>
                     </label>
 
                     <label class="grid gap-1 text-xs font-bold text-purple">
-                        Ton courriel
+                        Courriel
                         <input class="min-h-10 rounded-full bg-[#f1f1f1] px-4 text-sm font-normal text-black outline-none focus-visible:ring-2 focus-visible:ring-violet" type="email" name="project_email" autocomplete="email" required>
                     </label>
 
@@ -96,7 +178,7 @@ get_header();
                     </label>
 
                     <label class="grid gap-1 text-xs font-bold text-purple">
-                        Parle-nous en quelques mots
+                        Parle-nous en avec quelques mots
                         <textarea class="min-h-24 resize-y rounded-2xl bg-[#f1f1f1] px-4 py-3 text-sm font-normal text-black outline-none focus-visible:ring-2 focus-visible:ring-violet" name="project_message" required></textarea>
                     </label>
 
@@ -109,97 +191,5 @@ get_header();
             <path fill="currentColor" d="M0 0 H1440 V58 Q1380 100 1320 58 T1200 58 T1080 58 T960 58 T840 58 T720 58 T600 58 T480 58 T360 58 T240 58 T120 58 T0 58 Z" />
         </svg>
     </section>
-
-    <?php
-    $get_programme_field = static function ($name) {
-        return function_exists('get_field') ? get_field($name) : null;
-    };
-
-    $date = $get_programme_field('date') ?: $get_programme_field('jour');
-    $time_start = $get_programme_field('time_start') ?: $get_programme_field('heure_debut');
-    $time_end = $get_programme_field('time_end') ?: $get_programme_field('heure_fin');
-    $title = $get_programme_field('title') ?: get_the_title();
-    $description = $get_programme_field('description') ?: get_the_excerpt();
-    $image = $get_programme_field('image');
-    $reverse = !empty($args['reverse']);
-
-    if (is_array($date)) {
-        $date = implode(', ', array_map('ucfirst', $date));
-    }
-
-    $image_alt = get_the_title();
-    $figure_order = $reverse ? 'md:order-2' : 'md:order-1';
-    $content_order = $reverse ? 'md:order-1' : 'md:order-2';
-    $grid_columns = $reverse
-        ? 'md:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)]'
-        : 'md:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)]';
-    ?>
-    <!-- pour change l'ordre du display -->
-
-    <article class="grid grid-cols-1 overflow-hidden rounded-[2.5rem] bg-black text-white md:min-h-40 <?php echo esc_attr($grid_columns); ?>">
-        <?php if ($image) : ?>
-            <figure class="<?php echo esc_attr($figure_order); ?> order-1 min-h-48 overflow-hidden p-2 md:min-h-0">
-                <?php if (is_array($image) && !empty($image['ID'])) : ?>
-                    <?php
-                    $image_alt = !empty($image['alt']) ? $image['alt'] : $image_alt;
-                    echo wp_get_attachment_image(
-                        absint($image['ID']),
-                        'large',
-                        false,
-                        ['alt' => $image_alt, 'class' => 'block size-full rounded-[1.75rem] object-cover']
-                    );
-                    ?>
-                <?php elseif (is_numeric($image)) : ?>
-                    <?php
-                    echo wp_get_attachment_image(
-                        absint($image),
-                        'large',
-                        false,
-                        ['alt' => $image_alt, 'class' => 'block size-full rounded-[1.75rem] object-cover']
-                    );
-                    ?>
-                <?php elseif (is_array($image) && !empty($image['url'])) : ?>
-                    <?php $image_alt = !empty($image['alt']) ? $image['alt'] : $image_alt; ?>
-                    <img class="block size-full rounded-[1.75rem] object-cover" src="<?php echo esc_url($image['url']); ?>" alt="<?php echo esc_attr($image_alt); ?>">
-                <?php elseif (is_string($image)) : ?>
-                    <img class="block size-full rounded-[1.75rem] object-cover" src="<?php echo esc_url($image); ?>" alt="<?php echo esc_attr($image_alt); ?>">
-                <?php endif; ?>
-            </figure>
-        <?php elseif (has_post_thumbnail()) : ?>
-            <figure class="<?php echo esc_attr($figure_order); ?> order-1 min-h-48 overflow-hidden p-2 md:min-h-0">
-                <?php the_post_thumbnail('large', ['alt' => $image_alt, 'class' => 'block size-full rounded-[1.75rem] object-cover']); ?>
-            </figure>
-        <?php endif; ?>
-
-        <div class="<?php echo esc_attr($content_order); ?> order-2 flex flex-col items-start justify-center gap-3 p-6 text-left md:p-8 <?php echo $reverse ? 'md:items-end md:text-right' : ''; ?>">
-            <div class="flex flex-wrap items-baseline gap-x-2 gap-y-1">
-                <h2 class="font-title text-base font-black uppercase leading-tight text-white"><?php echo esc_html($title); ?></h2>
-                <?php if ($date || $time_start || $time_end) : ?>
-                    <p class="text-xs font-bold text-orange">
-                        <?php if ($date) : ?>
-                            <?php echo esc_html($date); ?>
-                        <?php endif; ?>
-                        <?php if ($time_start) : ?>
-                            <?php echo $date ? ' · ' : ''; ?>
-                            <?php echo esc_html($time_start); ?>
-                            <?php if ($time_end) : ?>
-                                - <?php echo esc_html($time_end); ?>
-                            <?php endif; ?>
-                        <?php endif; ?>
-                    </p>
-                <?php endif; ?>
-            </div>
-
-            <!-- partie description -->
-            <?php if ($description) : ?>
-                <div class="text-xs leading-relaxed text-white/75"><?php echo wp_kses_post($description); ?></div>
-            <?php endif; ?>
-
-            <!-- bouton voir plus -->
-            <a class="inline-flex min-h-8 items-center justify-center rounded-full bg-orange px-5 py-2 text-xs font-extrabold text-white transition-colors duration-300 hover:bg-yellow hover:text-black focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange" href="<?php echo esc_url(get_permalink()); ?>">
-                Voir plus
-            </a>
-        </div>
-    </article>
 
     <?php get_footer(); ?>

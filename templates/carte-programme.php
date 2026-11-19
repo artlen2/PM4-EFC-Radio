@@ -10,23 +10,25 @@ $title = $get_programme_field('title') ?: get_the_title();
 $description = $get_programme_field('description') ?: get_the_excerpt();
 $image = $get_programme_field('image');
 $reverse = !empty($args['reverse']);
+$has_image = $image || has_post_thumbnail();
 
 if (is_array($date)) {
     $date = implode(', ', array_map('ucfirst', $date));
 }
 
 $image_alt = get_the_title();
-$figure_order = $reverse ? 'md:order-2' : 'md:order-1';
-$content_order = $reverse ? 'md:order-1' : 'md:order-2';
-$grid_columns = $reverse
-    ? 'md:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)]'
-    : 'md:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)]';
+$figure_order = $reverse ? 'order-2' : 'order-1';
+$content_order = $reverse ? 'order-1' : 'order-2';
+$grid_columns = !$has_image
+    ? 'grid-cols-1'
+    : ($reverse
+        ? 'grid-cols-[minmax(0,1fr)_minmax(0,1fr)] md:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)]'
+        : 'grid-cols-[minmax(0,1fr)_minmax(0,1fr)] md:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)]');
 ?>
-<!-- pour change l'ordre du display -->
 
 <article class="grid grid-cols-1 overflow-hidden rounded-[2.5rem] bg-black text-white md:min-h-40 <?php echo esc_attr($grid_columns); ?>">
     <?php if ($image) : ?>
-        <figure class="<?php echo esc_attr($figure_order); ?> order-1 min-h-48 overflow-hidden p-2 md:min-h-0">
+        <figure class="<?php echo esc_attr($figure_order); ?> min-h-36 min-w-0 overflow-hidden p-2 md:min-h-0">
             <?php if (is_array($image) && !empty($image['ID'])) : ?>
                 <?php
                 $image_alt = !empty($image['alt']) ? $image['alt'] : $image_alt;
@@ -54,14 +56,14 @@ $grid_columns = $reverse
             <?php endif; ?>
         </figure>
     <?php elseif (has_post_thumbnail()) : ?>
-        <figure class="<?php echo esc_attr($figure_order); ?> order-1 min-h-48 overflow-hidden p-2 md:min-h-0">
+        <figure class="<?php echo esc_attr($figure_order); ?> min-h-36 min-w-0 overflow-hidden p-2 md:min-h-0">
             <?php the_post_thumbnail('large', ['alt' => $image_alt, 'class' => 'block size-full rounded-[1.75rem] object-cover']); ?>
         </figure>
     <?php endif; ?>
 
-    <div class="<?php echo esc_attr($content_order); ?> order-2 flex flex-col items-start justify-center gap-3 p-6 text-left md:p-8 <?php echo $reverse ? 'md:items-end md:text-right' : ''; ?>">
+    <div class="<?php echo esc_attr($content_order); ?> flex min-w-0 flex-col items-start justify-center gap-2 p-3 text-left sm:gap-3 sm:p-5 md:p-8 <?php echo $reverse ? 'items-end text-right' : ''; ?>">
         <div class="flex flex-wrap items-baseline gap-x-2 gap-y-1">
-            <h2 class="font-title text-base font-black uppercase leading-tight text-white"><?php echo esc_html($title); ?></h2>
+            <h2 class="font-title text-sm font-black uppercase leading-tight text-white md:text-base"><?php echo esc_html($title); ?></h2>
             <?php if ($date || $time_start || $time_end) : ?>
                 <p class="text-xs font-bold text-orange">
                     <?php if ($date) : ?>
@@ -80,11 +82,11 @@ $grid_columns = $reverse
 
       <!-- partie description -->
         <?php if ($description) : ?>
-            <div class="text-xs leading-relaxed text-white/75"><?php echo wp_kses_post($description); ?></div>
+            <div class="text-[0.65rem] leading-relaxed text-white/75 md:text-xs"><?php echo wp_kses_post($description); ?></div>
         <?php endif; ?>
 
         <!-- bouton voir plus -->
-        <a class="inline-flex min-h-8 items-center justify-center rounded-full bg-orange px-5 py-2 text-xs font-extrabold text-white transition-colors duration-300 hover:bg-yellow hover:text-black focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange" href="<?php echo esc_url(get_permalink()); ?>">
+        <a class="inline-flex min-h-8 items-center justify-center rounded-full bg-orange px-3 py-1 text-[0.65rem] font-extrabold text-white transition-colors duration-300 hover:bg-yellow hover:text-black focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange sm:px-5 sm:py-2 sm:text-xs" href="<?php echo esc_url(get_permalink()); ?>">
             Voir plus
         </a>
     </div>
