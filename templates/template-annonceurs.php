@@ -37,7 +37,7 @@ while (have_posts()) : the_post();
            
                 <!-- logos -->
                 <?php if ($logo_image_url || $logo_url) : ?>
-                 <section class="bg-orange rounded-[24px] border-t-2 border-x-2 border-b-8 border-black p-6 flex flex-col gap-4">
+                 <section class="bg-beige rounded-[24px] border-t-2 border-x-2 border-b-8 border-black p-6 flex flex-col gap-4">
                  <h2 class="text-2xl font-bold text-black">Logos</h2>
  
                  <?php if ($logo_image_url) : ?>
