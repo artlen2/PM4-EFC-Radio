@@ -11,8 +11,11 @@ document.addEventListener('DOMContentLoaded', function () {
     let visibleCards = 0;
 
     cards.forEach(function (card) {
-      const days = card.dataset.programmeDays.split(' ');
-      const isVisible = days.includes(day) || days.includes('all');
+      const days = (card.dataset.programmeDays || '')
+        .toLowerCase()
+        .split(/\s+/)
+        .filter(Boolean);
+      const isVisible = days.includes(day.toLowerCase()) || days.includes('all');
       card.hidden = !isVisible;
       card.style.display = isVisible ? '' : 'none';
       visibleCards += isVisible ? 1 : 0;
