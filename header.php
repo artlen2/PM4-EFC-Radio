@@ -48,21 +48,20 @@
         <section class="relative h-svh overflow-hidden">
             <!-- bg -->
             <img class="absolute inset-0 size-full object-cover" src="<?php echo esc_url(get_template_directory_uri() . '/assets/objets/background.png'); ?>" alt="">
-            <!-- titre et boule -->
-            <div class="absolute left-1/2 top-[10%] z-10 aspect-[1440/900] w-[min(77vw,130svh)] -translate-x-1/2 lg:scale-115">
-                <img class="size-full" src="<?php echo esc_url(get_template_directory_uri() . '/assets/objets/title.png'); ?>" alt="<?php echo esc_attr(get_bloginfo('name')); ?>">
-                <img class="disco-swing absolute left-[80%] bottom-[20%] w-[17%] max-w-none" src="<?php echo esc_url(get_template_directory_uri() . '/assets/objets/disco-ball.png'); ?>" alt="">
-            </div>
             <?php if (is_front_page()) : ?>
-
-
-                <!-- description page d'accueil du site -->
-                <div class="absolute inset-x-0 bottom-[10%] z-10 px-4 md:pl-[21.5%] md:pr-8">
-                    <div class="inter text-xl md:text-xl font-extrabold text-violet max-w-2xl">
-                        <?php echo apply_filters('the_content', get_post_field('post_content', get_queried_object_id())); ?>
-                    </div>
+                <!-- titre et boule -->
+                <div class="absolute left-1/2 top-[10%] z-10 aspect-[1440/900] w-[min(77vw,130svh)] -translate-x-1/2 lg:scale-115">
+                    <img class="size-full" src="<?php echo esc_url(get_template_directory_uri() . '/assets/objets/title.png'); ?>" alt="<?php echo esc_attr(get_bloginfo('name')); ?>">
+                    <img class="disco-swing absolute left-[80%] bottom-[20%] w-[17%] max-w-none" src="<?php echo esc_url(get_template_directory_uri() . '/assets/objets/disco-ball.png'); ?>" alt="">
                 </div>
+
+
             <?php else : ?>
+                <!-- titre et boule -->
+                <div class="absolute left-1/2 top-[10%] z-10 aspect-[1440/900] w-[min(77vw,130svh)] -translate-x-1/2 lg:scale-115">
+                    <img class="size-full" src="<?php echo esc_url(get_template_directory_uri() . '/assets/objets/title.png'); ?>" alt="<?php echo esc_attr(get_bloginfo('name')); ?>">
+                    <img class="disco-swing absolute left-[80%] bottom-[20%] w-[17%] max-w-none" src="<?php echo esc_url(get_template_directory_uri() . '/assets/objets/disco-ball.png'); ?>" alt="">
+                </div>
 
                 <!-- titre des autres pages -->
                 <div class="absolute inset-x-0 bottom-[22%] z-10 px-4 md:pl-[20%] md:pr-8">
@@ -92,6 +91,3 @@
             <path fill="currentColor"
                 d="M0 40 Q 60 0 120 40 T 240 40 T 360 40 T 480 40 T 600 40 T 720 40 T 840 40 T 960 40 T 1080 40 T 1200 40 T 1320 40 T 1440 40 V100 H0 Z" />
         </svg>
-
-
-  
