@@ -34,7 +34,7 @@ get_header();
                         <?php elseif ($program_index === 1) : ?>
                             <img class="pointer-events-none absolute -left-20 -top-10 z-10 hidden w-36 -rotate-12 lg:block" src="<?php echo esc_url(get_template_directory_uri() . '/assets/objets/megaphone2 3.png'); ?>" alt="" aria-hidden="true">
                         <?php endif; ?>
-                        <?php get_template_part('templates/template-programmation', null, ['reverse' => $reverse]); ?>
+                        <?php get_template_part('templates/carte-programme', null, ['reverse' => $reverse]); ?>
                     </div>
                 <?php
                     $program_index++;
