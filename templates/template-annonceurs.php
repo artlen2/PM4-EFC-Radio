@@ -21,6 +21,7 @@ while (have_posts()) : the_post();
     $logo_image_url    = get_field('logo_image');
     $logo_url    = kit_media_url(get_field('logo'));
     $typo_image_url = get_field('typo_image');
+    
     $typo_url    = kit_media_url(get_field('typographie'));
 ?>
 
@@ -46,9 +47,10 @@ while (have_posts()) : the_post();
                  <?php endif; ?>
 
                  <?php if ($logo_url ) : ?>
+                    <p class="text-black text-2xl ">Téléchargez les polices de caractères utilisée par la radio.</p>
                      <a href="<?php echo esc_url($logo_url); ?>" download
                        class="bg-white text-black font-bold no-underline text-center p-4 rounded-[30px] border-t-2 border-x-2 border-b-8 border-black hover:scale-105 ease-in-out duration-300">
-                       Télécharger le logo
+                       Télécharger les logos
                      </a>
                 <?php endif; ?>
                   </section>
@@ -59,15 +61,19 @@ while (have_posts()) : the_post();
 
                 <?php if ($typo_image_url || $typo_url)   : ?>
                     <section class="bg-beige  rounded-[24px] border-t-2 border-x-2 border-b-8 border-black p-6 flex flex-col gap-4">
+                        
+
+
+
                         <h2 class="text-2xl font-bold text-black">Typographie</h2>
 
-                    <?php if ($logo_image_url) : ?>
+                    <?php if ($typo_image_url) : ?>
                   
-                         <img class="w-full h-20 my-8 object-contain" src="<?php echo esc_url($typo_image_url); ?>" alt="Logo de la radio">
+                         <img class="w-full h-20 my-14 object-contain " src="<?php echo esc_url($typo_image_url); ?>" alt="Logo de la radio">
                     <?php endif; ?>
 
                     <?php if ($typo_url) :?>
-                        <p class="text-black ">Téléchargez les polices de caractères utilisée par la radio.</p>
+                        <p class="text-black text-2xl  ">Téléchargez les polices de caractères utilisée par la radio.</p>
                         <a href="<?php echo esc_url($typo_url); ?>" download
                             class="bg-white text-black font-bold no-underline text-center p-4 rounded-[30px] border-t-2 border-x-2 border-b-8 border-black hover:scale-105 ease-in-out duration-300">
                             Télécharger les typographies
