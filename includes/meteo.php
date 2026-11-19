@@ -159,22 +159,22 @@ function efc_meteo_heure($temps)
 function efc_meteo_icone($code, $jour = 1)
 {
     if ($code == 0) {
-        $icone = $jour ? 'soleil.png' : 'nuage.png'; // TODO lune.png
+        $icone = $jour ? 'soleil.svg' : 'lune.svg';
     } elseif ($code <= 2) {
-        $icone = 'nuage.png'; // TODO partiellement-nuageux.png
+        $icone = $jour ? 'partiellement-nuageux.svg' : 'nuageux.svg';
     } elseif ($code == 3) {
-        $icone = 'nuage.png';
+        $icone = 'nuageux.svg';
     } elseif ($code <= 48) {
-        $icone = 'nuage.png'; // TODO brouillard.png
+        $icone = 'brouillard.svg';
     } elseif ($code <= 67 || ($code >= 80 && $code <= 82)) {
-        $icone = 'nuage.png'; // TODO pluie.png
+        $icone = 'pluie.svg';
     } elseif ($code <= 77 || $code == 85 || $code == 86) {
-        $icone = 'nuage.png'; // TODO neige.png
+        $icone = 'neige.svg';
     } else {
-        $icone = 'nuage.png'; // TODO orage.png
+        $icone = 'orage.svg';
     }
 
-    return get_template_directory_uri() . '/assets/objets/' . $icone;
+    return get_template_directory_uri() . '/assets/objets/icons/' . $icone;
 }
 
 // texte (pour le alt des icônes)
