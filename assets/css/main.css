@@ -64,7 +64,7 @@ Version: 1.0
   }
 
   html {
-    background-color: var(--color-beige);
+    
     body {
       @apply font-sans;
 
