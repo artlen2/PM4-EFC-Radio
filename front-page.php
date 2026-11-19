@@ -15,7 +15,7 @@
             <div class="grid grid-cols-1 lg:grid-cols-[28rem_1fr] gap-16 items-start px-4 py-12">
 
                 <!-- titre et texte -->
-                <div class="mb-50 -rotate-3 scale-110 mt-[12%]">
+                <div class="mb-50 -rotate-3 ">
                     <div>
                         <?php if ($meteo_title) : ?>
                             <h2 class="text-orange text-6xl w-110 text-right leading-14"><?php echo esc_html($meteo_title); ?></h2>
@@ -103,10 +103,11 @@
 
                                 <!-- marée -->
                                 <?php if ($meteo['maree']) : ?>
-                                    <div class="relative overflow-hidden flex flex-col gap-4 min-h-56 bg-blue text-white rounded-[2rem] p-6">
-                                        <div>
+                                    <div class="relative overflow-hidden flex flex-col gap-4 min-w-0 min-h-56 bg-blue text-white rounded-[2rem] p-6">
+                                        <div class="relative">
                                             <h4 class="text-sm text-beige font-title font-black uppercase tracking-wide mb-4">Marée</h4>
-                                            <p class="font-title font-black text-3xl uppercase"><?php echo $meteo['maree']['montante'] ? 'Montante' : 'Descendante'; ?></p>
+                                            <!-- « Descendante » est long : taille plus petite dans les tuiles étroites pour rester aligné -->
+                                            <p class="font-title font-black text-3xl xl:text-2xl 2xl:text-3xl uppercase leading-none break-words"><?php echo $meteo['maree']['montante'] ? 'Montante' : 'Descendante'; ?></p>
                                         </div>
                                         <!-- vagues -->
                                         <svg class="absolute inset-x-0 bottom-0 w-full h-24" viewBox="0 0 400 100" preserveAspectRatio="none" aria-hidden="true">
@@ -137,7 +138,7 @@
                                     </div>
 
                                     <!-- lien vers un site météo -->
-                                    <a class="flex flex-1 items-center justify-center min-h-16 bg-white border-2 border-black rounded-full shadow-[0_6px_0_var(--color-black)] text-2xl font-bold transition hover:translate-y-1 hover:shadow-[0_2px_0_var(--color-black)]" href="https://meteo.gc.ca/fr/location/index.html?coords=48.849,-67.533" target="_blank" rel="noopener noreferrer">Voir plus</a>
+                                    <a class="flex flex-1 items-center justify-center min-h-16 bg-white border-2 border-black rounded-full shadow-[0_6px_0_var(--color-black)] text-2xl font-bold hover:scale-105 ease-in-out duration-300" href="https://meteo.gc.ca/fr/location/index.html?coords=48.849,-67.533" target="_blank" rel="noopener noreferrer">Voir plus</a>
                                 </div>
 
                             </div>
