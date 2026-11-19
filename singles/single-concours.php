@@ -43,7 +43,7 @@ while (have_posts()) :
             </time>
         <?php endif; ?>
 
-        <h1 class="text-4xl md:text-5xl font-title font-black text-title-ink leading-tight mb-6">
+        <h1 class="text-4xl md:text-5xl font-title font-black text-title-ink leading-tight mb-6 text-left">
             <?php the_title(); ?>
         </h1>
 

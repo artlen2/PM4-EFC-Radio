@@ -35,7 +35,7 @@ while (have_posts()) :
             </p>
         <?php endif; ?>
 
-        <h1 class=" font-title font-black text-title-ink leading-tight mb-8">
+        <h1 class=" font-title font-black text-title-ink leading-tight mb-8 text-left">
             <?php the_title(); ?>
         </h1>
 
