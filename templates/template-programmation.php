@@ -1,6 +1,8 @@
 <?php
 /* Template Name: Programmation */
-get_header(); ?>
+get_header(); 
+?>
+<main class="container mx-auto px-4 py-12 bg-beige">
 
 <section class="relative left-1/2 w-screen -translate-x-1/2 px-4 py-12">
     <div class="mx-auto max-w-6xl">

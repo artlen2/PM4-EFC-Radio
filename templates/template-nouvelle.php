@@ -1,6 +1,8 @@
 <?php
 /* Template Name: Annonceurs */
-get_header();
+get_header(); ?>
+<main class="container mx-auto px-4 py-12 bg-orange">
+<?php
 
 // Retourne l'URL d'un champ fichier, peu importe son format de retour (tableau, ID ou URL)
 function kit_media_url($champ)
@@ -20,7 +22,7 @@ while (have_posts()) : the_post();
     $typo_url    = kit_media_url(get_field('typographie'));
 ?>
 
-    <div class="bg-orange">
+    <div>
 
         <section class="max-w-5xl mx-auto px-4 py-10  ">
 

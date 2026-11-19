@@ -1,4 +1,5 @@
 <?php get_header(); ?>
+      <main class="container mx-auto px-4 py-12 bg-beige">
 
 <article class="flex flex-col items-center justify-center text-center gap-4 m-20 relative">
     <img src="https://projet4.timmatane.ca/2026/efc/eq1/wp-content/uploads/2026/11/micro.png" alt="micro vintage" class="w-40 h-40 mb-4 rotate-[10deg] absolute top-54 left-[52%] translate-x-10">

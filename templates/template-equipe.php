@@ -3,6 +3,9 @@
 Template Name: À propos
 */
 get_header();
+?>
+<main class="container mx-auto px-4 py-12 bg-beige">
+<?php
 
 /* Requêtes */
 $query_args = [
