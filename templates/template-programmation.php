@@ -6,7 +6,7 @@ get_header();
 
     <section class="relative left-1/2 w-screen -translate-x-1/2 px-4 py-12">
         <div class="mx-auto max-w-6xl">
-            <h1 class="mb-8 block font-archivo font-bold text-orange"><?php the_title(); ?></h1>
+            <h1 class="mb-8 block font-bold text-orange "><?php the_title(); ?></h1>
 
 
 
