@@ -63,9 +63,9 @@ $grid_columns = !$has_image
 
     <div class="<?php echo esc_attr($content_order); ?> flex min-w-0 flex-col items-start justify-center gap-2 p-3 text-left sm:gap-3 sm:p-5 md:p-8 <?php echo $reverse ? 'items-end text-right' : ''; ?>">
         <div class="flex flex-wrap items-baseline gap-x-2 gap-y-1">
-            <h2 class="font-title text-sm font-black uppercase leading-tight text-white md:text-base"><?php echo esc_html($title); ?></h2>
+            <h2 class="font-title  font-black uppercase leading-tight text-white"><?php echo esc_html($title); ?></h2>
             <?php if ($date || $time_start || $time_end) : ?>
-                <p class="text-xs font-bold text-orange">
+                <p class=" font-bold text-orange">
                     <?php if ($date) : ?>
                         <?php echo esc_html($date); ?>
                     <?php endif; ?>
@@ -80,13 +80,13 @@ $grid_columns = !$has_image
             <?php endif; ?>
         </div>
 
-      <!-- partie description -->
+        <!-- partie description -->
         <?php if ($description) : ?>
-            <div class="text-[0.65rem] leading-relaxed text-white/75 md:text-xs"><?php echo wp_kses_post($description); ?></div>
+            <div class=" leading-relaxed text-white/75 "><?php echo wp_kses_post($description); ?></div>
         <?php endif; ?>
 
         <!-- bouton voir plus -->
-        <a class="inline-flex min-h-8 items-center justify-center rounded-full bg-orange px-3 py-1 text-[0.65rem] font-extrabold text-white transition-colors duration-300 hover:bg-yellow hover:text-black focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange sm:px-5 sm:py-2 sm:text-xs" href="<?php echo esc_url(get_permalink()); ?>">
+        <a class="inline-flex min-h-8 items-center justify-center rounded-full bg-orange px-3 py-1 font-extrabold text-white transition-colors duration-300 hover:bg-yellow hover:text-black focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange sm:px-5 sm:py-2" href="<?php echo esc_url(get_permalink()); ?>">
             Voir plus
         </a>
     </div>

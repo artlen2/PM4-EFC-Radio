@@ -6,7 +6,9 @@ get_header();
 
     <section class="relative left-1/2 w-screen -translate-x-1/2 px-4 py-12">
         <div class="mx-auto max-w-6xl">
-            <h1 class="mb-8 block text-4xl font-archivo font-bold text-orange"><?php the_title(); ?></h1>
+            <h1 class="mb-8 block font-archivo font-bold text-orange"><?php the_title(); ?></h1>
+
+
 
             <?php
             $programmes = new WP_Query([
@@ -62,11 +64,11 @@ get_header();
                     'sun' => 'dimanche',
                 ];
                 ?>
-                <nav class="mb-10 overflow-x-auto" aria-label="Filtrer les programmations par jour">
-                    <div class="flex min-w-max gap-2 sm:gap-4" role="group">
+                <nav class="mb-10 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden" aria-label="Filtrer les programmations par jour">
+                    <div class="flex min-w-max items-center gap-1 sm:gap-2" role="group">
                         <?php foreach ($weekdays as $day_slug => $day_label) : ?>
                             <button
-                                class="rounded-full border-2 border-orange px-3 py-1 text-[0.7rem] font-extrabold uppercase text-black transition-colors hover:bg-orange hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange aria-pressed:bg-orange aria-pressed:text-white sm:px-4"
+                                class="inline-flex h-12 shrink-0 appearance-none items-center justify-center rounded-full border-2 border-solid border-transparent bg-transparent px-4 font-title font-black uppercase leading-none text-black transition-colors duration-200 hover:border-orange hover:text-orange focus-visible:border-orange focus-visible:text-orange sm:h-14 sm:px-5  aria-pressed:border-orange aria-pressed:text-orange"
                                 type="button"
                                 data-programme-day="<?php echo esc_attr($day_slug); ?>"
                                 aria-pressed="<?php echo $day_slug === 'lundi' ? 'true' : 'false'; ?>"
@@ -75,34 +77,135 @@ get_header();
                     </div>
                 </nav>
 
+                <?php
+$get_programme_field = static function ($name) {
+    return function_exists('get_field') ? get_field($name) : null;
+};
+
+$date = $get_programme_field('date') ?: $get_programme_field('jour');
+$time_start = $get_programme_field('time_start') ?: $get_programme_field('heure_debut');
+$time_end = $get_programme_field('time_end') ?: $get_programme_field('heure_fin');
+$title = $get_programme_field('title') ?: get_the_title();
+$description = $get_programme_field('description') ?: get_the_excerpt();
+$image = $get_programme_field('image');
+$reverse = !empty($args['reverse']);
+$has_image = $image || has_post_thumbnail();
+
+if (is_array($date)) {
+    $date = implode(', ', array_map('ucfirst', $date));
+}
+
+$image_alt = get_the_title();
+$figure_order = $reverse ? 'order-2' : 'order-1';
+$content_order = $reverse ? 'order-1' : 'order-2';
+$grid_columns = !$has_image
+    ? 'grid-cols-1'
+    : ($reverse
+        ? 'grid-cols-[minmax(0,1fr)_minmax(0,1fr)] md:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)]'
+        : 'grid-cols-[minmax(0,1fr)_minmax(0,1fr)] md:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)]');
+?>
+
+<article class="grid grid-cols-1 overflow-hidden rounded-[2.5rem] bg-black text-white md:min-h-40 <?php echo esc_attr($grid_columns); ?>">
+    <?php if ($image) : ?>
+        <figure class="<?php echo esc_attr($figure_order); ?> min-h-36 min-w-0 overflow-hidden p-2 md:min-h-0">
+            <?php if (is_array($image) && !empty($image['ID'])) : ?>
+                <?php
+                $image_alt = !empty($image['alt']) ? $image['alt'] : $image_alt;
+                echo wp_get_attachment_image(
+                    absint($image['ID']),
+                    'large',
+                    false,
+                    ['alt' => $image_alt, 'class' => 'block size-full rounded-[1.75rem] object-cover']
+                );
+                ?>
+            <?php elseif (is_numeric($image)) : ?>
+                <?php
+                echo wp_get_attachment_image(
+                    absint($image),
+                    'large',
+                    false,
+                    ['alt' => $image_alt, 'class' => 'block size-full rounded-[1.75rem] object-cover']
+                );
+                ?>
+            <?php elseif (is_array($image) && !empty($image['url'])) : ?>
+                <?php $image_alt = !empty($image['alt']) ? $image['alt'] : $image_alt; ?>
+                <img class="block size-full rounded-[1.75rem] object-cover" src="<?php echo esc_url($image['url']); ?>" alt="<?php echo esc_attr($image_alt); ?>">
+            <?php elseif (is_string($image)) : ?>
+                <img class="block size-full rounded-[1.75rem] object-cover" src="<?php echo esc_url($image); ?>" alt="<?php echo esc_attr($image_alt); ?>">
+            <?php endif; ?>
+        </figure>
+    <?php elseif (has_post_thumbnail()) : ?>
+        <figure class="<?php echo esc_attr($figure_order); ?> min-h-36 min-w-0 overflow-hidden p-2 md:min-h-0">
+            <?php the_post_thumbnail('large', ['alt' => $image_alt, 'class' => 'block size-full rounded-[1.75rem] object-cover']); ?>
+        </figure>
+    <?php endif; ?>
+
+    <div class="<?php echo esc_attr($content_order); ?> flex min-w-0 flex-col items-start justify-center gap-2 p-3 text-left sm:gap-3 sm:p-5 md:p-8 <?php echo $reverse ? 'items-end text-right' : ''; ?>">
+        <div class="flex flex-wrap items-baseline gap-x-2 gap-y-1">
+            <h2 class="font-title  font-black uppercase leading-tight text-white md:text-base"><?php echo esc_html($title); ?></h2>
+            <?php if ($date || $time_start || $time_end) : ?>
+                <p class=" font-bold text-orange">
+                    <?php if ($date) : ?>
+                        <?php echo esc_html($date); ?>
+                    <?php endif; ?>
+                    <?php if ($time_start) : ?>
+                        <?php echo $date ? ' · ' : ''; ?>
+                        <?php echo esc_html($time_start); ?>
+                        <?php if ($time_end) : ?>
+                            - <?php echo esc_html($time_end); ?>
+                        <?php endif; ?>
+                    <?php endif; ?>
+                </p>
+            <?php endif; ?>
+        </div>
+
+      <!-- partie description -->
+        <?php if ($description) : ?>
+            <div class=" leading-relaxed text-white/75 "><?php echo wp_kses_post($description); ?></div>
+        <?php endif; ?>
+
+        <!-- bouton voir plus -->
+        <a class="inline-flex min-h-8 items-center justify-center rounded-full bg-orange px-3 py-1 font-extrabold text-white transition-colors duration-300 hover:bg-yellow hover:text-black focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange sm:px-5 sm:py-2 sm:text-xs" href="<?php echo esc_url(get_permalink()); ?>">
+            Voir plus
+        </a>
+    </div>
+</article>
+
+
                 <div class="grid gap-12 md:gap-16">
                     <?php
                     $program_index = 0;
                     while ($programmes->have_posts()) :
                         $programmes->the_post();
                         $reverse = $program_index % 2 === 0;
-                        $programme_days = function_exists('get_field') ? (get_field('date') ?: get_field('jour')) : [];
-                        $programme_days = is_array($programme_days) ? $programme_days : [$programme_days];
+                        $programme_days = [];
+                        if (function_exists('get_field')) {
+                            foreach (['date', 'jour'] as $field_name) {
+                                $programme_days[] = get_field($field_name);
+                                $programme_days[] = get_field($field_name, false, false);
+                            }
+                        }
+
+                        $day_values = $programme_days;
                         $programme_day_slugs = [];
 
-                        foreach ($programme_days as $programme_day) {
-                            if (is_array($programme_day)) {
-                                $programme_day = array_filter(
-                                    [$programme_day['value'] ?? null, $programme_day['label'] ?? null],
-                                    'is_scalar'
-                                );
-                            } elseif (is_scalar($programme_day)) {
-                                $programme_day = [$programme_day];
-                            } else {
-                                $programme_day = [];
+                        while ($day_values) {
+                            $day_value = array_pop($day_values);
+                            if (is_array($day_value)) {
+                                foreach ($day_value as $nested_day_value) {
+                                    $day_values[] = $nested_day_value;
+                                }
+                                continue;
                             }
 
-                            foreach ($programme_day as $day_value) {
-                                $normalized_days = preg_split('/[^a-z0-9]+/', sanitize_title((string) $day_value), -1, PREG_SPLIT_NO_EMPTY);
-                                foreach ($normalized_days as $normalized_day) {
-                                    if (isset($weekday_aliases[$normalized_day])) {
-                                        $programme_day_slugs[] = $weekday_aliases[$normalized_day];
-                                    }
+                            if (!is_scalar($day_value)) {
+                                continue;
+                            }
+
+                            $normalized_days = preg_split('/[^a-z0-9]+/', sanitize_title((string) $day_value), -1, PREG_SPLIT_NO_EMPTY);
+                            foreach ($normalized_days as $normalized_day) {
+                                if (isset($weekday_aliases[$normalized_day])) {
+                                    $programme_day_slugs[] = $weekday_aliases[$normalized_day];
                                 }
                             }
                         }
@@ -138,8 +241,8 @@ get_header();
 
         <div class="mx-auto grid max-w-5xl items-center gap-8 md:grid-cols-2 md:gap-12">
             <div class="max-w-md">
-                <h2 class="font-title text-3xl font-black uppercase text-yellow md:text-4xl">Tu as un projet?</h2>
-                <p class="mt-4 text-sm leading-relaxed text-white/90">
+                <h2 class="font-title font-black uppercase text-yellow ">Tu as un projet?</h2>
+                <p class="mt-4 leading-relaxed text-white/90">
                     Une idée d'émission, une chronique ou un événement à faire connaître? Remplis le formulaire et notre équipe te recontactera pour en jaser.
                 </p>
             </div>
@@ -149,40 +252,40 @@ get_header();
                 $project_status = isset($_GET['projet']) ? sanitize_key(wp_unslash($_GET['projet'])) : '';
                 if ($project_status === 'envoye') :
                 ?>
-                    <p class="mb-4 rounded-xl bg-green-100 p-3 text-sm text-green-900" role="status" aria-live="polite">Merci! Ta proposition a bien été envoyée.</p>
+                    <p class="mb-4 rounded-xl bg-green-100 p-3 text-green-900" role="status" aria-live="polite">Merci! Ta proposition a bien été envoyée.</p>
                 <?php elseif ($project_status === 'invalide') : ?>
-                    <p class="mb-4 rounded-xl bg-red-100 p-3 text-sm text-red-900" role="alert">Vérifie les champs et l'adresse courriel, puis réessaie.</p>
+                    <p class="mb-4 rounded-xl bg-red-100 p-3  text-red-900" role="alert">Vérifie les champs et l'adresse courriel, puis réessaie.</p>
                 <?php elseif ($project_status === 'erreur') : ?>
-                    <p class="mb-4 rounded-xl bg-red-100 p-3 text-sm text-red-900" role="alert">Le message n'a pas pu être envoyé. Réessaie plus tard ou écris-nous directement.</p>
+                    <p class="mb-4 rounded-xl bg-red-100 p-3  text-red-900" role="alert">Le message n'a pas pu être envoyé. Réessaie plus tard ou écris-nous directement.</p>
                 <?php elseif ($project_status === 'securite') : ?>
-                    <p class="mb-4 rounded-xl bg-red-100 p-3 text-sm text-red-900" role="alert">Le formulaire a expiré. Recharge la page et réessaie.</p>
+                    <p class="mb-4 rounded-xl bg-red-100 p-3  text-red-900" role="alert">Le formulaire a expiré. Recharge la page et réessaie.</p>
                 <?php endif; ?>
 
                 <form action="<?php echo esc_url(admin_url('admin-post.php')); ?>" method="post" class="grid gap-3">
                     <input type="hidden" name="action" value="efc_submit_project">
                     <?php wp_nonce_field('efc_submit_project', 'efc_project_nonce'); ?>
 
-                    <label class="grid gap-1 text-xs font-bold text-purple">
+                    <label class="grid gap-1 font-bold text-purple">
                         Nom
-                        <input class="min-h-10 rounded-full bg-[#f1f1f1] px-4 text-sm font-normal text-black outline-none focus-visible:ring-2 focus-visible:ring-violet" type="text" name="project_name" autocomplete="name" required>
+                        <input class="min-h-10 rounded-full bg-[#f1f1f1] px-4 font-normal text-black outline-none focus-visible:ring-2 focus-visible:ring-violet" type="text" name="project_name" autocomplete="name" required>
                     </label>
 
-                    <label class="grid gap-1 text-xs font-bold text-purple">
+                    <label class="grid gap-1  font-bold text-purple">
                         Courriel
-                        <input class="min-h-10 rounded-full bg-[#f1f1f1] px-4 text-sm font-normal text-black outline-none focus-visible:ring-2 focus-visible:ring-violet" type="email" name="project_email" autocomplete="email" required>
+                        <input class="min-h-10 rounded-full bg-[#f1f1f1] px-4 font-normal text-black outline-none focus-visible:ring-2 focus-visible:ring-violet" type="email" name="project_email" autocomplete="email" required>
                     </label>
 
-                    <label class="grid gap-1 text-xs font-bold text-purple">
+                    <label class="grid gap-1 font-bold text-purple">
                         Ton idée de projet
-                        <input class="min-h-10 rounded-full bg-[#f1f1f1] px-4 text-sm font-normal text-black outline-none focus-visible:ring-2 focus-visible:ring-violet" type="text" name="project_title" required>
+                        <input class="min-h-10 rounded-full bg-[#f1f1f1] px-4 font-normal text-black outline-none focus-visible:ring-2 focus-visible:ring-violet" type="text" name="project_title" required>
                     </label>
 
-                    <label class="grid gap-1 text-xs font-bold text-purple">
+                    <label class="grid gap-1 font-bold text-purple">
                         Parle-nous en avec quelques mots
-                        <textarea class="min-h-24 resize-y rounded-2xl bg-[#f1f1f1] px-4 py-3 text-sm font-normal text-black outline-none focus-visible:ring-2 focus-visible:ring-violet" name="project_message" required></textarea>
+                        <textarea class="min-h-24 resize-y rounded-2xl bg-[#f1f1f1] px-4 py-3  font-normal text-black outline-none focus-visible:ring-2 focus-visible:ring-violet" name="project_message" required></textarea>
                     </label>
 
-                    <button class="justify-self-end rounded-full bg-orange px-6 py-2 text-sm font-extrabold text-white transition-colors hover:bg-yellow hover:text-black focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet" type="submit">Envoyer</button>
+                    <button class="justify-self-end rounded-full bg-orange px-6 py-2 font-extrabold text-white transition-colors hover:bg-yellow hover:text-black focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet" type="submit">Envoyer</button>
                 </form>
             </div>
         </div>

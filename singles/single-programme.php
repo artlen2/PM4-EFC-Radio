@@ -25,17 +25,17 @@ while (have_posts()) :
     <article class="max-w-4xl mx-auto px-6 py-16">
 
         <a href="<?php echo esc_url($back_url); ?>"
-            class="inline-flex items-center gap-2 text-sm font-semibold text-brown hover:underline mb-10">
+            class="inline-flex items-center gap-2 font-semibold text-brown hover:underline mb-10">
             ← Retour aux programmes
         </a>
 
         <?php if ($category) : ?>
-            <p class="text-xs font-semibold uppercase tracking-widest text-brown mb-3">
+            <p class=" font-semibold uppercase tracking-widest text-brown mb-3">
                 <?php echo esc_html($category); ?>
             </p>
         <?php endif; ?>
 
-        <h1 class="text-4xl md:text-5xl font-title font-black text-title-ink leading-tight mb-8">
+        <h1 class=" font-title font-black text-title-ink leading-tight mb-8">
             <?php the_title(); ?>
         </h1>
 
