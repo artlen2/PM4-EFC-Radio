@@ -85,7 +85,7 @@ Version: 1.0
         @apply text-black;
       }
       p {
-        @apply text-4xl;
+        @apply text-2xl;
       }
     }
   }
