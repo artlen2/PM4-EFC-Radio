@@ -7,7 +7,7 @@ function efc_enqueue_scripts()
 {
     wp_enqueue_style("main", get_stylesheet_uri(), [], filemtime(get_stylesheet_directory() . "/style.css"));
 
-    // script pour la nav en mobile
+    // Script navigation mobile (toutes les pages)
     wp_enqueue_script(
         'efc-nav',
         get_template_directory_uri() . '/assets/scripts/carousel.js',
@@ -17,10 +17,10 @@ function efc_enqueue_scripts()
     );
 
     if (is_page_template('templates/template-programmation.php')) {
-        $programme_filter_script = get_template_directory() . '/assets/scripts/programme-filtre.js';
+        $programme_filter_script = get_template_directory() . '/assets/scripts/programme-filter.js';
         wp_enqueue_script(
             'efc-programme-filter',
-            get_template_directory_uri() . '/assets/scripts/programme-filtre.js',
+            get_template_directory_uri() . '/assets/scripts/programme-filter.js',
             [],
             filemtime($programme_filter_script),
             true
@@ -77,7 +77,7 @@ function efc_handle_project_submission()
 add_action('admin_post_efc_submit_project', 'efc_handle_project_submission');
 add_action('admin_post_nopriv_efc_submit_project', 'efc_handle_project_submission');
 
-// champs SCP dans api
+// Expose les champs SCF dans la REST API
 add_filter('acf/rest/format_value_for_rest', '__return_true');
 
 function efc_setup_scripts()
@@ -86,7 +86,7 @@ function efc_setup_scripts()
     add_theme_support("post-thumbnails");
 
 
-    //  custom header
+    // Add custom header
     add_theme_support("custom-header", [
         "width" => 1920,
         "height" => 1080,
