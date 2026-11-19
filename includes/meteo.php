@@ -26,7 +26,14 @@ function efc_get_meteo()
     $meteo['maree'] = efc_fetch_maree();
     $meteo['mis_a_jour'] = time();
 
-    set_transient('efc_meteo', $meteo, 30 * MINUTE_IN_SECONDS);
+    // cache de 30 min max, mais on le vide plus tôt :
+    // - au changement d'heure (sinon « Maintenant » affiche l'heure passée)
+    // - quand la prochaine marée arrive (sinon on affiche une marée déjà passée)
+    $duree = min(30 * MINUTE_IN_SECONDS, HOUR_IN_SECONDS - time() % HOUR_IN_SECONDS);
+    if ($meteo['maree']) {
+        $duree = min($duree, $meteo['maree']['heure'] - time());
+    }
+    set_transient('efc_meteo', $meteo, max(60, $duree));
     return $meteo;
 }
 
@@ -80,6 +87,14 @@ function efc_fetch_meteo()
             'code'  => $heures['weather_code'][$i],
             'jour'  => $heures['is_day'][$i],
         ];
+    }
+
+    // « Maintenant » = conditions actuelles, pour que ce soit pareil que la grosse température
+    // (sinon on avait par ex. 6° en gros et 7° dans « Maintenant »)
+    if ($prochaines) {
+        $prochaines[0]['temp'] = round($actuel['temperature_2m']);
+        $prochaines[0]['code'] = $actuel['weather_code'];
+        $prochaines[0]['jour'] = $actuel['is_day'];
     }
 
     return [
@@ -147,7 +162,7 @@ function efc_meteo_direction($degres)
 
 // Heure au format « 7 h 12 »
 // doc wp_date : https://developer.wordpress.org/reference/functions/wp_date/
-// lettres du format (G, i...) : https://www.php.net/manual/fr/datetime.format.php
+// lettres du format : https://www.php.net/manual/fr/datetime.format.php
 function efc_meteo_heure($temps)
 {
     return wp_date('G \h i', $temps, new DateTimeZone(EFC_METEO_FUSEAU));
