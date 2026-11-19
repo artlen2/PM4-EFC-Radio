@@ -105,3 +105,26 @@ Version: 1.0
     transform: rotate(2deg);
   }
 }
+
+/* Fond pleine largeur pour <main class="container ..."> :
+   le container limite la largeur du contenu, mais la couleur de fond
+   déborde jusqu'aux bords de l'écran (sans scroll horizontal). */
+main.container {
+  box-shadow: 0 0 0 100vmax var(--main-bg, transparent);
+  clip-path: inset(0 -100vmax);
+}
+main.container.bg-beige {
+  --main-bg: var(--color-beige);
+}
+main.container.bg-orange {
+  --main-bg: var(--color-orange);
+}
+
+/* Le creux de la vague du hero prend la couleur du <main> qui suit
+   (sinon on voit le blanc du body entre la vague et le main). */
+.hero-wave:has(+ main.bg-beige) {
+  background-color: var(--color-beige);
+}
+.hero-wave:has(+ main.bg-orange) {
+  background-color: var(--color-orange);
+}
