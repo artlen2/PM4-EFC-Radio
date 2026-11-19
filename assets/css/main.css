@@ -14,11 +14,11 @@ Version: 1.0
 @import "tailwindcss";
 @source "../../**/*.php"; /* Fichiers à scanner pour les classes Tailwind */
 
-
 /* Fonts titres */
 @font-face {
   font-family: "Archivo";
-  src: url("./assets/fonts/Archivo-VariableFont_wdth\,wght.ttf") format("truetype");
+  src: url("./assets/fonts/Archivo-VariableFont_wdth\,wght.ttf")
+    format("truetype");
   font-weight: 500 900;
   font-stretch: 62% 125%;
   font-style: normal;
@@ -26,7 +26,8 @@ Version: 1.0
 /* Inter */
 @font-face {
   font-family: "Inter";
-  src: url("./assets/fonts/Inter-VariableFont_opsz\,wght.ttf") format("truetype");
+  src: url("./assets/fonts/Inter-VariableFont_opsz\,wght.ttf")
+    format("truetype");
   font-weight: 100 900;
   font-style: normal;
 }
@@ -35,25 +36,23 @@ Version: 1.0
   font-family: "Inter", sans-serif;
 }
 
-
 .archivo {
   font-family: "Archivo", sans-serif;
   font-weight: 900;
 }
 
-
 @theme {
   --font-title: "Archivo", sans-serif;
   --font-sans: "Inter", sans-serif;
 
-  --color-orange: #FF8600;
-  --color-yellow: #FDBE00;
-  --color-beige: #FEF2CA;
-  --color-violet: #A768F4;
-  --color-purple: #540D6E;
-  --color-black: #0F0E0F;
-  --color-white: #FEFDFD;
-  --color-blue: #639ED1;
+  --color-orange: #ff8600;
+  --color-yellow: #fdbe00;
+  --color-beige: #fef2ca;
+  --color-violet: #a768f4;
+  --color-purple: #540d6e;
+  --color-black: #0f0e0f;
+  --color-white: #fefdfd;
+  --color-blue: #639ed1;
 }
 
 @layer base {
@@ -90,12 +89,7 @@ Version: 1.0
   }
 }
 
-
 /* -------- NAVIGATION -------- */
-
-
-
-
 
 /* Boule disco du hero */
 .disco-swing {
@@ -104,8 +98,10 @@ Version: 1.0
 }
 
 @keyframes disco-swing {
-  from { transform: rotate(-2deg); }
-  to   { transform: rotate(2deg); }
+  from {
+    transform: rotate(-2deg);
+  }
+  to {
+    transform: rotate(2deg);
+  }
 }
-
-

@@ -1,10 +1,10 @@
 <?php get_header(); ?>
 <!-- Météo -->
 <?php
-$meteo_title        = get_field('meteo-title');
-$meteo_text         = get_field('meteo-text');
+$meteo_title = get_field('meteo-title');
+$meteo_text = get_field('meteo-text');
 $meteo_announcement = get_field('meteo-announcement');
-$meteo_date         = get_field('meteo-date');
+$meteo_date = get_field('meteo-date');
 
 // météo en direct (includes/meteo.php)
 $meteo = function_exists('efc_get_meteo') ? efc_get_meteo() : null;
@@ -27,7 +27,7 @@ if ($meteo_title || $meteo_text || $meteo_announcement) : ?>
             </div>
 
             <!-- annonce -->
-            <div>                
+            <div>
                 <?php if ($meteo_date) : ?>
                     <p><?php echo esc_html($meteo_date); ?></p>
                 <?php endif; ?>
