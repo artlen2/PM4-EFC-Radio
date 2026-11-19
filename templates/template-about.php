@@ -52,11 +52,11 @@ get_header();
     ?>
             <li class="group w-56 shrink-0 snap-center scale-90 opacity-50 transition duration-300 data-[active=true]:scale-100 data-[active=true]:opacity-100" data-card>
                 <div class="flex h-18 flex-col justify-end">
-                    <h3 class="font-title text-sm font-black uppercase leading-tight">
+                    <h4 class="font-title font-black uppercase leading-tight">
                         <?php echo esc_html($member['name']); ?>
-                    </h3>
+                    </h4>
                     <?php if ($member['role']) : ?>
-                        <p class="mt-0.5 text-xs font-semibold leading-tight text-purple">
+                        <p class="mt-0.5 font-semibold leading-tight text-purple">
                             <?php echo esc_html($member['role']); ?>
                         </p>
                     <?php endif; ?>
@@ -71,7 +71,7 @@ get_header();
                                 class="h-full w-full object-cover"
                                 loading="lazy">
                         <?php else : ?>
-                            <div class="flex h-full w-full items-center justify-center bg-violet/20 font-title text-4xl text-purple"
+                            <div class="flex h-full w-full items-center justify-center bg-violet/20 font-title text-purple"
                                 aria-hidden="true">
                                 <?php echo esc_html(mb_substr($member['name'], 0, 1)); ?>
                             </div>
@@ -81,7 +81,7 @@ get_header();
                     <button type="button"
                         data-open="<?php echo esc_attr($uid); ?>"
                         class="absolute -bottom-2 right-0 translate-x-2 cursor-pointer rounded-lg border-2 border-black
-                           bg-yellow px-3 py-1 text-sm font-bold text-white shadow-[2px_2px_0_0_#0F0E0F]
+                           bg-yellow px-3 py-1 font-bold text-white shadow-[2px_2px_0_0_#0F0E0F]
                            transition hover:bg-orange focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple"
                         aria-label="<?php echo esc_attr(sprintf('Voir plus sur %s', $member['name'])); ?>">
                         Voir plus
@@ -103,7 +103,7 @@ get_header();
                         <?php endif; ?>
                         <div class="flex-1">
                             <h3 id="<?php echo esc_attr($uid); ?>-title"
-                                class="font-title text-xl font-black uppercase leading-tight text-purple">
+                                class="font-title font-black uppercase leading-tight text-purple">
                                 <?php echo esc_html($member['name']); ?>
                             </h3>
                             <?php if ($member['role']) : ?>
@@ -111,7 +111,7 @@ get_header();
                             <?php endif; ?>
                         </div>
                         <button type="button" data-close
-                            class="cursor-pointer rounded-full border-2 border-black bg-white px-3 py-1 text-sm font-bold
+                            class="cursor-pointer rounded-full border-2 border-black bg-white px-3 py-1 font-bold
                                hover:bg-yellow focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple"
                             aria-label="Fermer">
                             ✕
@@ -142,7 +142,7 @@ get_header();
 
                 <div class="mx-auto mb-8 flex max-w-6xl items-center gap-4 px-6">
                     <h2 id="<?php echo esc_attr($id); ?>-title"
-                        class="font-title text-2xl font-black uppercase text-yellow sm:text-3xl">
+                        class="font-title font-black uppercase text-yellow ">
                         <?php echo esc_html($title); ?>
                     </h2>
                     <?php
@@ -204,13 +204,13 @@ get_header();
 
         <!-- En-tête de page -->
         <header class="mx-auto flex max-w-6xl justify-end px-6 pt-12">
-            <h1 class="-rotate-3 font-title text-4xl font-black uppercase text-orange sm:text-5xl">
+            <h1 class="-rotate-3 font-title font-black uppercase text-orange ">
                 <?php the_title(); ?>
             </h1>
         </header>
 
         <?php if (get_the_content()) : ?>
-            <div class="mx-auto mt-6 max-w-2xl px-6 text-center text-lg">
+            <div class="mx-auto mt-6 max-w-2xl px-6 text-center ">
                 <?php the_content(); ?>
             </div>
         <?php endif; ?>
@@ -225,7 +225,7 @@ get_header();
         <?php if (!empty($all_partners)) : ?>
             <section class="mx-auto max-w-6xl px-6 py-16" aria-labelledby="partenaires-title">
                 <h2 id="partenaires-title"
-                    class="mb-10 font-title text-2xl font-black uppercase text-yellow sm:text-3xl">
+                    class="mb-10 font-title font-black uppercase text-yellow ">
                     Partenaires
                 </h2>
 
