@@ -63,9 +63,9 @@ $grid_columns = !$has_image
 
     <div class="<?php echo esc_attr($content_order); ?> flex min-w-0 flex-col items-start justify-center gap-2 p-3 text-left sm:gap-3 sm:p-5 md:p-8 <?php echo $reverse ? 'items-end text-right' : ''; ?>">
         <div class="flex flex-wrap items-baseline gap-x-2 gap-y-1">
-            <h2 class="font-title  font-black uppercase leading-tight text-white"><?php echo esc_html($title); ?></h2>
+            <h2 class="font-title  font-black uppercase leading-tight text-white text-left"><?php echo esc_html($title); ?></h2>
             <?php if ($date || $time_start || $time_end) : ?>
-                <p class=" font-bold text-orange">
+                <p class=" font-bold text-orange text-left">
                     <?php if ($date) : ?>
                         <?php echo esc_html($date); ?>
                     <?php endif; ?>
@@ -82,7 +82,7 @@ $grid_columns = !$has_image
 
         <!-- partie description -->
         <?php if ($description) : ?>
-            <div class=" leading-relaxed text-white/75 "><?php echo wp_kses_post($description); ?></div>
+            <div class=" leading-relaxed text-white/75 text-left"><?php echo wp_kses_post($description); ?></div>
         <?php endif; ?>
 
         <!-- bouton voir plus -->

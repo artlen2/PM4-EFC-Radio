@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
   const filters = document.querySelectorAll('[data-programme-day]');
-  const cards = document.querySelectorAll('.programme-card');
+  const cards = document.querySelectorAll('.carte-programme');
   const emptyState = document.querySelector('.programme-empty-state');
 
   if (!filters.length || !cards.length || !emptyState) {
