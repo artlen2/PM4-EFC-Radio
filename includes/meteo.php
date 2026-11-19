@@ -174,7 +174,7 @@ function efc_meteo_icone($code, $jour = 1)
         $icone = 'orage.svg';
     }
 
-    return get_template_directory_uri() . '/assets/objets/icons/' . $icone;
+    return get_template_directory_uri() . './assets/objets/icons/' . $icone;
 }
 
 // texte (pour le alt des icônes)
