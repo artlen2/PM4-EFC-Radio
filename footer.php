@@ -50,7 +50,7 @@
         <p class="text-lg">Écoutez-nous en direct, partout dans La Matanie!</p>
         <!-- btn faire un don -->
         <a href="<?php echo esc_url(home_url('/')); ?>"
-          class="bg-white text-black font-bold no-underline text-center p-4 w-full md:w-50  rounded-[30px] hover:scale-105 ease-in-out duration-300 border-t-2 border-x-2 border-b-8 border-black">
+          class="bg-white text-black font-bold no-underline text-center p-4 w-full md:w-50  rounded-[30px] btn-press">
           Faire un don
         </a>
       </div>

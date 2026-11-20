@@ -81,11 +81,6 @@
                 </div>
             <?php endif; ?>
         </section>
-        <!-- jaune du bas de la vidéo -->
-        <?php
-        // couleur sous la vague = couleur du <main> de la page (sinon on voit du blanc)
-        $wave_bg = is_page_template('templates/template-nouvelle.php') ? '#ff8600' : '#fef2ca';
-        ?>
         <svg class="hero-wave -mt-px -mb-px block h-16 w-full rotate-180 text-[#fdbe00] md:h-24" style="background-color: <?php echo esc_attr($wave_bg); ?>;" viewBox="0 0 1440 100"
             preserveAspectRatio="none" aria-hidden="true">
             <path fill="currentColor"

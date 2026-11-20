@@ -4,12 +4,7 @@ Author: Lucioles
 Version: 1.0
 */
 
-/*
-  Source Tailwind du thème, compilée dans /style.css.
-  npm run dev   → recompile à chaque modification
-  npm run build → version minifiée
-  L'en-tête ci-dessus (commentaire /*!) est conservé dans style.css pour que WordPress reconnaisse le thème.
-*/
+/* tailwind -> style.css (npm run dev / npm run build) */
 
 @import "tailwindcss";
 @source "../../**/*.php"; /* Fichiers à scanner pour les classes Tailwind */
@@ -46,6 +41,7 @@ Version: 1.0
   --font-sans: "Inter", sans-serif;
 
   --color-orange: #ff8600;
+  --color-orange-light: #F4B13E;
   --color-yellow: #fdbe00;
   --color-beige: #fef2ca;
   --color-violet: #a768f4;
@@ -108,9 +104,7 @@ Version: 1.0
   }
 }
 
-/* Fond pleine largeur pour <main class="container ..."> :
-   le container limite la largeur du contenu, mais la couleur de fond
-   déborde jusqu'aux bords de l'écran (sans scroll horizontal). */
+/* bg du main en pleine largeur */
 main.container {
   box-shadow: 0 0 0 100vmax var(--main-bg, transparent);
   clip-path: inset(0 -100vmax);
@@ -122,11 +116,22 @@ main.container.bg-orange {
   --main-bg: var(--color-orange);
 }
 
-/* Le creux de la vague du hero prend la couleur du <main> qui suit
-   (sinon on voit le blanc du body entre la vague et le main). */
+/* vague du hero = meme couleur que le main */
 .hero-wave:has(+ main.bg-beige) {
   background-color: var(--color-beige);
 }
 .hero-wave:has(+ main.bg-orange) {
   background-color: var(--color-orange);
+}
+
+/* btn qui s'enfonce au hover */
+@utility btn-press {
+  border: 2px solid var(--color-black);
+  box-shadow: 0 6px 0 var(--color-black);
+  transition: transform 150ms ease-out, box-shadow 150ms ease-out, background-color 300ms, color 300ms;
+
+  &:hover {
+    transform: translateY(6px);
+    box-shadow: 0 0 0 var(--color-black);
+  }
 }
