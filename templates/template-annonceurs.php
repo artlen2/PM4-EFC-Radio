@@ -82,33 +82,37 @@ while (have_posts()) : the_post();
                     </section>
                 <?php endif; ?>
 
-                 
+                  
  
             </div>
+
+           
         </section>
 
 
         <!-- nous joindre -->
 
-     <section class="bg-beige p-8 md:p-24 flex gap-100 ">
+     <section class="bg-beige p-8 md:p-24 flex gap-100 relative mb-32 scale-110  ">
 
-              <div class="" >
+              <div>
+                <img src="<?php echo esc_url(get_stylesheet_directory_uri()); ?>/assets/objets/disco-ball.png')" alt="main qui tien un téléphone" class="w-38 absolute top-0 right-20" >
                   <h1 class="text-5xl text-violet  rotate-[-3deg]">Nous joindre</h1>
-                  <img src="<?php echo esc_url(get_stylesheet_directory_uri()); ?>/assets/objets/phone2.png')" alt="main qui tien un téléphone" class="rotate-[30deg] w-50 ml-30" >
+                  <img src="<?php echo esc_url(get_stylesheet_directory_uri()); ?>/assets/objets/phone2.png')" alt="main qui tien un téléphone" class="rotate-[30deg] w-50 ml-30 " >
+                  
               </div>
 
-            <div class="  " >
+            <div class="scale-110" >
 
                 
 
                  <div class="bg-violet w-110 p-8 md:p-12 pb-16 md:pb-24 md:pr-[35%] min-h-[18rem]" style="-webkit-mask: url('<?php echo esc_url(get_stylesheet_directory_uri()); ?>/assets/objets/Union.png') center / 100% 100% no-repeat; mask: url('<?php echo esc_url(get_stylesheet_directory_uri()); ?>/assets/objets/Union.png') center / 100% 80% no-repeat;">
 
-                <h2 class="text-3xl text-beige mb-8 mt-8 w-50">Équipe des ventes :</h2>
+                <h2 class="text-2xl text-beige mb-8 mt-8 w-50">Équipe des ventes :</h2>
                 
 
                  <ul class="w-100 ">
                      <li class="mb-6 text-beige ">COURRIEL : <a class=" hover:text-yellow ease-in-out duration-200 "  href="mailto:radiolamatanie@gmail.com">radiolamatanie@gmail.com</a></li>
-                     <li class="mb-6 text-beige">TÉLÉPHONE : <a class=" hover:text-yellow ease-in-out duration-200 href="tel:+(581) 232-7434">(581) 232-7434</a></li>
+                     <li class="mb-6 text-beige">TÉLÉPHONE : <a class=" hover:text-yellow ease-in-out duration-200 " href="tel:+(581) 232-7434">(581) 232-7434</a></li>
                 </ul>
 
         </div>
