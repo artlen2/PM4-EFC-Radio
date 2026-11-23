@@ -46,7 +46,7 @@ while (have_posts()) : the_post();
                  <?php endif; ?>
  
                  <?php if ($logo_url ) : ?>
-                    <p class="text-black text-2xl ">Téléchargez les polices de caractères utilisée par la radio.</p>
+                    <p class="text-black text-2xl ">Téléchargez les logos utilisée par la radio.</p>
                      <a href="<?php echo esc_url($logo_url); ?>" download
                        class="bg-white text-black font-bold no-underline text-center p-4 rounded-[30px] border-t-2 border-x-2 border-b-8 border-black hover:scale-105 ease-in-out duration-300">
                        Télécharger les logos
@@ -72,7 +72,7 @@ while (have_posts()) : the_post();
                     <?php endif; ?>
  
                     <?php if ($typo_url) :?>
-                        <p class="text-black text-2xl  ">Téléchargez les polices de caractères utilisée par la radio.</p>
+                        <p class="text-black text-2xl  ">Téléchargez les polices d'écritures utilisée par la radio.</p>
                         <a href="<?php echo esc_url($typo_url); ?>" download
                             class="bg-white text-black font-bold no-underline text-center p-4 rounded-[30px] border-t-2 border-x-2 border-b-8 border-black hover:scale-105 ease-in-out duration-300">
                             Télécharger les typographies
@@ -80,6 +80,10 @@ while (have_posts()) : the_post();
                     <?php endif; ?>
                     </section>
                 <?php endif; ?>
+
+                 <img src="<?php echo esc_url(get_template_directory_uri()); ?>/assets/objets/old-cam.png"
+                    alt="" aria-hidden="true"
+                    class="w-24 md:w-40 justify-self-end md:col-span-2">
  
             </div>
         </section>
