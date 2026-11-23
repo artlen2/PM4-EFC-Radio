@@ -8,8 +8,15 @@ while (have_posts()) :
     the_post();
     $title = function_exists('get_field') ? get_field('title') : '';
     $title = $title ?: get_the_title();
+    $date = function_exists('get_field') ? (get_field('date') ?: get_field('jour')) : '';
+    $time_start = function_exists('get_field') ? (get_field('time_start') ?: get_field('heure_debut')) : '';
+    $time_end = function_exists('get_field') ? (get_field('time_end') ?: get_field('heure_fin')) : '';
     $image = function_exists('get_field') ? get_field('image') : null;
     $description = function_exists('get_field') ? get_field('description') : '';
+
+    if (is_array($date)) {
+        $date = implode(', ', array_map('ucfirst', $date));
+    }
 
     $image_url = '';
     $image_id = 0;
@@ -29,39 +36,61 @@ while (have_posts()) :
     $url_programmation = $page_programmation ? get_permalink($page_programmation->ID) : home_url();
     $back_url = wp_get_referer() ?: $url_programmation;
 ?>
-    <article class="mx-auto max-w-4xl px-6 py-16">
-        <a href="<?php echo esc_url($back_url); ?>"
-            class="bg-orange text-black font-bold no-underline text-center p-4 rounded-[30px] btn-press margin-bottom-10">
-            Retour aux programmes
-        </a>
+    <main class="min-h-[60vh] bg-black px-4 py-12 text-white sm:px-6">
+        <div class="mx-auto max-w-5xl">
+            <a href="<?php echo esc_url($back_url); ?>"
+                style="display: inline-flex; margin-bottom: 2rem;"
+                class="bg-yellow text-black font-bold no-underline text-center p-4 rounded-[30px] btn-press">
+                Retour aux programmes
+            </a>
 
-        <h1 class="mb-8 text-left font-title font-orange leading-tight text-title-ink margin-top-15 text-4xl md:text-5xl">
-            <?php echo esc_html($title); ?>
-        </h1>
-
-        <?php if ($image_id || $image_url) : ?>
-            <figure class="mb-10 overflow-hidden rounded-2xl  shadow-sm">
-                <?php if ($image_id) : ?>
-                    <?php echo wp_get_attachment_image($image_id, 'large', false, [
-                        'alt' => $image_alt,
-                        'class' => 'max-h-130 w-full object-cover',
-                        'loading' => 'eager',
-                    ]); ?>
-                <?php else : ?>
-                    <img src="<?php echo esc_url($image_url); ?>"
-                        alt="<?php echo esc_attr($image_alt); ?>"
-                        class="max-h-130 w-full object-cover"
-                        loading="eager">
+            <article class="grid grid-cols-1 overflow-hidden text-white md:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)]">
+                <?php if ($image_id || $image_url) : ?>
+                    <figure class="min-h-56 min-w-0 overflow-hidden p-2 md:min-h-full">
+                        <?php if ($image_id) : ?>
+                            <?php echo wp_get_attachment_image($image_id, 'large', false, [
+                                'alt' => $image_alt,
+                                'class' => 'block size-full min-h-56 transform-none rounded-[1.75rem] object-cover object-center md:min-h-80',
+                                'loading' => 'eager',
+                            ]); ?>
+                        <?php else : ?>
+                            <img src="<?php echo esc_url($image_url); ?>"
+                                alt="<?php echo esc_attr($image_alt); ?>"
+                                class="block size-full min-h-56 transform-none rounded-[1.75rem] object-cover object-center md:min-h-80"
+                                loading="eager">
+                        <?php endif; ?>
+                    </figure>
                 <?php endif; ?>
-            </figure>
-        <?php endif; ?>
 
-        <?php if ($description) : ?>
-            <div class="text-lg leading-relaxed text-ink-light">
-                <?php echo wp_kses_post($description); ?>
-            </div>
-        <?php endif; ?>
-    </article>
+                <div class="flex min-w-0 flex-col items-start justify-center gap-3 p-5 text-left sm:p-8">
+                    <h1 class="font-title text-3xl font-black uppercase leading-tight text-white sm:text-4xl">
+                        <?php echo esc_html($title); ?>
+                    </h1>
+
+                    <?php if ($date || $time_start || $time_end) : ?>
+                        <p class="font-bold text-orange">
+                            <?php if ($date) : ?>
+                                <?php echo esc_html($date); ?>
+                            <?php endif; ?>
+                            <?php if ($time_start) : ?>
+                                <?php echo $date ? ' · ' : ''; ?>
+                                <?php echo esc_html($time_start); ?>
+                                <?php if ($time_end) : ?>
+                                    - <?php echo esc_html($time_end); ?>
+                                <?php endif; ?>
+                            <?php endif; ?>
+                        </p>
+                    <?php endif; ?>
+
+                    <?php if ($description) : ?>
+                        <div class="leading-relaxed text-white/75">
+                            <?php echo wp_kses_post($description); ?>
+                        </div>
+                    <?php endif; ?>
+                </div>
+            </article>
+        </div>
+    </main>
 <?php endwhile; ?>
 
 <?php get_footer(); ?>
