@@ -19,7 +19,7 @@ get_header();
     $all_partners     = get_posts($query_args + ['post_type' => 'partenaire']);
 
     /* Helpers */
-    // Les champs image SCF/ACF peuvent retourner un tableau, un ID ou une URL.
+    // image SCF (tableau, id ou url)
     if (!function_exists('radio_image')) {
         function radio_image($field, $fallback_alt = '')
         {
@@ -42,7 +42,7 @@ get_header();
         }
     }
 
-    // Une carte du carrousel et sa fenêtre de détails
+    // carte + popup
     if (!function_exists('radio_member_card')) {
         function radio_member_card($member)
         {
@@ -82,7 +82,7 @@ get_header();
                         data-open="<?php echo esc_attr($uid); ?>"
                         class="absolute -bottom-2 right-0 translate-x-2 cursor-pointer rounded-lg border-2 border-black
                            bg-yellow px-3 py-1 font-bold text-white shadow-[2px_2px_0_0_#0F0E0F]
-                           transition hover:bg-orange focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple"
+                           transition hover:bg-orange hover:translate-y-[2px] hover:shadow-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple"
                         aria-label="<?php echo esc_attr(sprintf('Voir plus sur %s', $member['name'])); ?>">
                         Voir plus
                     </button>
@@ -111,7 +111,7 @@ get_header();
                             <?php endif; ?>
                         </div>
                         <button type="button" data-close
-                            class="cursor-pointer rounded-full border-2 border-black bg-white px-3 py-1 font-bold
+                            class="cursor-pointer rounded-full btn-press bg-white px-3 py-1 font-bold
                                hover:bg-yellow focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple"
                             aria-label="Fermer">
                             ✕
@@ -130,7 +130,7 @@ get_header();
         }
     }
 
-    // Un carrousel complet (titre de section + piste défilante + flèches).
+    // carrousel
     if (!function_exists('radio_carousel')) {
         function radio_carousel($id, $title, $icon, $members)
         {
@@ -154,11 +154,11 @@ get_header();
 
                     <div class="ml-auto flex gap-2">
                         <button type="button" data-scroll="-1" data-target="<?php echo esc_attr($id); ?>"
-                            class="cursor-pointer rounded-full border-2 border-black bg-white size-10 font-bold
+                            class="cursor-pointer rounded-full btn-press bg-white size-10 font-bold
                                hover:bg-yellow focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple"
                             aria-label="Précédent">←</button>
                         <button type="button" data-scroll="1" data-target="<?php echo esc_attr($id); ?>"
-                            class="cursor-pointer rounded-full border-2 border-black bg-white size-10 font-bold
+                            class="cursor-pointer rounded-full btn-press bg-white size-10 font-bold
                                hover:bg-yellow focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple"
                             aria-label="Suivant">→</button>
                     </div>
@@ -264,7 +264,7 @@ get_header();
 
     <script>
         (function() {
-            // Met en avant la carte centrée de chaque carrousel
+            // carte du milieu en avant
             document.querySelectorAll('[data-track]').forEach(function(track) {
                 var observer = new IntersectionObserver(function(entries) {
                     entries.forEach(function(e) {

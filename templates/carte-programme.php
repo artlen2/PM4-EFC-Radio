@@ -26,7 +26,7 @@ $grid_columns = !$has_image
         : 'grid-cols-[minmax(0,1fr)_minmax(0,1fr)] md:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)]');
 ?>
 
-<article class="grid grid-cols-1 overflow-hidden rounded-[2.5rem] bg-black text-white md:min-h-40 <?php echo esc_attr($grid_columns); ?>">
+<article class="grid grid-cols-1 overflow-hidden rounded-[2.5rem] bg-black text-white transition-transform duration-300 ease-out hover:-translate-y-1 motion-reduce:transform-none md:min-h-40 <?php echo esc_attr($grid_columns); ?>">
     <?php if ($image) : ?>
         <figure class="<?php echo esc_attr($figure_order); ?> min-h-36 min-w-0 overflow-hidden p-2 md:min-h-0">
             <?php if (is_array($image) && !empty($image['ID'])) : ?>

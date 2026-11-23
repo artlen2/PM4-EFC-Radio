@@ -16,11 +16,12 @@ function efc_enqueue_scripts()
         true // charger en footer
     );
 
+    // filtre pour la page programmation
     if (is_page_template('templates/template-programmation.php')) {
-        $programme_filter_script = get_template_directory() . '/assets/scripts/programme-filter.js';
+        $programme_filter_script = get_template_directory() . '/assets/scripts/programme-filtre.js';
         wp_enqueue_script(
             'efc-programme-filter',
-            get_template_directory_uri() . '/assets/scripts/programme-filter.js',
+            get_template_directory_uri() . '/assets/scripts/programme-filtre.js',
             [],
             filemtime($programme_filter_script),
             true

@@ -4,7 +4,7 @@ get_header(); ?>
 <main class="container mx-auto px-4 py-12 bg-orange">
 <?php
  
-// Retourne l'URL d'un champ fichier, peu importe son format de retour (tableau, ID ou URL)
+// url du fichier
 function kit_media_url($champ)
 {
     if (is_array($champ)) {
@@ -48,7 +48,7 @@ while (have_posts()) : the_post();
                  <?php if ($logo_url ) : ?>
                     <p class="text-black text-2xl ">Téléchargez les logos utilisée par la radio.</p>
                      <a href="<?php echo esc_url($logo_url); ?>" download
-                       class="bg-white text-black font-bold no-underline text-center p-4 rounded-[30px] border-t-2 border-x-2 border-b-8 border-black hover:scale-105 ease-in-out duration-300">
+                       class="bg-white text-black font-bold no-underline text-center p-4 rounded-[30px] btn-press">
                        Télécharger les logos
                      </a>
                 <?php endif; ?>
@@ -74,7 +74,7 @@ while (have_posts()) : the_post();
                     <?php if ($typo_url) :?>
                         <p class="text-black text-2xl  ">Téléchargez les polices d'écritures utilisée par la radio.</p>
                         <a href="<?php echo esc_url($typo_url); ?>" download
-                            class="bg-white text-black font-bold no-underline text-center p-4 rounded-[30px] border-t-2 border-x-2 border-b-8 border-black hover:scale-105 ease-in-out duration-300">
+                            class="bg-white text-black font-bold no-underline text-center p-4 rounded-[30px] btn-press">
                             Télécharger les typographies
                         </a>
                     <?php endif; ?>

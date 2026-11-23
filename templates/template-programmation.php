@@ -77,8 +77,6 @@ get_header();
                     </div>
                 </nav>
 
- 
-
 
                 <div class="grid gap-12 md:gap-16">
                     <?php
@@ -119,13 +117,44 @@ get_header();
                         }
 
                         $programme_day_slugs = array_values(array_unique($programme_day_slugs));
+
+                        foreach ($programme_days as $programme_day_value) {
+                            $possible_dates = is_array($programme_day_value) ? $programme_day_value : [$programme_day_value];
+                            foreach ($possible_dates as $possible_date) {
+                                if (!is_scalar($possible_date)) {
+                                    continue;
+                                }
+                                $timestamp = false;
+                                $date_text = trim((string) $possible_date);
+                                foreach ([
+                                    'Ymd',
+                                    'Y-m-d',
+                                    'd/m/Y',
+                                    'd-m-Y',
+                                    'm/d/Y',
+                                ] as $date_format) {
+                                    $parsed_date = DateTimeImmutable::createFromFormat('!' . $date_format, $date_text);
+                                    $errors = DateTimeImmutable::getLastErrors();
+                                    if ($parsed_date && (!$errors || ($errors['warning_count'] === 0 && $errors['error_count'] === 0))) {
+                                        $timestamp = $parsed_date->setTimezone(wp_timezone())->getTimestamp();
+                                        break;
+                                    }
+                                }
+                                if ($timestamp) {
+                                    $weekday_keys = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+                                    $weekday_key = strtolower($weekday_keys[(int) wp_date('w', $timestamp)]);
+                                    $programme_day_slugs[] = $weekday_aliases[$weekday_key];
+                                }
+                            }
+                        }
+
+                        if (empty($programme_day_slugs)) {
+                            $programme_day_slugs[] = $weekday_aliases[strtolower(wp_date('l', get_the_date('U') ?: time()))];
+                        }
+
+                        $programme_day_slugs = array_values(array_unique(array_filter($programme_day_slugs)));
                     ?>
-                        <div class="programme-card relative mx-auto w-full md:w-[91%] <?php echo $reverse ? 'md:mr-auto' : 'md:ml-auto'; ?>" data-programme-days="<?php echo esc_attr(implode(' ', $programme_day_slugs)); ?>">
-                            <?php if ($program_index === 0) : ?>
-                                <img class="pointer-events-none absolute -right-12 -top-12 z-10 hidden w-28 rotate-6 lg:block" src="<?php echo esc_url(get_template_directory_uri() . '/assets/objets/radio.png'); ?>" alt="" aria-hidden="true">
-                            <?php elseif ($program_index === 1) : ?>
-                                <img class="pointer-events-none absolute -left-20 -top-10 z-10 hidden w-36 -rotate-12 lg:block" src="<?php echo esc_url(get_template_directory_uri() . '/assets/objets/megaphone2 3.png'); ?>" alt="" aria-hidden="true">
-                            <?php endif; ?>
+                        <div class="programme-card relative mx-auto w-full transition-all duration-300 ease-out md:w-[91%] <?php echo $reverse ? 'md:mr-auto' : 'md:ml-auto'; ?>" data-programme-days="<?php echo esc_attr(implode(' ', $programme_day_slugs)); ?>">
                             <?php get_template_part('templates/carte-programme', null, ['reverse' => $reverse]); ?>
                         </div>
                     <?php
@@ -147,6 +176,8 @@ get_header();
             <path fill="currentColor" d="M0 42 Q60 0 120 42 T240 42 T360 42 T480 42 T600 42 T720 42 T840 42 T960 42 T1080 42 T1200 42 T1320 42 T1440 42 V100 H0 Z" />
         </svg>
 
+
+                <!-- formulaire de projet -->
         <div class="mx-auto grid max-w-5xl items-center gap-8 md:grid-cols-2 md:gap-12">
             <div class="max-w-md">
                 <h2 class="font-title font-black uppercase text-yellow ">Tu as un projet?</h2>
@@ -160,6 +191,8 @@ get_header();
                 $project_status = isset($_GET['projet']) ? sanitize_key(wp_unslash($_GET['projet'])) : '';
                 if ($project_status === 'envoye') :
                 ?>
+
+                <!-- sécurise l'envois / champs de renseignements -->
                     <p class="mb-4 rounded-xl bg-green-100 p-3 text-green-900" role="status" aria-live="polite">Merci! Ta proposition a bien été envoyée.</p>
                 <?php elseif ($project_status === 'invalide') : ?>
                     <p class="mb-4 rounded-xl bg-red-100 p-3  text-red-900" role="alert">Vérifie les champs et l'adresse courriel, puis réessaie.</p>
