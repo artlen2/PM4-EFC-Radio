@@ -26,8 +26,16 @@ $grid_columns = !$has_image
         : 'grid-cols-[minmax(0,1fr)_minmax(0,1fr)] md:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)]');
 ?>
 
+<<<<<<< HEAD
 <article class="grid grid-cols-1 overflow-hidden rounded-[2.5rem] bg-black text-white shadow-sm transition-[scale,transform,box-shadow] duration-300 ease-out hover:scale-105 hover:shadow-lg motion-reduce:transition-none md:min-h-40 <?php echo esc_attr($grid_columns); ?>">
+=======
+<<<<<<< HEAD
+<article class="grid grid-cols-1 overflow-hidden rounded-[2.5rem] bg-black text-white transition-transform duration-300 ease-out hover:-translate-y-1 md:min-h-40 <?php echo esc_attr($grid_columns); ?>">
+=======
+<article class="grid grid-cols-1 overflow-hidden rounded-[2.5rem] bg-black text-white shadow-sm transition-[scale,transform,box-shadow] duration-300 ease-out hover:scale-180 hover:shadow-lg motion-reduce:transition-none md:min-h-40 <?php echo esc_attr($grid_columns); ?>">
+>>>>>>> 0258209b36cdeddca2080118cab462991126daca
 
+>>>>>>> f35d8d9a876f424efb043d194960050a61a8dc1b
     <?php if ($image) : ?>
         <figure class="<?php echo esc_attr($figure_order); ?> min-h-36 min-w-0 overflow-hidden p-2 md:min-h-0">
             <?php if (is_array($image) && !empty($image['ID'])) : ?>

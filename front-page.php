@@ -39,7 +39,7 @@
                         <div class="flex flex-col gap-6">
 
                             <div class="grid grid-cols-1 xl:grid-cols-[2fr_3fr] gap-10 bg-blue text-white rounded-[2rem] p-4 lg:p-6">
-
+                                <!-- icone à changer pour la météo -->
                                 <!-- maintenant -->
                                 <div class="flex flex-col">
                                     <h3 class="text-2xl uppercase leading-none">Matane, QC</h3>
@@ -58,9 +58,9 @@
                                     <ul class="grid grid-cols-3 sm:grid-cols-6 gap-2">
                                         <?php foreach ($meteo['prochaines'] as $i => $heure) : ?>
                                             <li class="flex flex-col items-center gap-1 rounded-2xl py-5 px-3 text-black <?php echo $i === 0 ? 'bg-beige' : 'bg-white'; ?>">
-                                                <p class="text-xs font-bold text-black/60 whitespace-nowrap"><?php echo $i === 0 ? 'Maintenant' : esc_html(wp_date('G \h', $heure['heure'], new DateTimeZone(EFC_METEO_FUSEAU))); ?></p>
+                                                <p class="text-xs font-bold text-black/60 whitespace-nowrap"><?php echo $i === 0 ? 'En direct' : esc_html(wp_date('G \h', $heure['heure'], new DateTimeZone(EFC_METEO_FUSEAU))); ?></p>
                                                 <img class="w-8 h-8" src="<?php echo esc_url(efc_meteo_icone($heure['code'], $heure['jour'])); ?>" alt="<?php echo esc_attr(efc_meteo_description($heure['code'])); ?>">
-                                                <p class="font-title font-black text-4xl leading-none"><?php echo esc_html($heure['temp']); ?>°</p>
+                                                <p class="font-title font-black text-4xl leading-none  text-black"><?php echo esc_html($heure['temp']); ?>°</p>
                                                 <p class="flex items-center gap-1 text-xs font-bold text-blue"><img class="w-3 h-3" src="<?php echo esc_url(get_template_directory_uri() . '/assets/objets/icons/mini-pluie.svg'); ?>" alt="Probabilité de pluie"><?php echo esc_html($heure['pluie']); ?> %</p>
                                             </li>
                                         <?php endforeach; ?>
@@ -107,13 +107,29 @@
                                         <div class="relative">
                                             <h4 class="text-sm text-beige font-title font-black uppercase tracking-wide mb-2">Marée</h4>
                                             <!-- montante / descendante -->
-                                            <p class="font-title font-black text-2xl  uppercase leading-none break-words"><?php echo $meteo['maree']['montante'] ? 'Montante' : 'Descendante'; ?></p>
+                                            <?php if ($meteo['maree']['montante']) : ?>
+                                                <p class="font-title font-black text-2xl  uppercase leading-none wrap-break-word">Montante</p>
+                                            <?php else : ?>
+                                                <p class="font-title font-black text-lg  uppercase leading-none wrap-break-word">Descendante</p>
+                                            <?php endif; ?>
                                         </div>
                                         <!-- vagues -->
-                                        <svg class="absolute inset-x-0 bottom-0 w-full h-24" viewBox="0 0 400 100" preserveAspectRatio="none" aria-hidden="true">
-                                            <path d="M0 13 Q50 38 100 13 T200 13 T300 13 T400 13 V100 H0Z" fill="#fefdfd" opacity=".5" />
-                                            <path d="M0 45 Q50 20 100 40 T200 40 T300 40 T400 40 V100 H0Z" fill="#fef2ca" />
-                                        </svg>
+                                        <!-- src: https://codepen.io/andyfitz/pen/aZrKdV -->
+                                        <div class="absolute inset-x-0 bottom-0" aria-hidden="true">
+                                            <svg class="block w-full h-10" xmlns="http://www.w3.org/2000/svg" viewBox="0 24 150 28" preserveAspectRatio="none">
+                                                <defs>
+                                                    <path id="maree-vague" d="M-160 44c30 0 58-18 88-18s58 18 88 18 58-18 88-18 58 18 88 18v44h-352z" />
+                                                </defs>
+                                                <g class="maree-parallax">
+                                                    <!-- vague de derrière -->
+                                                    <use href="#maree-vague" x="50" y="0" fill="#ABCEE6" />
+                                                    <!-- vague du devant -->
+                                                    <use href="#maree-vague" x="50" y="8" fill="#FFF0CB" />
+                                                </g>
+                                            </svg>
+                                            <!-- bloc plein sous les vagues, même couleur que la vague du devant -->
+                                            <div class="h-16 -mt-px bg-[#FFF0CB]"></div>
+                                        </div>
                                         <p class="relative mt-auto text-sm text-blue">
                                             <?php echo $meteo['maree']['montante'] ? 'Pleine mer' : 'Basse mer'; ?>
                                             à <?php echo esc_html(efc_meteo_heure($meteo['maree']['heure'])); ?>
@@ -147,28 +163,31 @@
                 <?php endif; ?>
 
             </div>
-            <!-- annonce -->
-            <div>
-                <?php if ($meteo_date) : ?>
-                    <p><?php echo esc_html($meteo_date); ?></p>
-                <?php endif; ?>
-                <?php if ($meteo_announcement) : ?>
-                    <p><?php echo nl2br(esc_html($meteo_announcement)); ?></p>
-                <?php endif; ?>
-            </div>
             <!-- état des routes -->
-            <div>
-                <iframe width="100%" height="450"
-                    src="https://embed.waze.com/fr/iframe?zoom=11&amp;lat=48.8486&amp;lon=-67.5333&amp;ct=livemap"
-                    title="État des routes en Matanie"
-                    loading="lazy"
-                    allowfullscreen></iframe>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start px-4 py-12">
+                <!-- annonce -->
+                <div class="relative min-w-0 bg-white rounded-[3rem] p-6 lg:p-8">
+                    <?php if ($meteo_date) : ?>
+                        <p><?php echo esc_html($meteo_date); ?></p>
+                    <?php endif; ?>
+                    <?php if ($meteo_announcement) : ?>
+                        <p><?php echo nl2br(esc_html($meteo_announcement)); ?></p>
+                    <?php endif; ?>
+                </div>
+                <!-- état des routes --> 
+                <div>
+                    <div class="carte-routes">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d49965.67457830342!2d-67.56261623299348!3d48.83919038373369!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sfr!2sca!4v1795459922725!5m2!1sfr!2sca" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+                        <!-- bouton Québec 511 par-dessus le bouton « Ouvrir dans Maps » de Google -->
+                        <a class="btn-quebec511" href="https://www.quebec511.info/fr/Carte/Default.aspx" target="_blank" rel="noopener noreferrer">
+                            Ouvrir Québec 511
+                            <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+                                <path fill="currentColor" d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z" />
+                            </svg>
+                        </a>
+                    </div>
 
-                <!-- lien vers les conditions routières officielles -->
-                <a href="https://www.quebec511.info/fr/Carte/Default.aspx" target="_blank" rel="noopener noreferrer">
-                    Conditions routières officielles
-                </a>
-
+                </div>
             </div>
         </section>
     <?php endif; ?>
