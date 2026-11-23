@@ -119,13 +119,44 @@ get_header();
                         }
 
                         $programme_day_slugs = array_values(array_unique($programme_day_slugs));
+
+                        foreach ($programme_days as $programme_day_value) {
+                            $possible_dates = is_array($programme_day_value) ? $programme_day_value : [$programme_day_value];
+                            foreach ($possible_dates as $possible_date) {
+                                if (!is_scalar($possible_date)) {
+                                    continue;
+                                }
+                                $timestamp = false;
+                                $date_text = trim((string) $possible_date);
+                                foreach ([
+                                    'Ymd',
+                                    'Y-m-d',
+                                    'd/m/Y',
+                                    'd-m-Y',
+                                    'm/d/Y',
+                                ] as $date_format) {
+                                    $parsed_date = DateTimeImmutable::createFromFormat('!' . $date_format, $date_text);
+                                    $errors = DateTimeImmutable::getLastErrors();
+                                    if ($parsed_date && (!$errors || ($errors['warning_count'] === 0 && $errors['error_count'] === 0))) {
+                                        $timestamp = $parsed_date->setTimezone(wp_timezone())->getTimestamp();
+                                        break;
+                                    }
+                                }
+                                if ($timestamp) {
+                                    $weekday_keys = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+                                    $weekday_key = strtolower($weekday_keys[(int) wp_date('w', $timestamp)]);
+                                    $programme_day_slugs[] = $weekday_aliases[$weekday_key];
+                                }
+                            }
+                        }
+
+                        if (empty($programme_day_slugs)) {
+                            $programme_day_slugs[] = $weekday_aliases[strtolower(wp_date('l', get_the_date('U') ?: time()))];
+                        }
+
+                        $programme_day_slugs = array_values(array_unique(array_filter($programme_day_slugs)));
                     ?>
-                        <div class="programme-card relative mx-auto w-full md:w-[91%] <?php echo $reverse ? 'md:mr-auto' : 'md:ml-auto'; ?>" data-programme-days="<?php echo esc_attr(implode(' ', $programme_day_slugs)); ?>">
-                            <?php if ($program_index === 0) : ?>
-                                <img class="pointer-events-none absolute -right-12 -top-12 z-10 hidden w-28 rotate-6 lg:block" src="<?php echo esc_url(get_template_directory_uri() . '/assets/objets/radio.png'); ?>" alt="" aria-hidden="true">
-                            <?php elseif ($program_index === 1) : ?>
-                                <img class="pointer-events-none absolute -left-20 -top-10 z-10 hidden w-36 -rotate-12 lg:block" src="<?php echo esc_url(get_template_directory_uri() . '/assets/objets/megaphone2 3.png'); ?>" alt="" aria-hidden="true">
-                            <?php endif; ?>
+                        <div class="programme-card relative mx-auto w-full transition-all duration-300 ease-out md:w-[91%] <?php echo $reverse ? 'md:mr-auto' : 'md:ml-auto'; ?>" data-programme-days="<?php echo esc_attr(implode(' ', $programme_day_slugs)); ?>">
                             <?php get_template_part('templates/carte-programme', null, ['reverse' => $reverse]); ?>
                         </div>
                     <?php
