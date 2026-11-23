@@ -61,3 +61,5 @@ document.addEventListener('DOMContentLoaded', function () {
 
   filterByDay('lundi');
 });
+
+// cache et ouvre les cartes en fonctions du jour sélectionné (le filtre)

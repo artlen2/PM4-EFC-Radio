@@ -26,7 +26,7 @@ while (have_posts()) :
 
         <a href="<?php echo esc_url($back_url); ?>"
             class="inline-flex items-center gap-2 font-semibold text-brown hover:underline mb-10">
-            ← Retour aux programmes
+             Retour aux programmes
         </a>
 
         <?php if ($category) : ?>

@@ -77,8 +77,6 @@ get_header();
                     </div>
                 </nav>
 
- 
-
 
                 <div class="grid gap-12 md:gap-16">
                     <?php
@@ -178,6 +176,8 @@ get_header();
             <path fill="currentColor" d="M0 42 Q60 0 120 42 T240 42 T360 42 T480 42 T600 42 T720 42 T840 42 T960 42 T1080 42 T1200 42 T1320 42 T1440 42 V100 H0 Z" />
         </svg>
 
+
+                <!-- formulaire de projet -->
         <div class="mx-auto grid max-w-5xl items-center gap-8 md:grid-cols-2 md:gap-12">
             <div class="max-w-md">
                 <h2 class="font-title font-black uppercase text-yellow ">Tu as un projet?</h2>
@@ -191,6 +191,8 @@ get_header();
                 $project_status = isset($_GET['projet']) ? sanitize_key(wp_unslash($_GET['projet'])) : '';
                 if ($project_status === 'envoye') :
                 ?>
+
+                <!-- sécurise l'envois / champs de renseignements -->
                     <p class="mb-4 rounded-xl bg-green-100 p-3 text-green-900" role="status" aria-live="polite">Merci! Ta proposition a bien été envoyée.</p>
                 <?php elseif ($project_status === 'invalide') : ?>
                     <p class="mb-4 rounded-xl bg-red-100 p-3  text-red-900" role="alert">Vérifie les champs et l'adresse courriel, puis réessaie.</p>

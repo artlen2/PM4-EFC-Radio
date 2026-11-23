@@ -16,6 +16,7 @@ function efc_enqueue_scripts()
         true // charger en footer
     );
 
+    // filtre pour la page programmation
     if (is_page_template('templates/template-programmation.php')) {
         $programme_filter_script = get_template_directory() . '/assets/scripts/programme-filtre.js';
         wp_enqueue_script(
