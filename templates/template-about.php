@@ -40,6 +40,33 @@ if (!function_exists('radio_image')) {
     }
 }
 
+// Find a file in the theme, ignoring upper/lower case in the file name
+// (Linux servers are case-sensitive: "Old-Cam.png" is not "old-cam.png")
+if (!function_exists('radio_find_asset')) {
+    function radio_find_asset($relative)
+    {
+        $relative = ltrim((string) $relative, '/');
+        $base = get_template_directory();
+        if ($relative === '') {
+            return null;
+        }
+        if (file_exists($base . '/' . $relative)) {
+            return $relative;
+        }
+        $dir  = dirname($relative);
+        $name = basename($relative);
+        $files = @scandir($base . '/' . $dir);
+        if ($files) {
+            foreach ($files as $file) {
+                if (strcasecmp($file, $name) === 0) {
+                    return ($dir === '.' ? '' : $dir . '/') . $file;
+                }
+            }
+        }
+        return null;
+    }
+}
+
 // Card (only the <li>, the popup is rendered separately)
 if (!function_exists('radio_member_card')) {
     function radio_member_card($member)
@@ -48,10 +75,11 @@ if (!function_exists('radio_member_card')) {
         $img    = radio_image($member['photo'], $member['name']);
         $radius = $member['shape'] === 'round' ? 'rounded-full' : 'rounded-3xl';
 ?>
-        <li class="group w-56 shrink-0 snap-center scale-90 opacity-50 transition duration-300 data-[active=true]:scale-100 data-[active=true]:opacity-100" data-card>
+        <!-- Card width comes from .radio-card (see the <style> block above <main>) -->
+        <li class="radio-card group shrink-0 snap-center scale-90 opacity-50 transition duration-300 data-[active=true]:scale-100 data-[active=true]:opacity-100" data-card>
             <!-- Fixed height so every photo lines up, tall enough for a 2 line name + 2 line role -->
-            <div class="flex h-28 flex-col justify-end">
-                <h4 class="font-title text-2xl font-black uppercase leading-tight [overflow-wrap:anywhere]">
+            <div class="radio-card-head flex flex-col justify-end">
+                <h4 class="font-title text-2xl font-black uppercase leading-tight sm:text-3xl [overflow-wrap:anywhere]">
                     <?php echo esc_html($member['name']); ?>
                 </h4>
                 <?php if ($member['role']) : ?>
@@ -100,7 +128,7 @@ if (!function_exists('radio_member_dialog')) {
         $radius = $member['shape'] === 'round' ? 'rounded-full' : 'rounded-3xl';
     ?>
         <dialog id="<?php echo esc_attr($uid); ?>"
-            class="m-auto w-[min(92vw,32rem)] max-h-[85dvh] overflow-x-hidden overflow-y-auto overscroll-contain
+            class="radio-dialog m-auto max-h-[85dvh] overflow-x-hidden overflow-y-auto overscroll-contain
                    rounded-3xl border-[3px] border-purple bg-beige p-0 text-black backdrop:bg-black/60"
             aria-labelledby="<?php echo esc_attr($uid); ?>-title">
             <div class="flex flex-col gap-4 p-6 sm:p-8">
@@ -145,6 +173,8 @@ if (!function_exists('radio_member_dialog')) {
 
 // Carousel
 // $icon is a path relative to the theme folder, e.g. 'assets/objets/micro.png'
+// The <section> is full width (not inside the page container) so cards run to the
+// edges of the screen instead of being cut in the middle of the page.
 if (!function_exists('radio_carousel')) {
     function radio_carousel($id, $title, $icon, $members)
     {
@@ -154,16 +184,19 @@ if (!function_exists('radio_carousel')) {
     ?>
         <section class="relative py-10" aria-labelledby="<?php echo esc_attr($id); ?>-title">
 
-            <div class="mb-8 flex items-center gap-4 px-6">
+            <!-- Same container + padding as the rest of the page so the title lines up -->
+            <div class="container mx-auto mb-8 flex items-center gap-4 px-10">
                 <h2 id="<?php echo esc_attr($id); ?>-title"
                     class="font-title font-black uppercase text-yellow">
                     <?php echo esc_html($title); ?>
                 </h2>
                 <?php
-                $icon_path = get_template_directory() . '/' . ltrim($icon, '/');
-                if ($icon && file_exists($icon_path)) : ?>
-                    <img src="<?php echo esc_url(get_template_directory_uri() . '/' . ltrim($icon, '/')); ?>"
-                        alt="" class="h-20 w-auto" aria-hidden="true">
+                $icon_rel = radio_find_asset($icon);
+                if ($icon_rel) : ?>
+                    <img src="<?php echo esc_url(get_template_directory_uri() . '/' . $icon_rel); ?>"
+                        alt="" class="radio-icon" aria-hidden="true">
+                <?php else : ?>
+                    <!-- Icon not found in the theme folder: <?php echo esc_html($icon); ?> -->
                 <?php endif; ?>
 
                 <div class="ml-auto flex gap-2">
@@ -178,9 +211,10 @@ if (!function_exists('radio_carousel')) {
                 </div>
             </div>
 
-            <!-- "relative" so offsetLeft is measured from the track itself (needed by the loop script) -->
+            <!-- "relative" so offsetLeft is measured from the track itself (needed by the loop script).
+                 Size, gap, centering padding and edge fade live in .radio-track (<style> block above <main>) -->
             <ul id="<?php echo esc_attr($id); ?>" data-track
-                class="relative flex snap-x snap-mandatory gap-10 overflow-x-auto px-[calc(50%-7rem)] pb-8 pt-6
+                class="radio-track relative flex snap-x snap-mandatory overflow-x-auto pb-8 pt-6
                        list-none m-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
                 <?php foreach ($members as $member) {
                     radio_member_card($member);
@@ -227,17 +261,75 @@ $nous_joindre_title = get_field('nous_joindre_title');
 $nous_joindre_texte = get_field('nous_joindre_texte');
 ?>
 
-<main class="container mx-auto px-4 py-12 bg-beige font-sans text-black">
+<style>
+    /* Carousel sizing: plain CSS on purpose, so it works even if Tailwind has not been rebuilt.
+       Change --card-w / --card-gap to resize the cards or the space between them. */
+    .radio-track {
+        --card-w: 18rem;
+        --card-gap: 6rem;
+        gap: var(--card-gap);
+        padding-inline: calc(50% - var(--card-w) / 2);
+        -webkit-mask-image: linear-gradient(to right, transparent, #000 10%, #000 90%, transparent);
+        mask-image: linear-gradient(to right, transparent, #000 10%, #000 90%, transparent);
+    }
 
-    <h1 class="-rotate-3 font-title font-black uppercase text-orange">
-        <?php echo esc_html($mission_title ?: get_the_title()); ?>
-    </h1>
+    .radio-card {
+        width: var(--card-w, 18rem);
+        flex: none;
+    }
 
-    <?php if ($mission_text) : ?>
-        <div class="mt-10 max-w-2xl px-6 text-left leading-relaxed">
-            <?php echo wp_kses_post(wpautop($mission_text)); ?>
-        </div>
-    <?php endif; ?>
+    .radio-card-head {
+        height: 9rem;
+    }
+
+    /* Title icons (micro / camera). Bigger than the title on purpose: the negative margin lets them
+       stick out above/below the title row instead of making the row taller.
+       Change the middle value of clamp() (14vw) or the max (16rem) to resize. */
+    .radio-icon {
+        height: clamp(6rem, 14vw, 16rem);
+        width: auto;
+        flex: none;
+        margin-block: -2rem;
+        pointer-events: none;
+    }
+
+    /* Popup width (was 32rem) */
+    .radio-dialog {
+        width: min(92vw, 44rem);
+    }
+
+    /* Used by the script while it swaps a copy for the real card, so nothing fades/flashes */
+    .radio-track.is-jumping .radio-card {
+        transition: none !important;
+    }
+
+    @media (min-width: 1024px) {
+        .radio-track {
+            --card-w: 22rem;
+            --card-gap: 9rem;
+        }
+
+        .radio-card-head {
+            height: 10rem;
+        }
+    }
+</style>
+
+<!-- <main> is full width (overflow-x-clip hides the sideways overflow of the carousel copies).
+     The "container" wrappers below keep the text content at the same width as before. -->
+<main class="overflow-x-clip bg-beige py-12 font-sans text-black">
+
+    <div class="container mx-auto px-4">
+        <h1 class="-rotate-3 font-title font-black uppercase text-orange">
+            <?php echo esc_html($mission_title ?: get_the_title()); ?>
+        </h1>
+
+        <?php if ($mission_text) : ?>
+            <div class="mt-10 max-w-2xl px-6 text-left leading-relaxed">
+                <?php echo wp_kses_post(wpautop($mission_text)); ?>
+            </div>
+        <?php endif; ?>
+    </div>
 
     <!-- Hosts -->
     <?php radio_carousel('animateurs', 'Animateurs', 'assets/objets/micro.png', $animators); ?>
@@ -245,78 +337,80 @@ $nous_joindre_texte = get_field('nous_joindre_texte');
     <!-- Team -->
     <?php radio_carousel('equipe', 'Employés', 'assets/objets/old-cam.png', $team); ?>
 
+    <div class="container mx-auto px-4">
 
-
-    <!-- Partners -->
-    <?php if (!empty($all_partners)) : ?>
-        <section class="px-6 py-16" aria-labelledby="partenaires-title">
-            <h2 id="partenaires-title"
-                class="mb-10 font-title font-black uppercase text-yellow">
-                Partenaires
-            </h2>
-
-            <ul class="grid list-none grid-cols-2 gap-6 p-0 m-0 sm:grid-cols-3 lg:grid-cols-4">
-                <?php foreach ($all_partners as $partner) :
-                    $logo = radio_image(get_field('logo', $partner->ID), get_the_title($partner));
-                    $link = get_field('link', $partner->ID);
-                    if (!$logo || !$logo['url']) {
-                        continue;
-                    }
-                ?>
-                    <li>
-                        <?php if ($link) : ?>
-                            <a href="<?php echo esc_url($link); ?>"
-                                target="_blank" rel="noopener noreferrer"
-                                class="flex aspect-3/2 items-center justify-center rounded-2xl border-2 border-purple/20 bg-white p-6
-                                       transition hover:border-purple focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple"
-                                aria-label="<?php echo esc_attr(sprintf('Visiter le site de %s (nouvel onglet)', get_the_title($partner))); ?>">
-                            <?php else : ?>
-                                <div class="flex aspect-3/2 items-center justify-center rounded-2xl border-2 border-purple/20 bg-white p-6">
-                                <?php endif; ?>
-
-                                <img src="<?php echo esc_url($logo['url']); ?>"
-                                    alt="<?php echo esc_attr($logo['alt']); ?>"
-                                    class="max-h-full max-w-full object-contain"
-                                    loading="lazy">
-
-                                <?php echo $link ? '</a>' : '</div>'; ?>
-                    </li>
-                <?php endforeach; ?>
-            </ul>
-        </section>
-    <?php endif; ?>
-
-    <!-- Nous joindre -->
-    <?php if ($nous_joindre_title || $nous_joindre_texte) : ?>
-        <section class="px-6 py-10 pb-16" aria-labelledby="contact-title">
-            <?php if ($nous_joindre_title) : ?>
-                <h2 id="contact-title" class="mb-4 font-title font-black uppercase text-yellow">
-                    <?php echo esc_html($nous_joindre_title); ?>
+        <!-- Partners -->
+        <?php if (!empty($all_partners)) : ?>
+            <section class="px-6 py-16" aria-labelledby="partenaires-title">
+                <h2 id="partenaires-title"
+                    class="mb-10 font-title font-black uppercase text-yellow">
+                    Partenaires
                 </h2>
-            <?php endif; ?>
-            <?php if ($nous_joindre_texte) : ?>
-                <div class="space-y-3 leading-relaxed">
-                    <?php echo wp_kses_post(wpautop($nous_joindre_texte)); ?>
-                </div>
-            <?php endif; ?>
-        </section>
-    <?php endif; ?>
 
-    <!-- Politique -->
-    <?php if ($politique_title || $politique_texte) : ?>
-        <section class="px-6 py-10" aria-labelledby="politique-title">
-            <?php if ($politique_title) : ?>
-                <h2 id="politique-title" class="mb-4 font-title font-black uppercase text-yellow">
-                    <?php echo esc_html($politique_title); ?>
-                </h2>
-            <?php endif; ?>
-            <?php if ($politique_texte) : ?>
-                <div class="space-y-3 leading-relaxed">
-                    <?php echo wp_kses_post(wpautop($politique_texte)); ?>
-                </div>
-            <?php endif; ?>
-        </section>
-    <?php endif; ?>
+                <ul class="grid list-none grid-cols-2 gap-6 p-0 m-0 sm:grid-cols-3 lg:grid-cols-4">
+                    <?php foreach ($all_partners as $partner) :
+                        $logo = radio_image(get_field('logo', $partner->ID), get_the_title($partner));
+                        $link = get_field('link', $partner->ID);
+                        if (!$logo || !$logo['url']) {
+                            continue;
+                        }
+                    ?>
+                        <li>
+                            <?php if ($link) : ?>
+                                <a href="<?php echo esc_url($link); ?>"
+                                    target="_blank" rel="noopener noreferrer"
+                                    class="flex aspect-3/2 items-center justify-center rounded-2xl border-2 border-purple/20 bg-white p-6
+                                           transition hover:border-purple focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple"
+                                    aria-label="<?php echo esc_attr(sprintf('Visiter le site de %s (nouvel onglet)', get_the_title($partner))); ?>">
+                                <?php else : ?>
+                                    <div class="flex aspect-3/2 items-center justify-center rounded-2xl border-2 border-purple/20 bg-white p-6">
+                                    <?php endif; ?>
+
+                                    <img src="<?php echo esc_url($logo['url']); ?>"
+                                        alt="<?php echo esc_attr($logo['alt']); ?>"
+                                        class="max-h-full max-w-full object-contain"
+                                        loading="lazy">
+
+                                    <?php echo $link ? '</a>' : '</div>'; ?>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+            </section>
+        <?php endif; ?>
+
+        <!-- Nous joindre -->
+        <?php if ($nous_joindre_title || $nous_joindre_texte) : ?>
+            <section class="px-6 py-10 pb-16" aria-labelledby="contact-title">
+                <?php if ($nous_joindre_title) : ?>
+                    <h2 id="contact-title" class="mb-4 font-title font-black uppercase text-yellow">
+                        <?php echo esc_html($nous_joindre_title); ?>
+                    </h2>
+                <?php endif; ?>
+                <?php if ($nous_joindre_texte) : ?>
+                    <div class="space-y-3 leading-relaxed">
+                        <?php echo wp_kses_post(wpautop($nous_joindre_texte)); ?>
+                    </div>
+                <?php endif; ?>
+            </section>
+        <?php endif; ?>
+
+        <!-- Politique -->
+        <?php if ($politique_title || $politique_texte) : ?>
+            <section class="px-6 py-10" aria-labelledby="politique-title">
+                <?php if ($politique_title) : ?>
+                    <h2 id="politique-title" class="mb-4 font-title font-black uppercase text-yellow">
+                        <?php echo esc_html($politique_title); ?>
+                    </h2>
+                <?php endif; ?>
+                <?php if ($politique_texte) : ?>
+                    <div class="space-y-3 leading-relaxed">
+                        <?php echo wp_kses_post(wpautop($politique_texte)); ?>
+                    </div>
+                <?php endif; ?>
+            </section>
+        <?php endif; ?>
+
+    </div>
 
 </main>
 
@@ -349,20 +443,20 @@ $nous_joindre_texte = get_field('nous_joindre_texte');
                 track.style.scrollSnapType = '';
             }
 
-            // 1. Put identical copies of the set before and after the real cards
-            if (count > 1) {
-                var perSide = Math.ceil(track.clientWidth / setWidth) + 1;
-                var before = document.createDocumentFragment();
-                var after = document.createDocumentFragment();
-                for (var i = 0; i < perSide; i++) {
-                    originals.forEach(function(card) {
-                        before.appendChild(makeClone(card));
-                        after.appendChild(makeClone(card));
-                    });
-                }
-                track.insertBefore(before, originals[0]);
-                track.appendChild(after);
+            // 1. Put identical copies of the set before and after the real cards.
+            //    This now also runs when there is only ONE card (no "count > 1" check),
+            //    so a carousel with a single animator still loops.
+            var perSide = Math.ceil(track.clientWidth / setWidth) + 1;
+            var before = document.createDocumentFragment();
+            var after = document.createDocumentFragment();
+            for (var i = 0; i < perSide; i++) {
+                originals.forEach(function(card) {
+                    before.appendChild(makeClone(card));
+                    after.appendChild(makeClone(card));
+                });
             }
+            track.insertBefore(before, originals[0]);
+            track.appendChild(after);
 
             var cards = track.querySelectorAll('[data-card]');
 
@@ -389,13 +483,26 @@ $nous_joindre_texte = get_field('nous_joindre_texte');
             var ticking = false;
 
             function wrap() {
-                if (count > 1 && !touching) {
+                if (!touching) {
                     var start = originals[0].offsetLeft;
                     var center = track.scrollLeft + track.clientWidth / 2;
+                    var target = null;
                     if (center < start) {
-                        jump(track.scrollLeft + setWidth);
+                        target = track.scrollLeft + setWidth;
                     } else if (center >= start + setWidth) {
-                        jump(track.scrollLeft - setWidth);
+                        target = track.scrollLeft - setWidth;
+                    }
+                    if (target !== null) {
+                        // The copy and the real card look identical, but the real one was "inactive"
+                        // (faded + small), so the CSS transition made it flash. Swap with transitions off.
+                        track.classList.add('is-jumping');
+                        jump(target);
+                        updateActive();
+                        void track.offsetWidth; // apply the instant change before re-enabling transitions
+                        requestAnimationFrame(function() {
+                            track.classList.remove('is-jumping');
+                        });
+                        return;
                     }
                 }
                 updateActive();
