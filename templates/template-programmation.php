@@ -222,7 +222,7 @@ get_header();
                         <textarea class="min-h-24 resize-y rounded-2xl bg-[#f1f1f1] px-4 py-3  font-normal text-black outline-none focus-visible:ring-2 focus-visible:ring-violet" name="project_message" required></textarea>
                     </label>
 
-                    <button class="justify-self-end rounded-full bg-orange px-6 py-2 font-extrabold text-white transition-colors hover:bg-yellow hover:text-black focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet" type="submit">Envoyer</button>
+                    <button class="bg-yellow text-black font-bold no-underline text-center p-4 rounded-[30px] btn-press" type="submit">Envoyer</button>
                 </form>
             </div>
         </div>
