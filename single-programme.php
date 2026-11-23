@@ -40,7 +40,7 @@ while (have_posts()) :
         <div class="mx-auto max-w-5xl">
             <a href="<?php echo esc_url($back_url); ?>"
                 style="display: inline-flex; margin-bottom: 2rem;"
-                class="bg-yellow text-black font-bold no-underline text-center p-4 rounded-[30px] btn-press">
+                class="bg-orange text-white font-bold no-underline text-center p-4 rounded-[30px] hover:bg-yellow hover:text-black hover:scale-105 ease-in-out duration-300">
                 Retour aux programmes
             </a>
 
