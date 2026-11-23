@@ -6,7 +6,7 @@ get_header();
 
     <section class="relative left-1/2 w-screen -translate-x-1/2 px-4 py-12">
         <div class="mx-auto max-w-6xl">
-            <h2 class="mb-8 block font-bold text-orange text-6xl w-110 leading-14"><?php the_title(); ?></h2>
+            <h2 class="mb-8 block font-bold text-orange text-6xl w-110 leading-14 archivo uppercase"><?php the_title(); ?></h2>
 
 
 
@@ -133,10 +133,10 @@ get_header();
                                     'd-m-Y',
                                     'm/d/Y',
                                 ] as $date_format) {
-                                    $parsed_date = DateTimeImmutable::createFromFormat('!' . $date_format, $date_text);
+                                    $parsed_date = DateTimeImmutable::createFromFormat('!' . $date_format, $date_text, wp_timezone());
                                     $errors = DateTimeImmutable::getLastErrors();
                                     if ($parsed_date && (!$errors || ($errors['warning_count'] === 0 && $errors['error_count'] === 0))) {
-                                        $timestamp = $parsed_date->setTimezone(wp_timezone())->getTimestamp();
+                                        $timestamp = $parsed_date->getTimestamp();
                                         break;
                                     }
                                 }
@@ -146,10 +146,6 @@ get_header();
                                     $programme_day_slugs[] = $weekday_aliases[$weekday_key];
                                 }
                             }
-                        }
-
-                        if (empty($programme_day_slugs)) {
-                            $programme_day_slugs[] = $weekday_aliases[strtolower(wp_date('l', get_the_date('U') ?: time()))];
                         }
 
                         $programme_day_slugs = array_values(array_unique(array_filter($programme_day_slugs)));
@@ -162,9 +158,9 @@ get_header();
                     endwhile;
                     ?>
                 </div>
-                <p class="programme-empty-state mt-8 hidden text-center font-bold text-purple" role="status" aria-live="polite">Aucune programmation publiée pour ce jour.</p>
+                <p class="programme-empty-state mt-8 hidden text-center font-bold text-black" role="status" aria-live="polite">Aucune programmation publiée pour ce jour.</p>
             <?php else : ?>
-                <p class="">Aucun programme ici à date.</p>
+                <p class="text-black">Aucun programme ici à date.</p>
             <?php endif; ?>
 
             <?php wp_reset_postdata(); ?>

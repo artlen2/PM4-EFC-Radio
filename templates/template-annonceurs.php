@@ -26,12 +26,13 @@ while (have_posts()) : the_post();
  
     <div>
  
-        <section class="max-w-10xl mx-auto px-4 py-10  ">
+        <section class="max-w-10xl mx-auto px-4 py-10 ">
  
-            <h1 class="text-3xl md:text-5xl font-bold text-white mb-20 text-right rotate-[3deg] ">
+            <h1 class=" md:text-5xl font-bold text-white mb-20 text-right rotate-[3deg] ">
                 <?php echo esc_html($titre ?: get_the_title()); ?>
             </h1>
- 
+
+            
             <div class="grid gap-6 md:grid-cols-2 ">
  
            
@@ -81,12 +82,35 @@ while (have_posts()) : the_post();
                     </section>
                 <?php endif; ?>
 
-                 <img src="<?php echo esc_url(get_template_directory_uri()); ?>/assets/objets/old-cam.png"
-                    alt="" aria-hidden="true"
-                    class="w-24 md:w-40 justify-self-end md:col-span-2">
+                 
  
             </div>
         </section>
+
+
+        <!-- nous joindre -->
+
+        <section class="bg-beige p-24">
+
+           <h1 class="text-5xl text-violet mb-24">Nous joindre</h1>
+
+           <!-- FORMULAIRE NOUS JOINDRE -->
+           <div class=" bg-violet p-8 rounded-[24px] border-t-2 border-x-2 border-b-8 border-black ">
+
+              <h2 class="text-3xl text-beige mb-8 " >Équipe des ventes:</h2>
+
+              <ul >
+
+                 <li class="mb-6 text-beige">COURRIEL :</li>
+                 <li class="mb-6 text-beige">TÉLÉPHONE :</li>
+
+               </ul>
+
+            </div>
+
+        </section>
+
+        
     </div>
  
 <?php endwhile; ?>
