@@ -104,6 +104,28 @@ Version: 1.0
   }
 }
 
+/* Vagues animées de la carte marée */
+.maree-parallax > use {
+  animation: maree-vague 12s linear infinite;
+}
+.maree-parallax > use:nth-child(1) {
+  animation-delay: -2s;
+  animation-duration: 5s;
+}
+.maree-parallax > use:nth-child(2) {
+  animation-delay: -4s;
+  animation-duration: 3s;
+}
+
+@keyframes maree-vague {
+  0% {
+    transform: translate3d(-90px, 0, 0);
+  }
+  100% {
+    transform: translate3d(85px, 0, 0);
+  }
+}
+
 /* bg du main en pleine largeur */
 main.container {
   box-shadow: 0 0 0 100vmax var(--main-bg, transparent);
@@ -134,4 +156,33 @@ main.container.bg-orange {
     transform: translateY(6px);
     box-shadow: 0 0 0 var(--color-black);
   }
+}
+
+/* ===== Bouton Québec 511 par-dessus la carte Google ===== */
+.carte-routes {
+    position: relative;
+}
+
+.carte-routes .btn-quebec511 {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 12px 14px;
+    min-width: 185px;
+    background: #fff;
+    color: #1a73e8;
+    font-family: Roboto, Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 2px;
+    box-shadow: 0 1px 4px -1px rgba(0, 0, 0, 0.3);
+}
+
+.carte-routes .btn-quebec511:hover {
+    background: #f1f3f4;
 }

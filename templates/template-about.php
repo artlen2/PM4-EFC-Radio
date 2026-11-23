@@ -287,7 +287,7 @@ get_header();
                     var step = track.querySelector('[data-card]').offsetWidth + 40;
                     track.scrollBy({
                         left: step * Number(btn.dataset.scroll),
-                        behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'
+                        behavior: 'smooth'
                     });
                 });
             });
