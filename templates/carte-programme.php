@@ -26,7 +26,8 @@ $grid_columns = !$has_image
         : 'grid-cols-[minmax(0,1fr)_minmax(0,1fr)] md:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)]');
 ?>
 
-<article class="grid grid-cols-1 overflow-hidden rounded-[2.5rem] bg-black text-white transition-transform duration-300 ease-out hover:-translate-y-1 motion-reduce:transform-none md:min-h-40 <?php echo esc_attr($grid_columns); ?>">
+<article class="grid grid-cols-1 overflow-hidden rounded-[2.5rem] bg-black text-white shadow-sm transition-[scale,transform,box-shadow] duration-300 ease-out hover:scale-180 hover:shadow-lg motion-reduce:transition-none md:min-h-40 <?php echo esc_attr($grid_columns); ?>">
+
     <?php if ($image) : ?>
         <figure class="<?php echo esc_attr($figure_order); ?> min-h-36 min-w-0 overflow-hidden p-2 md:min-h-0">
             <?php if (is_array($image) && !empty($image['ID'])) : ?>
@@ -36,7 +37,7 @@ $grid_columns = !$has_image
                     absint($image['ID']),
                     'large',
                     false,
-                    ['alt' => $image_alt, 'class' => 'block size-full rounded-[1.75rem] object-cover']
+                    ['alt' => $image_alt, 'class' => 'block size-full transform-none rounded-[1.75rem] object-cover object-center']
                 );
                 ?>
             <?php elseif (is_numeric($image)) : ?>
@@ -45,19 +46,19 @@ $grid_columns = !$has_image
                     absint($image),
                     'large',
                     false,
-                    ['alt' => $image_alt, 'class' => 'block size-full rounded-[1.75rem] object-cover']
+                    ['alt' => $image_alt, 'class' => 'block size-full transform-none rounded-[1.75rem] object-cover object-center']
                 );
                 ?>
             <?php elseif (is_array($image) && !empty($image['url'])) : ?>
                 <?php $image_alt = !empty($image['alt']) ? $image['alt'] : $image_alt; ?>
-                <img class="block size-full rounded-[1.75rem] object-cover" src="<?php echo esc_url($image['url']); ?>" alt="<?php echo esc_attr($image_alt); ?>">
+                <img class="block size-full transform-none rounded-[1.75rem] object-cover object-center" src="<?php echo esc_url($image['url']); ?>" alt="<?php echo esc_attr($image_alt); ?>">
             <?php elseif (is_string($image)) : ?>
-                <img class="block size-full rounded-[1.75rem] object-cover" src="<?php echo esc_url($image); ?>" alt="<?php echo esc_attr($image_alt); ?>">
+                <img class="block size-full transform-none rounded-[1.75rem] object-cover object-center" src="<?php echo esc_url($image); ?>" alt="<?php echo esc_attr($image_alt); ?>">
             <?php endif; ?>
         </figure>
     <?php elseif (has_post_thumbnail()) : ?>
         <figure class="<?php echo esc_attr($figure_order); ?> min-h-36 min-w-0 overflow-hidden p-2 md:min-h-0">
-            <?php the_post_thumbnail('large', ['alt' => $image_alt, 'class' => 'block size-full rounded-[1.75rem] object-cover']); ?>
+            <?php the_post_thumbnail('large', ['alt' => $image_alt, 'class' => 'block size-full transform-none rounded-[1.75rem] object-cover object-center']); ?>
         </figure>
     <?php endif; ?>
 
