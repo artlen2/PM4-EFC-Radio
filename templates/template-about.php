@@ -144,6 +144,7 @@ if (!function_exists('radio_member_dialog')) {
 }
 
 // Carousel
+// $icon is a path relative to the theme folder, e.g. 'assets/objets/micro.png'
 if (!function_exists('radio_carousel')) {
     function radio_carousel($id, $title, $icon, $members)
     {
@@ -153,15 +154,15 @@ if (!function_exists('radio_carousel')) {
     ?>
         <section class="relative py-10" aria-labelledby="<?php echo esc_attr($id); ?>-title">
 
-            <div class="mx-auto mb-8 flex max-w-6xl items-center gap-4 px-6">
+            <div class="mb-8 flex items-center gap-4 px-6">
                 <h2 id="<?php echo esc_attr($id); ?>-title"
-                    class="font-title font-black uppercase text-yellow ">
+                    class="font-title font-black uppercase text-yellow">
                     <?php echo esc_html($title); ?>
                 </h2>
                 <?php
-                $icon_path = get_template_directory() . '/assets/images/' . $icon;
-                if (file_exists($icon_path)) : ?>
-                    <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/' . $icon); ?>"
+                $icon_path = get_template_directory() . '/' . ltrim($icon, '/');
+                if ($icon && file_exists($icon_path)) : ?>
+                    <img src="<?php echo esc_url(get_template_directory_uri() . '/' . ltrim($icon, '/')); ?>"
                         alt="" class="h-20 w-auto" aria-hidden="true">
                 <?php endif; ?>
 
@@ -216,34 +217,41 @@ $team = array_map(function ($p) {
         'shape' => 'squircle',
     ];
 }, $all_team_members);
+
+/* Page fields */
+$mission_title = get_field('mission_title');
+$mission_text = get_field('mission_text');
+$politique_title = get_field('politique_title');
+$politique_texte = get_field('politique_texte');
+$nous_joindre_title = get_field('nous_joindre_title');
+$nous_joindre_texte = get_field('nous_joindre_texte');
 ?>
 
-<main class="overflow-x-clip bg-beige font-sans text-black">
+<main class="container mx-auto px-4 py-12 bg-beige font-sans text-black">
 
-    <!-- Page header -->
-    <header class="mx-auto flex max-w-6xl justify-end px-6 pt-12">
-        <h1 class="-rotate-3 font-title font-black uppercase text-orange ">
-            <?php the_title(); ?>
-        </h1>
-    </header>
+    <h1 class="-rotate-3 font-title font-black uppercase text-orange">
+        <?php echo esc_html($mission_title ?: get_the_title()); ?>
+    </h1>
 
-    <?php if (get_the_content()) : ?>
-        <div class="mx-auto mt-6 max-w-2xl px-6 text-center ">
-            <?php the_content(); ?>
+    <?php if ($mission_text) : ?>
+        <div class="mt-10 max-w-2xl px-6 text-left leading-relaxed">
+            <?php echo wp_kses_post(wpautop($mission_text)); ?>
         </div>
     <?php endif; ?>
 
     <!-- Hosts -->
-    <?php radio_carousel('animateurs', 'Animateurs', 'icon-micro.png', $animators); ?>
+    <?php radio_carousel('animateurs', 'Animateurs', 'assets/objets/micro.png', $animators); ?>
 
     <!-- Team -->
-    <?php radio_carousel('equipe', 'Employés', 'icon-camera.png', $team); ?>
+    <?php radio_carousel('equipe', 'Employés', 'assets/objets/old-cam.png', $team); ?>
+
+
 
     <!-- Partners -->
     <?php if (!empty($all_partners)) : ?>
-        <section class="mx-auto max-w-6xl px-6 py-16" aria-labelledby="partenaires-title">
+        <section class="px-6 py-16" aria-labelledby="partenaires-title">
             <h2 id="partenaires-title"
-                class="mb-10 font-title font-black uppercase text-yellow ">
+                class="mb-10 font-title font-black uppercase text-yellow">
                 Partenaires
             </h2>
 
@@ -275,6 +283,38 @@ $team = array_map(function ($p) {
                     </li>
                 <?php endforeach; ?>
             </ul>
+        </section>
+    <?php endif; ?>
+
+    <!-- Nous joindre -->
+    <?php if ($nous_joindre_title || $nous_joindre_texte) : ?>
+        <section class="px-6 py-10 pb-16" aria-labelledby="contact-title">
+            <?php if ($nous_joindre_title) : ?>
+                <h2 id="contact-title" class="mb-4 font-title font-black uppercase text-yellow">
+                    <?php echo esc_html($nous_joindre_title); ?>
+                </h2>
+            <?php endif; ?>
+            <?php if ($nous_joindre_texte) : ?>
+                <div class="space-y-3 leading-relaxed">
+                    <?php echo wp_kses_post(wpautop($nous_joindre_texte)); ?>
+                </div>
+            <?php endif; ?>
+        </section>
+    <?php endif; ?>
+
+    <!-- Politique -->
+    <?php if ($politique_title || $politique_texte) : ?>
+        <section class="px-6 py-10" aria-labelledby="politique-title">
+            <?php if ($politique_title) : ?>
+                <h2 id="politique-title" class="mb-4 font-title font-black uppercase text-yellow">
+                    <?php echo esc_html($politique_title); ?>
+                </h2>
+            <?php endif; ?>
+            <?php if ($politique_texte) : ?>
+                <div class="space-y-3 leading-relaxed">
+                    <?php echo wp_kses_post(wpautop($politique_texte)); ?>
+                </div>
+            <?php endif; ?>
         </section>
     <?php endif; ?>
 
@@ -391,24 +431,10 @@ $team = array_map(function ($p) {
                 });
             });
 
-<<<<<<< HEAD
-            // Flèches précédent / suivant
-            document.querySelectorAll('[data-scroll]').forEach(function(btn) {
-                btn.addEventListener('click', function() {
-                    var track = document.getElementById(btn.dataset.target);
-                    var step = track.querySelector('[data-card]').offsetWidth + 40;
-                    track.scrollBy({
-                        left: step * Number(btn.dataset.scroll),
-                        behavior: 'smooth'
-                    });
-                });
-            });
-=======
             // Start on the first real card, centered
             jump(originals[0].offsetLeft - (track.clientWidth - originals[0].offsetWidth) / 2);
             updateActive();
         });
->>>>>>> f35d8d9a876f424efb043d194960050a61a8dc1b
 
         // Previous / next arrows
         document.querySelectorAll('[data-scroll]').forEach(function(btn) {
