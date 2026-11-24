@@ -177,6 +177,23 @@ main.container > *:not(.w-screen, .full-bleed) {
   }
 }
 
+/* btn qui s'enfonce au hover */
+@utility btn-border {
+  border: 2px solid var(--color-yellow);
+  box-shadow: 0 6px 0 var(--color-yellow);
+  transition:
+    transform 150ms ease-out,
+    box-shadow 150ms ease-out,
+    background-color 300ms,
+    color 300ms;
+
+  &:hover {
+    transform: translateY(6px);
+    box-shadow: 0 0 0 var(--color-yellow);
+  }
+}
+
+
 /* Bouton Québec 511 par-dessus la carte Google */
 .carte-routes {
   position: relative;
