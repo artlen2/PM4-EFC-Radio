@@ -31,17 +31,9 @@ if (!isset($filters[$current])) {
 // Current page number (for the pagination)
 $paged = max(1, (int) get_query_var('paged'));
 
-// The query
-$query_args = [
-    'post_type'      => 'post',
-    'post_status'    => 'publish',
-    'posts_per_page' => 4,
-    'paged'          => $paged,
-];
-if ($current) {
-    $query_args['category_name'] = $current;
-}
-$news = new WP_Query($query_args);
+// Use WordPress's main query, configured in functions.php.
+global $wp_query;
+$news = $wp_query;
 ?>
 
 <?php

@@ -50,6 +50,40 @@ function efc_enqueue_scripts()
 }
 add_action("wp_enqueue_scripts", "efc_enqueue_scripts");
 
+/*
+ * Actualités : pagination et filtres de la requête principale.
+ */
+add_action('pre_get_posts', function ($query) {
+    if (
+        is_admin() ||
+        !$query->is_main_query() ||
+        !$query->is_home()
+    ) {
+        return;
+    }
+
+    $query->set('posts_per_page', 4);
+    $query->set('orderby', 'date');
+    $query->set('order', 'DESC');
+
+    $allowed_categories = [
+        'communaute',
+        'culturel',
+        'politique',
+        'sport',
+    ];
+
+    $category = (
+        isset($_GET['categorie']) &&
+        is_string($_GET['categorie'])
+    )
+        ? sanitize_key(wp_unslash($_GET['categorie']))
+        : '';
+
+    if (in_array($category, $allowed_categories, true)) {
+        $query->set('category_name', $category);
+    }
+});
 
 // formulaire pour déposer son projet
 
