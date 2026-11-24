@@ -80,13 +80,10 @@ while (have_posts()) :
                 d="M0 40 Q 60 0 120 40 T 240 40 T 360 40 T 480 40 T 600 40 T 720 40 T 840 40 T 960 40 T 1080 40 T 1200 40 T 1320 40 T 1440 40 V100 H0 Z" />
         </svg>
  
-    <main class="relative isolate overflow-hidden bg-black px-4 py-10 text-white sm:px-6 sm:py-14">
-        <img
-            class="programme-vector-background"
-            src="<?php echo esc_url(get_template_directory_uri() . '/assets/objets/vecteur.png'); ?>"
-            alt=""
-            aria-hidden="true"
-        >
+    <main
+        class="programme-single relative isolate overflow-hidden bg-black px-4 pt-10 pb-28 text-white sm:px-6 sm:pt-14 sm:pb-36 md:pb-44"
+        style="background-image: linear-gradient(rgba(15, 14, 15, 0.84), rgba(15, 14, 15, 0.84)), url('<?php echo esc_url(get_template_directory_uri() . '/assets/objets/vecteur.png'); ?>')"
+    >
         <div aria-hidden="true" class="pointer-events-none absolute -right-40 top-16 size-96 rounded-full bg-purple/30 blur-3xl"></div>
         <div class="programme-music-notes" aria-hidden="true">
             <span>♪</span>
@@ -95,21 +92,29 @@ while (have_posts()) :
             <span>♩</span>
             <span>♪</span>
         </div>
-        <div class="relative mx-auto max-w-6xl">
+        <?php if ($animateurs) : ?>
+            <img
+                class="programme-character"
+                src="<?php echo esc_url(get_template_directory_uri() . '/assets/objets/Personnage.png'); ?>"
+                alt=""
+                aria-hidden="true"
+            >
+        <?php endif; ?>
+        <div class="relative z-10 mx-auto max-w-6xl">
             <a href="<?php echo esc_url($back_url); ?>"
                 class="mb-10 inline-flex items-center gap-2 rounded-full border border-white/25 px-5 py-3 font-bold bg-orange text-white no-underline transition-colors duration-200 btn-border hover:bg-yellow hover:text-black focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange">
                 <span aria-hidden="true">&larr;</span> Retour aux programmes
             </a>
 
             <article>
-                <div class="grid items-center gap-8 sm:gap-10 md:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] md:gap-14">
+                <div class="grid items-center gap-8 sm:gap-10 md:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] md:gap-14">
                     <header class="relative z-10">
                         <p class="mb-5 flex items-center gap-3 text-sm font-extrabold uppercase tracking-[0.2em] text-yellow">
                             <span aria-hidden="true" class="size-2 rounded-full bg-orange motion-safe:animate-pulse"></span>
                             Au programme
                         </p>
-                        <h1 class="max-w-3xl break-words font-title text-4xl font-black uppercase leading-tight text-beige sm:text-5xl md:text-6xl lg:text-7xl">
-                            <span class=" px-3 py-1 text-orange hover:text-beige transition-colors ease-in-out duration-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange hover:scale-110 motion-safe:transition-transform">
+                        <h1 class="max-w-3xl min-w-0 break-words font-title text-[clamp(2rem,5.5vw,4.5rem)] font-black uppercase leading-[1.05] text-orange [overflow-wrap:anywhere]">
+                            <span class="programme-title">
                                 <?php echo esc_html($title); ?>
                             </span>
                         </h1>
@@ -119,7 +124,7 @@ while (have_posts()) :
                     </header>
 
                 <?php if ($image_id || $image_url) : ?>
-                        <figure class="relative mx-auto w-full max-w-2xl p-1 sm:p-3">
+                        <figure class="relative mx-auto w-full max-w-none p-0">
                      
                 
                             <div class="relative z-10 overflow-hidden rounded-[1.75rem] border-4 border-violet bg-white/5">
@@ -140,7 +145,8 @@ while (have_posts()) :
                 <?php endif; ?>
                 </div>
 
-                <div class="mt-12 grid gap-4 sm:grid-cols-2">
+                <div class="programme-details relative mt-12">
+                    <div class="grid gap-4 sm:grid-cols-2">
                     <?php if ($date || $time_start || $time_end) : ?>
                         <section class="btn-border rounded-3xl bg-orange p-6 text-purple sm:p-8 hover:bg-yellow hover:text-black transition-colors duration-300" aria-labelledby="programme-schedule">
                             <p class=" mb-3 text-sm font-extrabold uppercase tracking-[0.18em]">Le rendez-vous</p>
@@ -160,7 +166,7 @@ while (have_posts()) :
 
                     <!-- partie pour les animateurs qui font l'émission -->
                     <?php if ($animateurs) : ?>
-                        <section class="relative rounded-3xl bg-purple p-6 pr-24 sm:p-8 sm:pr-32 hover:bg-yellow hover:text-black transition-colors duration-300 btn-border" aria-labelledby="programme-hosts">
+                        <section class="rounded-3xl bg-purple p-6 sm:p-8 hover:bg-yellow hover:text-black transition-colors duration-300 btn-border" aria-labelledby="programme-hosts">
                            
                             <h2 id="programme-hosts" class="font-title text-3xl font-black uppercase sm:text-4xl">Animateurs</h2>
                             <ul class="mt-4 flex flex-wrap gap-2">
@@ -176,14 +182,9 @@ while (have_posts()) :
                                     </li>
                                 <?php endforeach; ?>
                             </ul>
-                            <img
-                                class="programme-character"
-                                src="<?php echo esc_url(get_template_directory_uri() . '/assets/objets/Personnage.png'); ?>"
-                                alt=""
-                                aria-hidden="true"
-                            >
                         </section>
                     <?php endif; ?>
+                    </div>
                 </div>
 
             </article>

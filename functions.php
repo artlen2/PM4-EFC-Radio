@@ -28,6 +28,17 @@ function efc_enqueue_scripts()
         );
     }
 
+    if (is_singular('programme')) {
+        $programme_title_script = get_template_directory() . '/assets/scripts/programme-title-spotlight.js';
+        wp_enqueue_script(
+            'efc-programme-title-spotlight',
+            get_template_directory_uri() . '/assets/scripts/programme-title-spotlight.js',
+            [],
+            filemtime($programme_title_script),
+            true
+        );
+    }
+
     // Vue.js 
     if (is_page_template("templates/template-evenements-vue.php")) {
         wp_enqueue_script("vue-lib", "https://unpkg.com/vue@3/dist/vue.global.js");

@@ -69,8 +69,6 @@
                         <?php
                         if (is_singular()) {
                             echo esc_html(get_the_title());
-                        } elseif (is_home()) {
-                            echo esc_html(get_the_title(get_option('page_for_posts')));
                         } elseif (is_search()) {
                             echo 'Recherche : ' . esc_html(get_search_query());
                         } elseif (is_404()) {
@@ -83,3 +81,9 @@
                 </div>
             <?php endif; ?>
         </section>
+        <?php $wave_bg = $GLOBALS['wave_bg'] ?? 'var(--color-beige)'; ?>
+        <svg class="hero-wave -mt-px -mb-px block h-16 w-full rotate-180 text-[#fdbe00] md:h-24" style="background-color: <?php echo esc_attr($wave_bg); ?>;" viewBox="0 0 1440 100"
+            preserveAspectRatio="none" aria-hidden="true">
+            <path fill="currentColor"
+                d="M0 40 Q 60 0 120 40 T 240 40 T 360 40 T 480 40 T 600 40 T 720 40 T 840 40 T 960 40 T 1080 40 T 1200 40 T 1320 40 T 1440 40 V100 H0 Z" />
+        </svg>
