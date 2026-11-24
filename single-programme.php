@@ -185,6 +185,9 @@ while (have_posts()) :
                         </section>
                     <?php endif; ?>
                     </div>
+                    <?php if ($animateurs) : ?>
+                     
+                    <?php endif; ?>
                 </div>
 
             </article>
