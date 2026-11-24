@@ -120,15 +120,20 @@ get_header(); ?>
                                 alt="main qui tient un téléphone"
                                 class="rotate-[30deg] w-32 mt-6 md:mt-0 md:w-50 md:ml-30 ">
 
+                            <img src="<?php echo esc_url(get_stylesheet_directory_uri()); ?>/assets/objets/rond-points.png"
+                                alt="texture de point overlay"
+                                class="rotate-[30deg] w-80 absolute top-0 mix-blend-color-burn">
 
                         </div>
 
-                        <div class="ml-50">
-                            <div class="bg-violet w-full  md:w-150 p-14 md:p-12 pb-16 md:pb-24 md:pr-[35%] min-h-[18rem] [-webkit-mask-size:100%_70%] [mask-size:100%_70%] md:[-webkit-mask-size:100%_70%] md:[mask-size:100%_70%]"
+                        <div class="ml-50 ">
+                            <div class="bg-violet w-full   md:w-150 p-14 md:p-12 pb-16 md:pb-24 md:pr-[35%] min-h-[18rem] [-webkit-mask-size:100%_70%] [mask-size:100%_70%] md:[-webkit-mask-size:100%_70%] md:[mask-size:100%_70%]"
                                 style="-webkit-mask-image: url('<?php echo esc_url(get_stylesheet_directory_uri()); ?>/assets/objets/Union.png');
                         mask-image: url('<?php echo esc_url(get_stylesheet_directory_uri()); ?>/assets/objets/Union.png');
                         -webkit-mask-position: center; mask-position: center;
                         -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;">
+
+
 
                                 <h2 class="text-5xl text-beige mb-8 mt-24 md:w-100">Équipe des ventes :</h2>
 
