@@ -27,10 +27,10 @@ $grid_columns = !$has_image
         : 'grid-cols-[minmax(0,1fr)_minmax(0,1fr)] md:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)]');
 ?>
 
-<article class="grid grid-cols-1 overflow-hidden rounded-[2.5rem] bg-black text-white shadow-sm transition-[scale,transform,box-shadow] duration-300 ease-out hover:scale-105 hover:shadow-lg motion-reduce:transition-none md:min-h-40 <?php echo esc_attr($grid_columns); ?>">
+<article class="grid grid-cols-1 overflow-hidden rounded-[2.5rem] bg-black text-white shadow-sm transition-[scale,transform,box-shadow] duration-300 ease-out hover:shadow-lg motion-reduce:transition-none md:min-h-40 <?php echo esc_attr($grid_columns); ?>">
 
     <?php if ($image) : ?>
-        <figure class="<?php echo esc_attr($figure_order); ?> min-h-36 min-w-0 overflow-hidden p-2 md:min-h-0">
+        <figure class="<?php echo esc_attr($figure_order); ?> relative aspect-[16/9] min-h-44 min-w-0 overflow-hidden p-2 md:aspect-auto md:min-h-72">
             <?php if (is_array($image) && !empty($image['ID'])) : ?>
                 <?php
                 $image_alt = !empty($image['alt']) ? $image['alt'] : $image_alt;
@@ -58,16 +58,16 @@ $grid_columns = !$has_image
             <?php endif; ?>
         </figure>
     <?php elseif (has_post_thumbnail()) : ?>
-        <figure class="<?php echo esc_attr($figure_order); ?> min-h-36 min-w-0 overflow-hidden p-2 md:min-h-0">
+        <figure class="<?php echo esc_attr($figure_order); ?> relative aspect-[16/9] min-h-44 min-w-0 overflow-hidden p-2 md:aspect-auto md:min-h-72">
             <?php the_post_thumbnail('large', ['alt' => $image_alt, 'class' => 'block size-full transform-none rounded-[1.75rem] object-cover object-center']); ?>
         </figure>
     <?php endif; ?>
 
-    <div class="<?php echo esc_attr($content_order); ?> flex min-w-0 flex-col items-start justify-center gap-2 p-3 text-left sm:gap-3 sm:p-5 md:p-8 <?php echo $reverse ? 'items-end text-right' : ''; ?>">
+    <div class="<?php echo esc_attr($content_order); ?> flex min-w-0 flex-col items-start justify-center gap-2 p-4 text-left sm:gap-3 sm:p-5 md:p-8 <?php echo $reverse ? 'items-end text-right' : ''; ?>">
         <div class="flex flex-wrap items-baseline gap-x-2 gap-y-1">
-            <h2 class="font-title  font-black uppercase leading-tight text-white text-left"><?php echo esc_html($title); ?></h2>
+            <h2 class="min-w-0 break-words font-title text-left text-2xl font-black uppercase leading-tight text-white sm:text-3xl lg:text-4xl"><?php echo esc_html($title); ?></h2>
             <?php if ($date || $time_start || $time_end) : ?>
-                <p class=" font-bold text-orange text-left">
+                <p class="text-left text-base font-bold text-orange sm:text-lg">
                     <?php if ($date) : ?>
                         <?php echo esc_html($date); ?>
                     <?php endif; ?>
@@ -84,11 +84,11 @@ $grid_columns = !$has_image
 
         <!-- partie description -->
         <?php if ($description) : ?>
-            <div class=" leading-relaxed text-white/75 text-left"><?php echo wp_kses_post($description); ?></div>
+            <div class="text-left text-base leading-relaxed text-white/75 sm:text-lg [&_p]:text-base sm:[&_p]:text-lg"><?php echo wp_kses_post($description); ?></div>
         <?php endif; ?>
 
         <!-- bouton voir plus -->
-        <a class="inline-flex min-h-8 items-center justify-center rounded-full bg-orange px-3 py-1 font-extrabold text-white transition-colors duration-300 hover:bg-yellow hover:text-black focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange sm:px-5 sm:py-2" href="<?php echo esc_url(get_permalink()); ?>">
+        <a class="inline-flex min-h-8 items-center justify-center rounded-full bg-orange px-3 py-1 font-extrabold text-white transition-colors duration-300 hover:bg-yellow hover:text-black focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange sm:px-5 sm:py-2 btn-border" href="<?php echo esc_url(get_permalink()); ?>">
             Voir plus
         </a>
     </div>

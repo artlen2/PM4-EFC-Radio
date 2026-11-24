@@ -65,7 +65,7 @@
 
                 <!-- titre des autres pages -->
                 <div class="absolute inset-x-0 bottom-[22%] z-10 px-4 md:pl-[20%] md:pr-8">
-                    <h1 class="inter text-6xl -rotate-3 font-extrabold text-violet max-w-3xl">
+                    <h1 class="inter max-w-[min(90vw,48rem)] break-words text-4xl -rotate-3 font-extrabold leading-tight text-violet sm:text-5xl md:text-6xl">
                         <?php
                         if (is_singular()) {
                             echo esc_html(get_the_title());

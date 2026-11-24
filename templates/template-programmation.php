@@ -2,12 +2,19 @@
 /* Template Name: Programmation */
 get_header();
 ?>
+
+   <svg class="hero-wave -mt-px -mb-px block h-16 w-full rotate-180 text-yellow md:h-24 bg-transparent"  viewBox="0 0 1440 100"
+            preserveAspectRatio="none" aria-hidden="true">
+            <path fill="currentColor"
+                d="M0 40 Q 60 0 120 40 T 240 40 T 360 40 T 480 40 T 600 40 T 720 40 T 840 40 T 960 40 T 1080 40 T 1200 40 T 1320 40 T 1440 40 V100 H0 Z" />
+        </svg>
+
 <main class="container mx-auto px-4 py-12 bg-beige">
 
     <section class="relative left-1/2 w-screen -translate-x-1/2 px-4 py-12">
         <div class="mx-auto max-w-6xl">
-            <h2 class="mb-8 block font-bold text-orange text-6xl w-110 leading-14 archivo uppercase"><?php the_title(); ?></h2>
-               <p class="mb-12 ml-10 text-3xl font-light">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi at urna eget justo sollicitudin malesuada. Pellentesque volutpat ante quis orci pharetra, ac aliquam sapien congue. Fusce lacinia nisi tincidunt risus pellentesque, sit amet scelerisque diam suscipit. Fusce rhoncus eleifend lectus quis vulputate.</p>
+            <h2 class="mb-6 block max-w-full break-words font-bold uppercase leading-tight text-orange text-4xl sm:mb-8 sm:text-5xl lg:text-6xl archivo"><?php the_title(); ?></h2>
+            <p class="mb-10 max-w-4xl text-base font-light leading-relaxed sm:mb-12 sm:text-lg md:text-xl">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi at urna eget justo sollicitudin malesuada. Pellentesque volutpat ante quis orci pharetra, ac aliquam sapien congue. Fusce lacinia nisi tincidunt risus pellentesque, sit amet scelerisque diam suscipit. Fusce rhoncus eleifend lectus quis vulputate.</p>
 
             <?php
             $programmes = new WP_Query([
@@ -149,7 +156,7 @@ get_header();
 
                         $programme_day_slugs = array_values(array_unique(array_filter($programme_day_slugs)));
                     ?>
-                        <div class="programme-card relative mx-auto w-full transition-all duration-300 ease-out md:w-[91%] <?php echo $reverse ? 'md:mr-auto' : 'md:ml-auto'; ?>" data-programme-days="<?php echo esc_attr(implode(' ', $programme_day_slugs)); ?>">
+                        <div class="programme-card relative mx-auto w-full transition-all duration-300 ease-out md:w-[91%] md:hover:scale-[1.02] <?php echo $reverse ? 'md:mr-auto' : 'md:ml-auto'; ?>" data-programme-days="<?php echo esc_attr(implode(' ', $programme_day_slugs)); ?>">
                             <?php get_template_part('templates/carte-programme', null, ['reverse' => $reverse]); ?>
                         </div>
                     <?php
@@ -175,8 +182,8 @@ get_header();
                 <!-- formulaire de projet -->
         <div class="mx-auto grid max-w-5xl items-center gap-8 md:grid-cols-2 md:gap-12">
             <div class="max-w-md">
-                <h2 class="font-title font-black uppercase text-yellow ">Tu as un projet?</h2>
-                <p class="mt-4 leading-relaxed text-white/90">
+                <h2 class="font-title text-3xl font-black uppercase leading-tight text-yellow sm:text-4xl lg:text-5xl">Tu as un projet?</h2>
+                <p class="mt-4 text-base leading-relaxed text-white/90 sm:text-lg">
                     Une idée d'émission, une chronique ou un événement à faire connaître? Remplis le formulaire et notre équipe te recontactera pour en jaser.
                 </p>
             </div>
