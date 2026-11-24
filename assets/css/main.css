@@ -87,7 +87,7 @@ Version: 1.0
   }
 }
 
-/* -------- NAVIGATION -------- */
+/* Navigation */
 
 /* Boule disco du hero */
 .disco-swing {
@@ -126,19 +126,34 @@ Version: 1.0
   }
 }
 
-/* bg du main en pleine largeur */
+/* ===== Largeur du contenu : PADDING, pas de margin / max-width =====
+   - le main prend toute la largeur (aucune restriction)
+   - chaque enfant direct du main (section…) prend aussi toute la largeur,
+     donc son bg va de bord à bord
+   - le contenu est centré à la largeur du container grâce au padding
+   ⚠ NE PAS retirer les @media : ce sont elles qui gardent le contenu centré. */
 main.container {
-  box-shadow: 0 0 0 100vmax var(--main-bg, transparent);
-  clip-path: inset(0 -100vmax);
+  --container-w: 100%;
+  max-width: none;
+  margin-inline: 0;
+  padding-inline: 0;
+  overflow-x: clip; /* évite le scroll horizontal (scale-110, rotate…) */
+
+  @media (width >= 40rem) { --container-w: 40rem; }
+  @media (width >= 48rem) { --container-w: 48rem; }
+  @media (width >= 64rem) { --container-w: 64rem; }
+  @media (width >= 80rem) { --container-w: 80rem; }
+  @media (width >= 96rem) { --container-w: 96rem; }
 }
-main.container.bg-beige {
-  --main-bg: var(--color-beige);
-}
-main.container.bg-orange {
-  --main-bg: var(--color-orange);
+/* .w-screen = sections qui gèrent déjà leur pleine largeur (programmation)
+   .full-bleed = bord à bord SANS padding (ex. vagues entre les sections) */
+main.container > *:not(.w-screen, .full-bleed) {
+  max-width: none;
+  margin-inline: 0;
+  padding-inline: calc((100% - var(--container-w)) / 2 + 1rem);
 }
 
-/* vague du hero = meme couleur que le main */
+/* vague du hero */
 .hero-wave:has(+ main.bg-beige) {
   background-color: var(--color-beige);
 }
@@ -162,7 +177,7 @@ main.container.bg-orange {
   }
 }
 
-/* ===== Bouton Québec 511 par-dessus la carte Google ===== */
+/* Bouton Québec 511 par-dessus la carte Google */
 .carte-routes {
   position: relative;
 }
@@ -191,8 +206,7 @@ main.container.bg-orange {
   background: #f1f3f4;
 }
 
-/* ===== À propos ===== */
-/* Caroussel */
+/*  À propos */
 .radio-track {
   --card-w: 18rem;
   --card-gap: 6rem;
