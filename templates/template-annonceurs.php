@@ -22,6 +22,9 @@ while (have_posts()) : the_post();
     $logo_url    = kit_media_url(get_field('logo'));
     $typo_image_url = get_field('typo_image');
     $typo_url  = kit_media_url(get_field('typographie'));
+    $courriel = get_field('courriel');
+    $telephone = get_field('telephone');
+    
 ?>
  
     <div>
@@ -92,28 +95,44 @@ while (have_posts()) : the_post();
 
         <!-- nous joindre -->
 
-     <section class="bg-beige p-8 md:p-24 flex gap-100 relative mb-32 scale-110  ">
+     <section class="bg-beige p-8 md:p-24 flex flex-col md:flex-row gap-12 md:gap-100 relative mb-32 md:scale-110 overflow-hidden md:overflow-visible">
 
-              <div>
-                <img src="<?php echo esc_url(get_stylesheet_directory_uri()); ?>/assets/objets/disco-ball.png')" alt="main qui tien un téléphone" class="w-38 absolute top-0 right-20" >
-                  <h1 class="text-5xl text-violet  rotate-[-3deg]">Nous joindre</h1>
-                  <img src="<?php echo esc_url(get_stylesheet_directory_uri()); ?>/assets/objets/phone2.png')" alt="main qui tien un téléphone" class="rotate-[30deg] w-50 ml-30 " >
-                  
-              </div>
+    <div class="flex flex-col items-center md:block">
+        <img src="<?php echo esc_url(get_stylesheet_directory_uri()); ?>/assets/objets/disco-ball.png"
+             alt="" aria-hidden="true"
+             class="w-16 self-end md:w-38 md:absolute md:top-0 md:right-20">
 
-            <div class="scale-110" >
+        <h1 class="text-4xl md:text-5xl text-violet rotate-[-3deg]">Écris-nous!</h1>
 
-                
+        <img src="<?php echo esc_url(get_stylesheet_directory_uri()); ?>/assets/objets/phone2.png"
+             alt="main qui tient un téléphone"
+             class="rotate-[30deg] w-32 mt-6 md:mt-0 md:w-50 md:ml-30">
 
-                 <div class="bg-violet w-110 p-8 md:p-12 pb-16 md:pb-24 md:pr-[35%] min-h-[18rem]" style="-webkit-mask: url('<?php echo esc_url(get_stylesheet_directory_uri()); ?>/assets/objets/Union.png') center / 100% 100% no-repeat; mask: url('<?php echo esc_url(get_stylesheet_directory_uri()); ?>/assets/objets/Union.png') center / 100% 80% no-repeat;">
+             <p class="">Une idée, un projet? <br> Jasons ensemble!</p>
+    </div>
 
-                <h2 class="text-2xl text-beige mb-8 mt-8 w-50">Équipe des ventes :</h2>
-                
+    <div class="md:scale-110">
 
-                 <ul class="w-100 ">
-                     <li class="mb-6 text-beige ">COURRIEL : <a class=" hover:text-yellow ease-in-out duration-200 "  href="mailto:radiolamatanie@gmail.com">radiolamatanie@gmail.com</a></li>
-                     <li class="mb-6 text-beige">TÉLÉPHONE : <a class=" hover:text-yellow ease-in-out duration-200 " href="tel:+(581) 232-7434">(581) 232-7434</a></li>
-                </ul>
+        <div class="bg-violet w-full md:w-110 p-8 md:p-12 pb-16 md:pb-24 md:pr-[35%] min-h-[18rem] [-webkit-mask-size:100%_100%] [mask-size:100%_100%] md:[-webkit-mask-size:100%_80%] md:[mask-size:100%_80%]"
+             style="-webkit-mask-image: url('<?php echo esc_url(get_stylesheet_directory_uri()); ?>/assets/objets/Union.png');
+                    mask-image: url('<?php echo esc_url(get_stylesheet_directory_uri()); ?>/assets/objets/Union.png');
+                    -webkit-mask-position: center; mask-position: center;
+                    -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;">
+
+            <h2 class="text-2xl text-beige mb-8 mt-8 md:w-50">Équipe des ventes :</h2>
+
+            <ul class="w-full md:w-100">
+                <li class="mb-6 text-beige break-words">
+                    COURRIEL :
+                    <a class="hover:text-yellow ease-in-out duration-200"
+                       href="mailto:radiolamatanie@gmail.com"><?php echo esc_html($courriel); ?></a>
+                </li>
+                <li class="mb-6 text-beige">
+                    TÉLÉPHONE :
+                    <a class="hover:text-yellow ease-in-out duration-200"
+                       href="tel:+15812327434"><?php echo esc_html($telephone); ?></a>
+                </li>
+            </ul>
 
         </div>
     </div>
@@ -121,7 +140,7 @@ while (have_posts()) : the_post();
 </section>
 
         
-    </div>
+    
  
 <?php endwhile; ?>
  
