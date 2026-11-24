@@ -312,21 +312,32 @@ $nos_frequences_texte = get_field('nos_frequences_texte');
  * ============================================================
  */
 ?>
+<svg class="hero-wave -mt-px -mb-px block h-16 w-full rotate-180 text-[#fdbe00] md:h-24" viewBox="0 0 1440 100"
+    preserveAspectRatio="none" aria-hidden="true">
+    <path fill="currentColor"
+        d="M0 40 Q 60 0 120 40 T 240 40 T 360 40 T 480 40 T 600 40 T 720 40 T 840 40 T 960 40 T 1080 40 T 1200 40 T 1320 40 T 1440 40 V100 H0 Z" />
+</svg>
 <!-- overflow-x-clip hides the sideways overflow of the carousel copies -->
 <main class="overflow-x-clip bg-beige py-12 font-sans text-black">
 
     <!-- Mission (page title + text) -->
-    <div class="container mx-auto px-4">
-        <h1 class="-rotate-3 font-title font-black uppercase text-orange">
+    <div class="container mx-auto px-4 bg-violet">
+        <h1 class="font-title font-black uppercase text-white">
             <?php echo esc_html($mission_title ?: get_the_title()); ?>
         </h1>
 
         <?php if ($mission_text) : ?>
-            <div class="mt-10 max-w-2xl px-6 text-left leading-relaxed">
+            <div class="mt-10 max-w-2xl px-6 text-left leading-relaxed text-white">
                 <?php echo wp_kses_post(wpautop($mission_text)); ?>
             </div>
         <?php endif; ?>
     </div>
+
+    <svg class="hero-wave -mt-px -mb-px block h-16 w-full rotate-180 text-violet md:h-24" viewBox="0 0 1440 100"
+        preserveAspectRatio="none" aria-hidden="true">
+        <path fill="currentColor"
+            d="M0 40 Q 60 0 120 40 T 240 40 T 360 40 T 480 40 T 600 40 T 720 40 T 840 40 T 960 40 T 1080 40 T 1200 40 T 1320 40 T 1440 40 V100 H0 Z" />
+    </svg>
 
     <!-- Animateurs  -->
     <?php radio_carousel('animateurs', 'Animateurs', 'assets/objets/micro.png', $animators); ?>
@@ -600,5 +611,11 @@ $nos_frequences_texte = get_field('nos_frequences_texte');
         });
     })();
 </script>
+
+<svg class="hero-wave -mt-px -mb-px block h-16 w-full rotate-180 text-beige md:h-24  bg-transparent" viewBox="0 0 1440 100"
+    preserveAspectRatio="none" aria-hidden="true">
+    <path fill="currentColor"
+        d="M0 40 Q 60 0 120 40 T 240 40 T 360 40 T 480 40 T 600 40 T 720 40 T 840 40 T 960 40 T 1080 40 T 1200 40 T 1320 40 T 1440 40 V100 H0 Z" />
+</svg>
 
 <?php get_footer(); ?>
