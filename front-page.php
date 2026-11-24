@@ -184,7 +184,8 @@
                             <p class="text-black text-[1.25rem]"><?php echo nl2br(esc_html($meteo_announcement)); ?></p>
                         <?php else : ?>
                             <p class="text-black text-[1.25rem]">Aucun avertissement météo n'est actuellement en vigueur en Matanie.
-
+                                <br>
+                                <br>
                                 Planifiez vos déplacements en toute tranquillité et consultez ici les conditions météorologiques complètes en temps réel, les prévisions détaillées et l'état du réseau routier.</p>
                         <?php endif; ?>
 
