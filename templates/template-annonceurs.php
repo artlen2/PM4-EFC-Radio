@@ -22,6 +22,9 @@ while (have_posts()) : the_post();
     $logo_url    = kit_media_url(get_field('logo'));
     $typo_image_url = get_field('typo_image');
     $typo_url  = kit_media_url(get_field('typographie'));
+    $courriel = get_field('courriel');
+    $telephone = get_field('telephone');
+    
 ?>
  
     <div>
@@ -99,11 +102,13 @@ while (have_posts()) : the_post();
              alt="" aria-hidden="true"
              class="w-16 self-end md:w-38 md:absolute md:top-0 md:right-20">
 
-        <h1 class="text-4xl md:text-5xl text-violet rotate-[-3deg]">Nous joindre</h1>
+        <h1 class="text-4xl md:text-5xl text-violet rotate-[-3deg]">Écris-nous!</h1>
 
         <img src="<?php echo esc_url(get_stylesheet_directory_uri()); ?>/assets/objets/phone2.png"
              alt="main qui tient un téléphone"
              class="rotate-[30deg] w-32 mt-6 md:mt-0 md:w-50 md:ml-30">
+
+             <p class="">Une idée, un projet? <br> Jasons ensemble!</p>
     </div>
 
     <div class="md:scale-110">
@@ -120,12 +125,12 @@ while (have_posts()) : the_post();
                 <li class="mb-6 text-beige break-words">
                     COURRIEL :
                     <a class="hover:text-yellow ease-in-out duration-200"
-                       href="mailto:radiolamatanie@gmail.com">radiolamatanie@gmail.com</a>
+                       href="mailto:radiolamatanie@gmail.com"><?php echo esc_html($courriel); ?></a>
                 </li>
                 <li class="mb-6 text-beige">
                     TÉLÉPHONE :
                     <a class="hover:text-yellow ease-in-out duration-200"
-                       href="tel:+15812327434">(581) 232-7434</a>
+                       href="tel:+15812327434"><?php echo esc_html($telephone); ?></a>
                 </li>
             </ul>
 
