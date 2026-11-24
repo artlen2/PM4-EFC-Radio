@@ -81,6 +81,7 @@
                 </div>
             <?php endif; ?>
         </section>
+        <?php $wave_bg = $GLOBALS['wave_bg'] ?? 'var(--color-beige)'; ?>
         <svg class="hero-wave -mt-px -mb-px block h-16 w-full rotate-180 text-[#fdbe00] md:h-24" style="background-color: <?php echo esc_attr($wave_bg); ?>;" viewBox="0 0 1440 100"
             preserveAspectRatio="none" aria-hidden="true">
             <path fill="currentColor"

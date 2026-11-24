@@ -11,7 +11,7 @@
     $meteo = function_exists('efc_get_meteo') ? efc_get_meteo() : null;
 
     if ($meteo_title || $meteo_text || $meteo_announcement) : ?>
-        <section>
+        <section class="section-meteo" style="background: url('<?php echo esc_url(get_template_directory_uri() . '/images/fond-meteo.png'); ?>') right top / auto 100% no-repeat;">
             <div class="grid grid-cols-1 lg:grid-cols-[28rem_1fr] gap-16 items-start px-4 py-12">
 
                 <!-- titre et texte -->
@@ -34,7 +34,7 @@
                         <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/objets/soleil.png'); ?>" alt="" class="pointer-events-none absolute -top-16 right-28 w-40 hidden md:block">
                         <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/objets/nuage.png'); ?>" alt="" class="pointer-events-none absolute -top-14 -right-12 w-64 hidden md:block">
 
-                        <h2 class="text- text-5xl uppercase mb-3 text-orange-light">Météo</h2>
+                        <h2 class="text-5xl uppercase mb-3 text-orange-light">Météo</h2>
 
                         <div class="flex flex-col gap-6">
 
@@ -164,20 +164,31 @@
 
             </div>
             <!-- état des routes -->
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start px-4 py-12">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-stretch px-4 py-12 -mt-40 mb-20 lg:h-[600px] lg:box-content">
                 <!-- annonce -->
-                <div class="relative min-w-0 bg-white rounded-[3rem] p-6 lg:p-8">
-                    <?php if ($meteo_date) : ?>
-                        <p><?php echo esc_html($meteo_date); ?></p>
-                    <?php endif; ?>
-                    <?php if ($meteo_announcement) : ?>
-                        <p><?php echo nl2br(esc_html($meteo_announcement)); ?></p>
-                    <?php endif; ?>
+                <div class="relative min-w-0 bg-white rounded-[3rem] p-6 lg:p-8 overflow-hidden">
+                    <h2 class="text-5xl uppercase mb-3 text-orange-light w-70 relative z-10 mt-3">État des routes</h2>
+                    <h3 class="text-3xl uppercase mb-3 text-black relative z-10">Avertissements en vigueur</h3>
+                    <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/objets/highway.png'); ?>" alt="#" class="z-5 pointer-events-none w-150 absolute top-15 -right-10 ">
+                    <div class="relative bg-yellow rounded-[2rem] p-6 flex flex-col gap-4 z-20 mt-15 h-[300px]">
+
+                        <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/objets/alert.png'); ?>" alt="#" class="w-35 absolute -top-15 left-0 pointer-none">
+
+                        <?php if ($meteo_date) : ?>
+                            <p class="font-bold archivo text-white text-right  text-2xl uppercase"><?php echo esc_html($meteo_date); ?></p>
+                        <?php endif; ?>
+
+                        <?php if ($meteo_announcement) : ?>
+                            <p class="text-black text-[1.25rem]"><?php echo nl2br(esc_html($meteo_announcement)); ?></p>
+                        <?php endif; ?>
+
+                    </div>
+
                 </div>
-                <!-- état des routes --> 
-                <div>
-                    <div class="carte-routes">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d49965.67457830342!2d-67.56261623299348!3d48.83919038373369!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sfr!2sca!4v1795459922725!5m2!1sfr!2sca" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+                <!-- état des routes -->
+                <div class="h-[400px] lg:h-full">
+                    <div class="carte-routes h-full">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d49965.67457830342!2d-67.56261623299348!3d48.83919038373369!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sfr!2sca!4v1795459922725!5m2!1sfr!2sca" width="100%" style="border:0; display:block; height:100%;" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
                         <!-- bouton Québec 511 par-dessus le bouton « Ouvrir dans Maps » de Google -->
                         <a class="btn-quebec511" href="https://www.quebec511.info/fr/Carte/Default.aspx" target="_blank" rel="noopener noreferrer">
                             Ouvrir Québec 511
