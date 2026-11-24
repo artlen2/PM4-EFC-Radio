@@ -263,7 +263,7 @@ main.container > *:not(.w-screen, .full-bleed) {
   height: 9rem;
 }
 
-/* Title icons (micro / camera) */
+
 .radio-icon {
   height: clamp(6rem, 14vw, 16rem);
   width: auto;
@@ -272,7 +272,7 @@ main.container > *:not(.w-screen, .full-bleed) {
   pointer-events: none;
 }
 
-/* Popup width */
+
 .radio-dialog {
   width: min(92vw, 44rem);
 }
@@ -345,7 +345,7 @@ main.programme-single {
   position: absolute;
   color: var(--color-yellow);
   font-size: clamp(2rem, 5vw, 4rem);
-  opacity: 0.28;
+  opacity: 1;
   animation: programme-note-float 9s ease-in-out infinite;
 }
 
