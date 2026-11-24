@@ -14,7 +14,7 @@
     $meteo = function_exists('efc_get_meteo') ? efc_get_meteo() : null;
 
     ?>
-    <section class="section-meteo flow-root relative z-0 -mt-16 md:-mt-24 pt-16 md:pt-40" style="background: url('<?php echo esc_url(get_template_directory_uri() . '/images/fond-meteo.png'); ?>') right top / auto 100% no-repeat var(--color-beige);">
+    <section class="section-meteo flow-root relative z-0 -mt-16 md:-mt-24 pt-16 md:pt-30" style="background: url('<?php echo esc_url(get_template_directory_uri() . '/images/fond-meteo.png'); ?>') right top / auto 100% no-repeat var(--color-beige);">
         <div class="grid grid-cols-1 lg:grid-cols-[28rem_1fr] gap-16 items-start px-4 py-12">
 
             <!-- titre et texte -->
@@ -217,6 +217,9 @@
 
     <!-- programation -->
     <section class="clip-waves relative z-10 -mt-(--wave-h) h-[800px] bg-[#fff] bg-cover bg-center" style="background-image: url('<?php echo esc_url(get_template_directory_uri() . '/assets/objets/overlay-texturepapier.png'); ?>');">
+    
+
+
     </section>
 
     <?php get_footer(); ?>
