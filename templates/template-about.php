@@ -259,61 +259,10 @@ $politique_title = get_field('politique_title');
 $politique_texte = get_field('politique_texte');
 $nous_joindre_title = get_field('nous_joindre_title');
 $nous_joindre_texte = get_field('nous_joindre_texte');
+$nos_frequences_title = get_field('nos_frequences_title');
+$nos_frequences_texte = get_field('nos_frequences_texte');
 ?>
 
-<style>
-    /* Carousel sizing: plain CSS on purpose, so it works even if Tailwind has not been rebuilt.
-       Change --card-w / --card-gap to resize the cards or the space between them. */
-    .radio-track {
-        --card-w: 18rem;
-        --card-gap: 6rem;
-        gap: var(--card-gap);
-        padding-inline: calc(50% - var(--card-w) / 2);
-        -webkit-mask-image: linear-gradient(to right, transparent, #000 10%, #000 90%, transparent);
-        mask-image: linear-gradient(to right, transparent, #000 10%, #000 90%, transparent);
-    }
-
-    .radio-card {
-        width: var(--card-w, 18rem);
-        flex: none;
-    }
-
-    .radio-card-head {
-        height: 9rem;
-    }
-
-    /* Title icons (micro / camera). Bigger than the title on purpose: the negative margin lets them
-       stick out above/below the title row instead of making the row taller.
-       Change the middle value of clamp() (14vw) or the max (16rem) to resize. */
-    .radio-icon {
-        height: clamp(6rem, 14vw, 16rem);
-        width: auto;
-        flex: none;
-        margin-block: -2rem;
-        pointer-events: none;
-    }
-
-    /* Popup width (was 32rem) */
-    .radio-dialog {
-        width: min(92vw, 44rem);
-    }
-
-    /* Used by the script while it swaps a copy for the real card, so nothing fades/flashes */
-    .radio-track.is-jumping .radio-card {
-        transition: none !important;
-    }
-
-    @media (min-width: 1024px) {
-        .radio-track {
-            --card-w: 22rem;
-            --card-gap: 9rem;
-        }
-
-        .radio-card-head {
-            height: 10rem;
-        }
-    }
-</style>
 
 <!-- <main> is full width (overflow-x-clip hides the sideways overflow of the carousel copies).
      The "container" wrappers below keep the text content at the same width as before. -->
@@ -338,6 +287,22 @@ $nous_joindre_texte = get_field('nous_joindre_texte');
     <?php radio_carousel('equipe', 'Employés', 'assets/objets/old-cam.png', $team); ?>
 
     <div class="container mx-auto px-4">
+
+        <!-- Nos Fréquences -->
+        <?php if ($nos_frequences_title || $nos_frequences_texte) : ?>
+            <section class="px-6 py-10" aria-labelledby="politique-title">
+                <?php if ($nos_frequences_title) : ?>
+                    <h2 id="politique-title" class="mb-4 font-title font-black uppercase text-yellow">
+                        <?php echo esc_html($nos_frequences_title); ?>
+                    </h2>
+                <?php endif; ?>
+                <?php if ($nos_frequences_texte) : ?>
+                    <div class="space-y-3 leading-relaxed">
+                        <?php echo wp_kses_post(wpautop($nos_frequences_texte)); ?>
+                    </div>
+                <?php endif; ?>
+            </section>
+        <?php endif; ?>
 
         <!-- Partners -->
         <?php if (!empty($all_partners)) : ?>
