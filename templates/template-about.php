@@ -312,15 +312,7 @@ $nos_frequences_texte = get_field('nos_frequences_texte');
  * ============================================================
  */
 ?>
-<<<<<<< HEAD
-<svg class="hero-wave -mt-px -mb-px block h-16 w-full rotate-180 text-[#fdbe00] md:h-24" viewBox="0 0 1440 100"
-    preserveAspectRatio="none" aria-hidden="true">
-    <path fill="currentColor"
-        d="M0 40 Q 60 0 120 40 T 240 40 T 360 40 T 480 40 T 600 40 T 720 40 T 840 40 T 960 40 T 1080 40 T 1200 40 T 1320 40 T 1440 40 V100 H0 Z" />
-</svg>
-=======
 
->>>>>>> 0ba6cb1cafb0208c73ad03e4821c431953cbaf35
 <!-- overflow-x-clip hides the sideways overflow of the carousel copies -->
 <main class="overflow-x-clip bg-beige pb-12 font-sans text-black">
     <svg class="hero-wave -mt-px -mb-px block h-16 w-full rotate-180 text-[#fdbe00] md:h-24 bg-violet" viewBox="0 0 1440 100"
@@ -329,17 +321,6 @@ $nos_frequences_texte = get_field('nos_frequences_texte');
             d="M0 40 Q 60 0 120 40 T 240 40 T 360 40 T 480 40 T 600 40 T 720 40 T 840 40 T 960 40 T 1080 40 T 1200 40 T 1320 40 T 1440 40 V100 H0 Z" />
     </svg>
 
-<<<<<<< HEAD
-    <!-- Mission (page title + text) -->
-    <div class="container mx-auto px-4 bg-violet">
-        <h1 class="font-title font-black uppercase text-white">
-            <?php echo esc_html($mission_title ?: get_the_title()); ?>
-        </h1>
-
-        <?php if ($mission_text) : ?>
-            <div class="mt-10 max-w-2xl px-6 text-left leading-relaxed text-white">
-                <?php echo wp_kses_post(wpautop($mission_text)); ?>
-=======
     <!-- Mission (page title + text). Full-width violet band so it joins the waves above and below -->
     <?php $mascot_rel = radio_find_asset('assets/objets/Personnage2.png'); ?>
     <section class="bg-violet text-white" aria-labelledby="mission-title">
@@ -354,7 +335,6 @@ $nos_frequences_texte = get_field('nos_frequences_texte');
                     <img src="<?php echo esc_url(get_template_directory_uri() . '/' . $mascot_rel); ?>"
                         alt="" aria-hidden="true" class="radio-icon -scale-x-100 -rotate-6">
                 <?php endif; ?>
->>>>>>> 0ba6cb1cafb0208c73ad03e4821c431953cbaf35
             </div>
 
             <?php if ($mission_text) : ?>
@@ -364,12 +344,6 @@ $nos_frequences_texte = get_field('nos_frequences_texte');
             <?php endif; ?>
         </div>
     </section>
-
-    <svg class="hero-wave -mt-px -mb-px block h-16 w-full rotate-180 text-violet md:h-24" viewBox="0 0 1440 100"
-        preserveAspectRatio="none" aria-hidden="true">
-        <path fill="currentColor"
-            d="M0 40 Q 60 0 120 40 T 240 40 T 360 40 T 480 40 T 600 40 T 720 40 T 840 40 T 960 40 T 1080 40 T 1200 40 T 1320 40 T 1440 40 V100 H0 Z" />
-    </svg>
 
     <svg class="hero-wave -mt-px -mb-px block h-16 w-full rotate-180 text-violet md:h-24" viewBox="0 0 1440 100"
         preserveAspectRatio="none" aria-hidden="true">

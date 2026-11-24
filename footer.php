@@ -1,6 +1,6 @@
 </main>
 
-<footer class="py-10 md:py-24 px-4" style="background-image: linear-gradient(rgba(255,255,255,0.85), rgba(255,255,255,0.82)), url('https://projet4.timmatane.ca/2026/efc/eq1/wp-content/uploads/2026/11/pape-bg.jpg'); ">
+<footer class="py-16 md:py-24 px-4" style="background-image: linear-gradient(rgba(255,255,255,0.85), rgba(255,255,255,0.82)), url('https://projet4.timmatane.ca/2026/efc/eq1/wp-content/uploads/2026/11/pape-bg.jpg'); ">
   <!-- card footer container -->
   <div class="card-container bg-beige max-w-[1600px] mx-auto rounded-[24px] md:rounded-[40px] p-6 md:p-10 border-t-2 border-x-2 border-b-8 border-black lg:scale-115 ">
 
