@@ -7,8 +7,7 @@ get_header();
     <section class="relative left-1/2 w-screen -translate-x-1/2 px-4 py-12">
         <div class="mx-auto max-w-6xl">
             <h2 class="mb-8 block font-bold text-orange text-6xl w-110 leading-14 archivo uppercase"><?php the_title(); ?></h2>
-
-
+               <p class="mb-12 ml-10 text-3xl font-light">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi at urna eget justo sollicitudin malesuada. Pellentesque volutpat ante quis orci pharetra, ac aliquam sapien congue. Fusce lacinia nisi tincidunt risus pellentesque, sit amet scelerisque diam suscipit. Fusce rhoncus eleifend lectus quis vulputate.</p>
 
             <?php
             $programmes = new WP_Query([

@@ -4,6 +4,7 @@ $get_programme_field = static function ($name) {
 };
 
 $date = $get_programme_field('date') ?: $get_programme_field('jour');
+$animateur = $get_programme_field('animateur') ?: $get_programme_field('animateur');
 $time_start = $get_programme_field('time_start') ?: $get_programme_field('heure_debut');
 $time_end = $get_programme_field('time_end') ?: $get_programme_field('heure_fin');
 $title = $get_programme_field('title') ?: get_the_title();
