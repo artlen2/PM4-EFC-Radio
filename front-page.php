@@ -213,12 +213,20 @@
 
                 </div>
             </div>
+
     </section>
+
+    <!-- boule disco  -->
+    <div class="relative z-20 h-0">
+        <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/objets/disco-ball2.png'); ?>" alt="" aria-hidden="true" class="absolute left-50 top-0 w-55 -translate-y-[38%] pointer-events-none -scale-x-100 h-85 object-cover object-bottom">
+    </div>
 
     <!-- programation -->
     <section class="clip-waves relative z-10 -mt-(--wave-h) h-[800px] bg-[#fff] bg-cover bg-center" style="background-image: url('<?php echo esc_url(get_template_directory_uri() . '/assets/objets/overlay-texturepapier.png'); ?>');">
-            <h2 class="text-purple text-6xl w-110 text-right leading-14 uppercase">Prochaines émissions</h2>                
-
+            <div class="flex">
+                <h2 class="text-violet text-6xl w-110 ml-auto text-right leading-14 uppercase mt-10">Prochaines émissions</h2>
+                <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/objets/micro.png'); ?>" alt="micro" class="w-60 -mt-20 translate-y-13 scale-110">
+            </div>
 
     </section>
 
