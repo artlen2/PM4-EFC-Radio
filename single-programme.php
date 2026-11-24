@@ -92,13 +92,14 @@ while (have_posts()) :
             <span>♩</span>
             <span>♪</span>
         </div>
-        <?php if ($animateurs) : ?>
-            <img
+              <img
                 class="programme-character"
                 src="<?php echo esc_url(get_template_directory_uri() . '/assets/objets/Personnage.png'); ?>"
                 alt=""
                 aria-hidden="true"
             >
+        <?php if ($animateurs) : ?>
+      
         <?php endif; ?>
         <div class="relative z-10 mx-auto w-full max-w-screen-2xl">
             <a href="<?php echo esc_url($back_url); ?>"
