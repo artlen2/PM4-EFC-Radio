@@ -123,7 +123,7 @@ while (have_posts()) :
                 <div class="mt-12 grid gap-4 sm:grid-cols-2">
                     <?php if ($date || $time_start || $time_end) : ?>
                         <section class="rounded-3xl bg-violet p-6 text-yellow sm:p-8 hover:bg-yellow hover:text-black transition-colors duration-300" aria-labelledby="programme-schedule">
-                            <p class="mb-3 text-sm font-extrabold uppercase tracking-[0.18em]">Le rendez-vous</p>
+                            <p class="btn-border mb-3 text-sm font-extrabold uppercase tracking-[0.18em]">Le rendez-vous</p>
                             <h2 id="programme-schedule" class="font-title text-3xl font-black uppercase sm:text-4xl">
                                 <?php echo $date ? esc_html($date) : 'Horaire'; ?>
                             </h2>
@@ -140,7 +140,7 @@ while (have_posts()) :
 
                     <!-- partie pour les animateurs qui font l'émission -->
                     <?php if ($animateurs) : ?>
-                        <section class="rounded-3xl border border-orange bg-purple p-6 sm:p-8 hover:bg-yellow hover:text-black transition-colors duration-300" aria-labelledby="programme-hosts">
+                        <section class="rounded-3xl border border-orange bg-purple p-6 sm:p-8 hover:bg-yellow hover:text-black transition-colors duration-300 btn-border" aria-labelledby="programme-hosts">
                            
                             <h2 id="programme-hosts" class="font-title text-3xl font-black uppercase sm:text-4xl">Animateurs</h2>
                             <ul class="mt-4 flex flex-wrap gap-2">
