@@ -83,59 +83,61 @@ $news = new WP_Query($query_args);
         <?php if ($news->have_posts()) : ?>
 
             <!-- Grid of news cards -->
-            <div class="grid list-none grid-cols-1 gap-8 px-6 sm:grid-cols-2 lg:grid-cols-3">
+            <div class="grid grid-cols-1 gap-10 px-6 lg:grid-cols-2">
                 <?php while ($news->have_posts()) : $news->the_post(); ?>
 
-                    <article class="group flex flex-col overflow-hidden rounded-3xl border-[3px] border-purple bg-white">
+                    <article class="news-card group relative grid h-full min-w-0 grid-cols-1 overflow-hidden rounded-[2.5rem] border-[3px] border-purple bg-white <?php echo has_post_thumbnail() ? 'sm:grid-cols-2' : ''; ?>">
+                        <!-- Text -->
+                        <div class="flex min-w-0 flex-col p-6 sm:p-7 xl:p-8">
+                            <time
+                                datetime="<?php echo esc_attr(get_the_date('c')); ?>"
+                                class="mb-2 block text-sm font-semibold text-black/70">
+                                <?php echo esc_html(get_the_date('j M Y')); ?>
+                                <span aria-hidden="true"> · </span>
+                                <?php echo esc_html(get_the_time('H \h i')); ?>
+                            </time>
 
-                        <!-- Image (the title link below is the "real" link, so this one is hidden from keyboard / screen readers) -->
-                        <a href="<?php the_permalink(); ?>" class="block aspect-video overflow-hidden bg-violet/20"
-                            aria-hidden="true" tabindex="-1">
-                            <?php if (has_post_thumbnail()) : ?>
-                                <?php the_post_thumbnail('large', [
-                                    'class'   => 'h-full w-full object-cover transition duration-300 group-hover:scale-105',
-                                    'loading' => 'lazy',
-                                ]); ?>
-                            <?php endif; ?>
-                        </a>
-
-                        <div class="flex flex-1 flex-col gap-3 p-6">
-
-                            <!-- Category tags (only the ones listed in $filters) + date -->
-                            <div class="flex flex-wrap items-center gap-2 text-sm">
-                                <?php foreach (get_the_category() as $cat) : ?>
-                                    <?php if (isset($filters[$cat->slug])) : ?>
-                                        <span class="rounded-full bg-violet/20 px-3 py-1 font-semibold text-purple">
-                                            <?php echo esc_html($cat->name); ?>
-                                        </span>
-                                    <?php endif; ?>
-                                <?php endforeach; ?>
-
-                                <time datetime="<?php echo esc_attr(get_the_date('c')); ?>" class="ml-auto font-semibold text-orange">
-                                    <?php echo esc_html(get_the_date()); ?>
-                                </time>
-                            </div>
-
-                            <!-- Title -->
-                            <h2 class="font-title text-2xl font-black uppercase leading-tight wrap-anywhere">
-                                <a href="<?php the_permalink(); ?>" class="hover:text-purple">
-                                    <?php the_title(); ?>
-                                </a>
+                            <h2 class="m-0 text-left text-xl font-bold leading-tight text-orange [overflow-wrap:anywhere] xl:text-2xl">
+                                <?php the_title(); ?>
                             </h2>
 
-                            <!-- Short excerpt -->
-                            <p class="leading-relaxed">
-                                <?php echo esc_html(wp_trim_words(get_the_excerpt(), 25)); ?>
-                            </p>
+                            <?php
+                            $card_excerpt = wp_trim_words(
+                                wp_strip_all_tags(get_the_excerpt()),
+                                25,
+                                '…'
+                            );
+                            ?>
 
-                            <!-- Read more (pushed to the bottom so all cards line up) -->
-                            <a href="<?php the_permalink(); ?>"
-                                class="mt-auto font-bold text-purple hover:text-orange">
-                                Lire la suite →
+                            <?php if ($card_excerpt) : ?>
+                                <p class="mb-8 mt-6 text-left text-base leading-relaxed text-black xl:text-lg">
+                                    <?php echo esc_html($card_excerpt); ?>
+                                </p>
+                            <?php endif; ?>
+
+                            <a
+                                href="<?php echo esc_url(get_permalink()); ?>"
+                                class="btn-press mt-auto inline-flex w-fit max-w-full items-center justify-center rounded-full bg-yellow px-5 py-3 text-center text-sm font-bold leading-none text-white transition-colors duration-200 hover:bg-orange focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-purple">
+                                Voir l'article
                             </a>
                         </div>
-                    </article>
 
+                        <!-- Image: below the text on mobile, right side on wider screens -->
+                        <?php if (has_post_thumbnail()) : ?>
+                            <figure class="relative m-0 min-h-64 min-w-0 p-2 sm:min-h-80 sm:pl-0">
+                                <div class="relative h-full min-h-64 overflow-hidden rounded-[1.75rem] sm:min-h-80">
+                                    <?php
+                                    the_post_thumbnail('large', [
+                                        'class' => 'news-card__image absolute inset-0 block h-full w-full object-cover object-center',
+                                        'alt'     => '',
+                                        'loading' => 'lazy',
+                                    ]);
+                                    ?>
+                                </div>
+                            </figure>
+                        <?php endif; ?>
+
+                    </article>
                 <?php endwhile; ?>
             </div>
 

@@ -104,6 +104,307 @@ Version: 1.0
   }
 }
 
+/* btn qui s'enfonce au hover */
+@utility btn-press {
+  border: 2px solid var(--color-black);
+  box-shadow: 0 6px 0 var(--color-black);
+  transition:
+    transform 150ms ease-out,
+    box-shadow 150ms ease-out,
+    background-color 300ms,
+    color 300ms;
+
+  &:hover {
+    transform: translateY(6px);
+    box-shadow: 0 0 0 var(--color-black);
+  }
+}
+
+/* btn qui s'enfonce au hover */
+@utility btn-border {
+  border: 2px solid var(--color-yellow);
+  box-shadow: 0 6px 0 var(--color-yellow);
+  transition:
+    transform 150ms ease-out,
+    box-shadow 150ms ease-out,
+    background-color 300ms,
+    color 300ms;
+
+  &:hover {
+    transform: translateY(6px);
+    box-shadow: 0 0 0 var(--color-yellow);
+  }
+}
+
+/* Bouton Québec 511 par-dessus la carte Google */
+.carte-routes {
+  position: relative;
+}
+
+.carte-routes .btn-quebec511 {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 12px 14px;
+  min-width: 185px;
+  background: #fff;
+  color: #1a73e8;
+  font-family: Roboto, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 2px;
+  box-shadow: 0 1px 4px -1px rgba(0, 0, 0, 0.3);
+}
+
+.carte-routes .btn-quebec511:hover {
+  background: #f1f3f4;
+}
+
+/* ==========  À propos ========== */
+.radio-track {
+  --card-w: 18rem;
+  --card-gap: 6rem;
+  gap: var(--card-gap);
+  padding-inline: calc(50% - var(--card-w) / 2);
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 10%,
+    #000 90%,
+    transparent
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 10%,
+    #000 90%,
+    transparent
+  );
+}
+
+.radio-card {
+  width: var(--card-w, 18rem);
+  flex: none;
+}
+
+.radio-card-head {
+  height: 9rem;
+}
+
+.radio-icon {
+  height: clamp(6rem, 14vw, 16rem);
+  width: auto;
+  flex: none;
+  margin-block: -2rem;
+  pointer-events: none;
+}
+
+.radio-dialog {
+  width: min(92vw, 44rem);
+}
+
+.radio-track.is-jumping .radio-card {
+  transition: none !important;
+}
+
+/* ==========  Programme ========== */
+main.programme-single {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.programme-title {
+  display: block;
+  width: 100%;
+  color: var(--color-orange);
+  background-image: radial-gradient(
+    circle 5rem at var(--spot-x, -20rem) var(--spot-y, -20rem),
+    var(--color-yellow) 0,
+    var(--color-yellow) 45%,
+    var(--color-orange) 100%
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.programme-character {
+  position: absolute;
+  z-index: 20;
+  right: 1rem;
+  bottom: 1rem;
+  width: clamp(6.5rem, 18vw, 12rem);
+  height: auto;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+  animation: programme-character-jump 1.8s ease-in-out infinite;
+}
+
+.programme-character.is-dragging {
+  z-index: 30;
+  cursor: grabbing;
+  animation: none;
+}
+
+@keyframes programme-character-jump {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0);
+  }
+  45% {
+    transform: translateY(-1.25rem) rotate(-3deg);
+  }
+  55% {
+    transform: translateY(-1.25rem) rotate(3deg);
+  }
+}
+
+.programme-music-notes {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.programme-music-notes span {
+  position: absolute;
+  color: var(--color-yellow);
+  font-size: clamp(2rem, 5vw, 4rem);
+  opacity: 1;
+  animation: programme-note-float 9s ease-in-out infinite;
+}
+
+.programme-music-notes span:nth-child(1) {
+  top: 16%;
+  left: 8%;
+}
+
+.programme-music-notes span:nth-child(2) {
+  top: 38%;
+  right: 8%;
+  animation-delay: -2s;
+}
+
+.programme-music-notes span:nth-child(3) {
+  top: 65%;
+  left: 18%;
+  animation-delay: -4s;
+}
+
+.programme-music-notes span:nth-child(4) {
+  top: 77%;
+  right: 24%;
+  animation-delay: -6s;
+}
+
+.programme-music-notes span:nth-child(5) {
+  top: 26%;
+  left: 53%;
+  animation-delay: -3s;
+}
+
+@keyframes programme-note-float {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(-8deg);
+  }
+  50% {
+    transform: translate3d(0, -1.25rem, 0) rotate(8deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .programme-music-notes span,
+  .programme-character {
+    animation: none;
+  }
+}
+
+@media (min-width: 1024px) {
+  .programme-character {
+    right: 2rem;
+    bottom: 2rem;
+  }
+
+  .radio-track {
+    --card-w: 22rem;
+    --card-gap: 9rem;
+  }
+
+  .radio-card-head {
+    height: 10rem;
+  }
+}
+
+@media (min-width: 640px) and (max-width: 1023px) {
+  .programme-character {
+    right: 1.5rem;
+  }
+}
+
+/* ==========  Nouvelle ========== */
+.news-card {
+  box-shadow: 0 6px 0 var(--color-purple);
+  transform-origin: center bottom;
+
+  transition:
+    transform 350ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 350ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.news-card__image {
+  transition:
+    transform 650ms cubic-bezier(0.22, 1, 0.36, 1),
+    filter 350ms ease;
+}
+
+/* Highlight keyboard interaction without shifting the focused button. */
+.news-card:focus-within {
+  box-shadow:
+    0 8px 0 var(--color-purple),
+    0 0 0 3px var(--color-yellow, #fdbe00);
+}
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .news-card:hover {
+    z-index: 1;
+
+    transform: translateY(-10px) rotate(-1deg) scale(1.015);
+
+    box-shadow: 8px 14px 0 var(--color-purple);
+  }
+
+  /* Alternate the tilt for a less repetitive layout. */
+  .news-card:nth-child(even):hover {
+    transform: translateY(-10px) rotate(1deg) scale(1.015);
+
+    box-shadow: -8px 14px 0 var(--color-purple);
+  }
+
+  .news-card:hover .news-card__image {
+    transform: scale(1.08) rotate(1deg);
+    filter: saturate(1.12);
+  }
+
+  .news-card:nth-child(even):hover .news-card__image {
+    transform: scale(1.08) rotate(-1deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .news-card,
+  .news-card__image {
+    transition: none;
+  }
+}
+
 /* Vagues animées de la carte marée */
 .maree-parallax > use {
   animation: maree-vague 12s linear infinite;
@@ -169,7 +470,9 @@ main.container > *:not(.w-screen, .full-bleed) {
 /* section avec vagues en haut et en bas (clip-path), même courbe que .hero-wave */
 .clip-waves {
   --wave-h: 1.6rem; /* 40% de h-16 */
-  padding-block: calc(var(--wave-h) + 3rem); /* le contenu commence sous les vagues */
+  padding-block: calc(
+    var(--wave-h) + 3rem
+  ); /* le contenu commence sous les vagues */
   clip-path: polygon(
     0% calc(var(--wave-h) * 0.5),
     1.042% calc(var(--wave-h) * 0.281),
@@ -368,251 +671,7 @@ main.container > *:not(.w-screen, .full-bleed) {
   );
 }
 @media (width >= 48rem) {
-  .clip-waves { --wave-h: 2.4rem; } /* 40% de md:h-24 */
-}
-
-/* btn qui s'enfonce au hover */
-@utility btn-press {
-  border: 2px solid var(--color-black);
-  box-shadow: 0 6px 0 var(--color-black);
-  transition:
-    transform 150ms ease-out,
-    box-shadow 150ms ease-out,
-    background-color 300ms,
-    color 300ms;
-
-  &:hover {
-    transform: translateY(6px);
-    box-shadow: 0 0 0 var(--color-black);
-  }
-}
-
-/* btn qui s'enfonce au hover */
-@utility btn-border {
-  border: 2px solid var(--color-yellow);
-  box-shadow: 0 6px 0 var(--color-yellow);
-  transition:
-    transform 150ms ease-out,
-    box-shadow 150ms ease-out,
-    background-color 300ms,
-    color 300ms;
-
-  &:hover {
-    transform: translateY(6px);
-    box-shadow: 0 0 0 var(--color-yellow);
-  }
-}
-
-/* Bouton Québec 511 par-dessus la carte Google */
-.carte-routes {
-  position: relative;
-}
-
-.carte-routes .btn-quebec511 {
-  position: absolute;
-  top: 6px;
-  left: 6px;
-  z-index: 2;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 12px 14px;
-  min-width: 185px;
-  background: #fff;
-  color: #1a73e8;
-  font-family: Roboto, Arial, sans-serif;
-  font-size: 14px;
-  font-weight: 600;
-  text-decoration: none;
-  border-radius: 2px;
-  box-shadow: 0 1px 4px -1px rgba(0, 0, 0, 0.3);
-}
-
-.carte-routes .btn-quebec511:hover {
-  background: #f1f3f4;
-}
-
-/* ==========  À propos ========== */
-.radio-track {
-  --card-w: 18rem;
-  --card-gap: 6rem;
-  gap: var(--card-gap);
-  padding-inline: calc(50% - var(--card-w) / 2);
-  -webkit-mask-image: linear-gradient(
-    to right,
-    transparent,
-    #000 10%,
-    #000 90%,
-    transparent
-  );
-  mask-image: linear-gradient(
-    to right,
-    transparent,
-    #000 10%,
-    #000 90%,
-    transparent
-  );
-}
-
-.radio-card {
-  width: var(--card-w, 18rem);
-  flex: none;
-}
-
-.radio-card-head {
-  height: 9rem;
-}
-
-
-.radio-icon {
-  height: clamp(6rem, 14vw, 16rem);
-  width: auto;
-  flex: none;
-  margin-block: -2rem;
-  pointer-events: none;
-}
-
-
-.radio-dialog {
-  width: min(92vw, 44rem);
-}
-
-.radio-track.is-jumping .radio-card {
-  transition: none !important;
-}
-
-main.programme-single {
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-}
-
-.programme-title {
-  display: block;
-  width: 100%;
-  color: var(--color-orange);
-  background-image: radial-gradient(
-    circle 5rem at var(--spot-x, -20rem) var(--spot-y, -20rem),
-    var(--color-yellow) 0,
-    var(--color-yellow) 45%,
-    var(--color-orange) 100%
-  );
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.programme-character {
-  position: absolute;
-  z-index: 20;
-  right: 1rem;
-  bottom: 1rem;
-  width: clamp(6.5rem, 18vw, 12rem);
-  height: auto;
-  cursor: grab;
-  touch-action: none;
-  user-select: none;
-  animation: programme-character-jump 1.8s ease-in-out infinite;
-}
-
-.programme-character.is-dragging {
-  z-index: 30;
-  cursor: grabbing;
-  animation: none;
-}
-
-@keyframes programme-character-jump {
-  0%,
-  100% {
-    transform: translateY(0) rotate(0);
-  }
-  45% {
-    transform: translateY(-1.25rem) rotate(-3deg);
-  }
-  55% {
-    transform: translateY(-1.25rem) rotate(3deg);
-  }
-}
-
-.programme-music-notes {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-  pointer-events: none;
-}
-
-.programme-music-notes span {
-  position: absolute;
-  color: var(--color-yellow);
-  font-size: clamp(2rem, 5vw, 4rem);
-  opacity: 1;
-  animation: programme-note-float 9s ease-in-out infinite;
-}
-
-.programme-music-notes span:nth-child(1) {
-  top: 16%;
-  left: 8%;
-}
-
-.programme-music-notes span:nth-child(2) {
-  top: 38%;
-  right: 8%;
-  animation-delay: -2s;
-}
-
-.programme-music-notes span:nth-child(3) {
-  top: 65%;
-  left: 18%;
-  animation-delay: -4s;
-}
-
-.programme-music-notes span:nth-child(4) {
-  top: 77%;
-  right: 24%;
-  animation-delay: -6s;
-}
-
-.programme-music-notes span:nth-child(5) {
-  top: 26%;
-  left: 53%;
-  animation-delay: -3s;
-}
-
-@keyframes programme-note-float {
-  0%,
-  100% {
-    transform: translate3d(0, 0, 0) rotate(-8deg);
-  }
-  50% {
-    transform: translate3d(0, -1.25rem, 0) rotate(8deg);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .programme-music-notes span,
-  .programme-character {
-    animation: none;
-  }
-}
-
-@media (min-width: 1024px) {
-  .programme-character {
-    right: 2rem;
-    bottom: 2rem;
-  }
-
-  .radio-track {
-    --card-w: 22rem;
-    --card-gap: 9rem;
-  }
-
-  .radio-card-head {
-    height: 10rem;
-  }
-}
-
-@media (min-width: 640px) and (max-width: 1023px) {
-  .programme-character {
-    right: 1.5rem;
-  }
+  .clip-waves {
+    --wave-h: 2.4rem;
+  } /* 40% de md:h-24 */
 }
