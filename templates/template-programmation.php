@@ -234,7 +234,7 @@ get_header();
         </div>
 
         <svg class="absolute left-0 top-full h-12 w-full text-violet md:h-20" viewBox="0 0 1440 100" preserveAspectRatio="none" aria-hidden="true">
-            <path fill="currentColor" d="M0 0 H1440 V58 Q1380 100 1320 58 T1200 58 T1080 58 T960 58 T840 58 T720 58 T600 58 T480 58 T360 58 T240 58 T120 58 T0 58 Z" />
+            <path fill="currentColor" d="M0 0 H1440 V58 Q1380 100 1320 58 T1200 58 T1080 58 T960 58 T840 58 T720 58 T600 58 T480 58 T360 58 T240 58 T120 58 T0 58 Z"/>
         </svg>
     </section>
 
