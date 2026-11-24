@@ -1,5 +1,10 @@
 <?php get_header(); ?>
-<main class="container mx-auto px-4 py-12 bg-beige">
+<svg class="hero-wave relative z-10 -mt-px -mb-px block h-16 w-full rotate-180 text-[#fdbe00] md:h-24" style="background-color: transparent;" viewBox="0 0 1440 100"
+    preserveAspectRatio="none" aria-hidden="true">
+    <path fill="currentColor"
+        d="M0 40 Q 60 0 120 40 T 240 40 T 360 40 T 480 40 T 600 40 T 720 40 T 840 40 T 960 40 T 1080 40 T 1200 40 T 1320 40 T 1440 40 V100 H0 Z" />
+</svg>
+<main class="container mx-auto px-4 pb-12 bg-beige">
     <!-- Météo -->
     <?php
     $meteo_announcement = get_field('meteo-announcement');
@@ -213,7 +218,7 @@
 
     <!-- programation -->
     <section class="clip-waves relative z-10 -mt-(--wave-h) h-[800px] bg-[#fff] bg-cover bg-center" style="background-image: url('<?php echo esc_url(get_template_directory_uri() . '/assets/objets/overlay-texturepapier.png'); ?>');">
-    
+            <h2 class="text-purple text-6xl w-110 text-right leading-14 uppercase">Prochaines émissions</h2>                
 
 
     </section>
