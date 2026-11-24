@@ -49,6 +49,13 @@ $news = new WP_Query($query_args);
  *  PAGE MARKUP - the look of the page starts here
  * ============================================================ */
 ?>
+
+<svg class="hero-wave -mt-px -mb-px block h-16 w-full rotate-180 text-[#fdbe00] md:h-24 bg-beige" viewBox="0 0 1440 100"
+    preserveAspectRatio="none" aria-hidden="true">
+    <path fill="currentColor"
+        d="M0 40 Q 60 0 120 40 T 240 40 T 360 40 T 480 40 T 600 40 T 720 40 T 840 40 T 960 40 T 1080 40 T 1200 40 T 1320 40 T 1440 40 V100 H0 Z" />
+</svg>
+
 <main class="overflow-x-clip bg-beige py-12 font-sans text-black">
     <div class="container mx-auto px-4">
 
@@ -159,5 +166,11 @@ $news = new WP_Query($query_args);
 
     </div>
 </main>
+
+<svg class="hero-wave -mt-px -mb-px block h-12 w-full rotate-180 text-beige md:h-16" viewBox="0 20 1440 80"
+    preserveAspectRatio="none" aria-hidden="true">
+    <path fill="currentColor"
+        d="M0 40 Q 60 0 120 40 T 240 40 T 360 40 T 480 40 T 600 40 T 720 40 T 840 40 T 960 40 T 1080 40 T 1200 40 T 1320 40 T 1440 40 V100 H0 Z" />
+</svg>
 
 <?php get_footer(); ?>
