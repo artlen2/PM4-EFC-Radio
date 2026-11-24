@@ -93,7 +93,7 @@ get_header(); ?>
 
             </section>
 
-            <svg class="hero-wave -mt-px -mb-px block h-16 w-full bg-beige rotate-180 text-orange md:h-24" viewBox="0 0 1440 100"
+            <svg class="hero-wave relative z-10 -mt-px -mb-px block h-16 w-full bg-beige rotate-180 text-orange md:h-24" viewBox="0 0 1440 100"
                 preserveAspectRatio="none" aria-hidden="true">
                 <path fill="currentColor"
                     d="M0 40 Q 60 0 120 40 T 240 40 T 360 40 T 480 40 T 600 40 T 720 40 T 840 40 T 960 40 T 1080 40 T 1200 40 T 1320 40 T 1440 40 V100 H0 Z" />
@@ -103,22 +103,22 @@ get_header(); ?>
             <!-- nous joindre -->
             <section class="bg-beige px-4 md:px-8 py-8 md:py-24 overflow-hidden md:overflow-visible">
 
-                <<<<<<< HEAD
-                    <article class="container mx-auto mx-32 relative flex flex-col scale-110 md:flex-row md:items-center  gap-4 md:gap-24">
-                    =======
-                    <article class="container mx-auto relative flex flex-col scale md:flex-row md:items-center md:justify-between gap-4 md:gap-24">
-                        >>>>>>> 0ba6cb1cafb0208c73ad03e4821c431953cbaf35
+
+                <article class="container mx-auto mx-32 relative flex flex-col scale-110 md:flex-row md:items-center  gap-4 md:gap-24">
+
+                    <article class="container mx-auto relative flex flex-col scale md:flex-row md:items-center gap-4 md:gap-24">
+
 
                         <div class="flex flex-col items-center ml-32 md:block">
-                            <img src="<?php echo esc_url(get_stylesheet_directory_uri()); ?>/assets/objets/disco-ball.png"
+                            <img src="<?php echo esc_url(get_stylesheet_directory_uri()); ?>/assets/objets/disco-ball2.png"
                                 alt="" aria-hidden="true"
-                                class="w-16 self-end z-1  md:w-38 md:absolute md:-top-24 md:right-50">
+                                class="w-16 self-end z-1  md:w-38 md:absolute md:-top-20 md:right-56">
 
                             <h2 class="text-4xl md:text-6xl text-violet rotate-[-3deg]">On jase?</h2>
 
                             <img src="<?php echo esc_url(get_stylesheet_directory_uri()); ?>/assets/objets/phone2.png"
                                 alt="main qui tient un téléphone"
-                                class="rotate-[30deg] w-32 mt-6 md:mt-0 md:w-50 md:ml-30">
+                                class="rotate-[30deg] w-32 mt-6 md:mt-0 md:w-50 md:ml-30 ">
 
 
                         </div>

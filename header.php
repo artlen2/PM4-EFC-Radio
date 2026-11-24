@@ -69,6 +69,8 @@
                         <?php
                         if (is_singular()) {
                             echo esc_html(get_the_title());
+                        } elseif (is_home()) {
+                            echo esc_html(get_the_title(get_option('page_for_posts')));
                         } elseif (is_search()) {
                             echo 'Recherche : ' . esc_html(get_search_query());
                         } elseif (is_404()) {
