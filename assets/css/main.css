@@ -281,7 +281,94 @@ main.container > *:not(.w-screen, .full-bleed) {
   transition: none !important;
 }
 
+.programme-vector-background {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  opacity: 0.72;
+  pointer-events: none;
+}
+
+.programme-character {
+  position: absolute;
+  z-index: 2;
+  right: -0.5rem;
+  bottom: -1.5rem;
+  width: clamp(6.5rem, 18vw, 12rem);
+  height: auto;
+  pointer-events: none;
+}
+
+.programme-music-notes {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.programme-music-notes span {
+  position: absolute;
+  color: var(--color-yellow);
+  font-size: clamp(2rem, 5vw, 4rem);
+  opacity: 0.28;
+  animation: programme-note-float 9s ease-in-out infinite;
+}
+
+.programme-music-notes span:nth-child(1) {
+  top: 16%;
+  left: 8%;
+}
+
+.programme-music-notes span:nth-child(2) {
+  top: 38%;
+  right: 8%;
+  animation-delay: -2s;
+}
+
+.programme-music-notes span:nth-child(3) {
+  top: 65%;
+  left: 18%;
+  animation-delay: -4s;
+}
+
+.programme-music-notes span:nth-child(4) {
+  top: 77%;
+  right: 24%;
+  animation-delay: -6s;
+}
+
+.programme-music-notes span:nth-child(5) {
+  top: 26%;
+  left: 53%;
+  animation-delay: -3s;
+}
+
+@keyframes programme-note-float {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(-8deg);
+  }
+  50% {
+    transform: translate3d(0, -1.25rem, 0) rotate(8deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .programme-music-notes span {
+    animation: none;
+  }
+}
+
 @media (min-width: 1024px) {
+  .programme-character {
+    right: -5rem;
+    bottom: -1.75rem;
+  }
+
   .radio-track {
     --card-w: 22rem;
     --card-gap: 9rem;
@@ -289,5 +376,11 @@ main.container > *:not(.w-screen, .full-bleed) {
 
   .radio-card-head {
     height: 10rem;
+  }
+}
+
+@media (min-width: 640px) and (max-width: 1023px) {
+  .programme-character {
+    right: -2.5rem;
   }
 }
