@@ -167,10 +167,13 @@ $news = new WP_Query($query_args);
     </div>
 </main>
 
+<<<<<<< HEAD
+=======
 <svg class="hero-wave -mt-px -mb-px block h-12 w-full rotate-180 text-beige md:h-16" viewBox="0 20 1440 80"
     preserveAspectRatio="none" aria-hidden="true">
     <path fill="currentColor"
         d="M0 40 Q 60 0 120 40 T 240 40 T 360 40 T 480 40 T 600 40 T 720 40 T 840 40 T 960 40 T 1080 40 T 1200 40 T 1320 40 T 1440 40 V100 H0 Z" />
 </svg>
 
+>>>>>>> 0ba6cb1cafb0208c73ad03e4821c431953cbaf35
 <?php get_footer(); ?>

@@ -107,7 +107,11 @@ while (have_posts()) : the_post();
        <!-- nous joindre -->
        <section class="bg-beige px-4 md:px-8 py-8 md:py-24 overflow-hidden md:overflow-visible">
 
+<<<<<<< HEAD
+            <article class="container mx-auto mx-32 relative flex flex-col scale-110 md:flex-row md:items-center  gap-4 md:gap-24">
+=======
             <article class="container mx-auto relative flex flex-col scale md:flex-row md:items-center md:justify-between gap-4 md:gap-24">
+>>>>>>> 0ba6cb1cafb0208c73ad03e4821c431953cbaf35
 
                 <div class="flex flex-col items-center md:block">
                     <img src="<?php echo esc_url(get_stylesheet_directory_uri()); ?>/assets/objets/disco-ball.png"
