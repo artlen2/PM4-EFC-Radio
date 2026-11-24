@@ -139,11 +139,21 @@ main.container {
   padding-inline: 0;
   overflow-x: clip; /* évite le scroll horizontal (scale-110, rotate…) */
 
-  @media (width >= 40rem) { --container-w: 40rem; }
-  @media (width >= 48rem) { --container-w: 48rem; }
-  @media (width >= 64rem) { --container-w: 64rem; }
-  @media (width >= 80rem) { --container-w: 80rem; }
-  @media (width >= 96rem) { --container-w: 96rem; }
+  @media (width >= 40rem) {
+    --container-w: 40rem;
+  }
+  @media (width >= 48rem) {
+    --container-w: 48rem;
+  }
+  @media (width >= 64rem) {
+    --container-w: 64rem;
+  }
+  @media (width >= 80rem) {
+    --container-w: 80rem;
+  }
+  @media (width >= 96rem) {
+    --container-w: 96rem;
+  }
 }
 /* .w-screen = sections qui gèrent déjà leur pleine largeur (programmation)
    .full-bleed = bord à bord SANS padding (ex. vagues entre les sections) */
@@ -398,7 +408,6 @@ main.container > *:not(.w-screen, .full-bleed) {
   }
 }
 
-
 /* Bouton Québec 511 par-dessus la carte Google */
 .carte-routes {
   position: relative;
@@ -428,7 +437,7 @@ main.container > *:not(.w-screen, .full-bleed) {
   background: #f1f3f4;
 }
 
-/*  À propos */
+/* ==========  À propos ========== */
 .radio-track {
   --card-w: 18rem;
   --card-gap: 6rem;
