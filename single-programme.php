@@ -82,7 +82,7 @@ while (have_posts()) :
  
     <main
         class="programme-single relative isolate overflow-hidden bg-black px-4 pt-10 pb-28 text-white sm:px-6 sm:pt-14 sm:pb-36 md:pb-44"
-        style="background-image: linear-gradient(rgba(15, 14, 15, 0.84), rgba(15, 14, 15, 0.84)), url('<?php echo esc_url(get_template_directory_uri() . '/assets/objets/vecteur.png'); ?>')"
+        style="background-image: linear-gradient(rgba(15, 14, 15, 0.94), rgba(15, 14, 15, 0.94)), url('<?php echo esc_url(get_template_directory_uri() . '/assets/objets/vecteur.png'); ?>')"
     >
         <div aria-hidden="true" class="pointer-events-none absolute -right-40 top-16 size-96 rounded-full bg-purple/30 blur-3xl"></div>
         <div class="programme-music-notes" aria-hidden="true">
