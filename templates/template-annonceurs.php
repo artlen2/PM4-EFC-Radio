@@ -43,7 +43,7 @@ get_header(); ?>
 
                 <div class="container mx-auto">
 
-                    <h1 class="text-4xl md:text-7xl font-bold text-white my-12 text-right rotate-[3deg]">
+                    <h1 class="text-4xl md:text-7xl font-bold text-white my-24 text-right rotate-[3deg]">
                         <?php echo esc_html($titre ?: get_the_title()); ?>
                     </h1>
 
@@ -114,15 +114,14 @@ get_header(); ?>
                                 alt="" aria-hidden="true"
                                 class="w-16 self-end z-1  md:w-38 md:absolute md:-top-20 md:right-56">
 
-                            <h2 class="text-4xl md:text-6xl text-violet rotate-[-3deg]">On jase?</h2>
+                            <h2 class="text-4xl md:text-6xl text-violet rotate-[-3deg] ">On jase?</h2>
 
                             <img src="<?php echo esc_url(get_stylesheet_directory_uri()); ?>/assets/objets/phone2.png"
                                 alt="main qui tient un téléphone"
                                 class="rotate-[30deg] w-32 mt-6 md:mt-0 md:w-50 md:ml-30 ">
-
                             <img src="<?php echo esc_url(get_stylesheet_directory_uri()); ?>/assets/objets/rond-points.png"
                                 alt="texture de point overlay"
-                                class="rotate-[30deg] w-80 absolute top-0 mix-blend-color-burn">
+                                class="rotate-[30deg] w-110 absolute top-0 mix-blend-overlay opacity-75  ">
 
                         </div>
 
