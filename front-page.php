@@ -2,29 +2,29 @@
 <main class="container mx-auto px-4 py-12 bg-beige">
     <!-- Météo -->
     <?php
-    $meteo_title = get_field('meteo-title');
-    $meteo_text = get_field('meteo-text');
     $meteo_announcement = get_field('meteo-announcement');
     $meteo_date = get_field('meteo-date');
 
     // météo en direct (includes/meteo.php)
     $meteo = function_exists('efc_get_meteo') ? efc_get_meteo() : null;
 
-    if ($meteo_title || $meteo_text || $meteo_announcement) : ?>
+    ?>
         <section class="section-meteo" style="background: url('<?php echo esc_url(get_template_directory_uri() . '/images/fond-meteo.png'); ?>') right top / auto 100% no-repeat;">
             <div class="grid grid-cols-1 lg:grid-cols-[28rem_1fr] gap-16 items-start px-4 py-12">
 
                 <!-- titre et texte -->
                 <div class="mb-50 -rotate-3 mt-3">
                     <div>
-                        <?php if ($meteo_title) : ?>
-                            <h2 class="text-orange text-6xl w-110 text-right leading-14"><?php echo esc_html($meteo_title); ?></h2>
-                        <?php endif; ?>
+                        <h2 class="text-orange text-6xl w-110 text-right leading-14 uppercase">En direct de la région</h2>
                         <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/objets/Personnage2.png'); ?>" alt="img-météo" class="w-60 -mt-35 -translate-x-10 rotate-2">
                     </div>
-                    <?php if ($meteo_text) : ?>
-                        <p class="text-3xl font-light ml-10"><?php echo nl2br(esc_html($meteo_text)); ?></p>
-                    <?php endif; ?>
+                    <p class="text-3xl font-light ml-10">Ici, vous trouverez un aperçu
+                        des principales conditions
+                        météorologiques, des vents,
+                        des marées et de l'état des routes afin
+                        de rester informés et de
+                        vous déplacer en toute
+                        sécurité.</p>
                 </div>
 
                 <!-- météo -->
@@ -186,7 +186,8 @@
                             <p class="text-black text-[1.25rem]">Aucun avertissement météo n'est actuellement en vigueur en Matanie.
                                 <br>
                                 <br>
-                                Planifiez vos déplacements en toute tranquillité et consultez ici les conditions météorologiques complètes en temps réel, les prévisions détaillées et l'état du réseau routier.</p>
+                                Planifiez vos déplacements en toute tranquillité et consultez ici les conditions météorologiques complètes en temps réel, les prévisions détaillées et l'état du réseau routier.
+                            </p>
                         <?php endif; ?>
 
                     </div>
@@ -208,6 +209,5 @@
                 </div>
             </div>
         </section>
-    <?php endif; ?>
 
     <?php get_footer(); ?>
