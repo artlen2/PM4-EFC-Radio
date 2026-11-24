@@ -126,12 +126,7 @@ Version: 1.0
   }
 }
 
-/* ===== Largeur du contenu : PADDING, pas de margin / max-width =====
-   - le main prend toute la largeur (aucune restriction)
-   - chaque enfant direct du main (section…) prend aussi toute la largeur,
-     donc son bg va de bord à bord
-   - le contenu est centré à la largeur du container grâce au padding
-   ⚠ NE PAS retirer les @media : ce sont elles qui gardent le contenu centré. */
+/* */
 main.container {
   --container-w: 100%;
   max-width: none;

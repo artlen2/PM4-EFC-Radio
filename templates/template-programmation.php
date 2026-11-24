@@ -180,7 +180,7 @@ get_header();
 
 
                 <!-- formulaire de projet -->
-        <div class="mx-auto grid max-w-5xl items-center gap-8 md:grid-cols-2 md:gap-12">
+        <div class="mx-auto grid w-full max-w-7xl items-center gap-8 md:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] md:gap-12">
             <div class="max-w-md">
                 <h2 class="font-title text-3xl font-black uppercase leading-tight text-yellow sm:text-4xl lg:text-5xl">Tu as un projet?</h2>
                 <p class="mt-4 text-base leading-relaxed text-white/90 sm:text-lg">

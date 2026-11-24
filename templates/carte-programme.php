@@ -9,6 +9,7 @@ $time_start = $get_programme_field('time_start') ?: $get_programme_field('heure_
 $time_end = $get_programme_field('time_end') ?: $get_programme_field('heure_fin');
 $title = $get_programme_field('title') ?: get_the_title();
 $description = $get_programme_field('description') ?: get_the_excerpt();
+$description = wp_trim_words(wp_strip_all_tags($description), 24, '…');
 $image = $get_programme_field('image');
 $reverse = !empty($args['reverse']);
 $has_image = $image || has_post_thumbnail();
@@ -84,7 +85,7 @@ $grid_columns = !$has_image
 
         <!-- partie description -->
         <?php if ($description) : ?>
-            <div class="text-left text-base leading-relaxed text-white/75 sm:text-lg [&_p]:text-base sm:[&_p]:text-lg"><?php echo wp_kses_post($description); ?></div>
+            <p class="text-left text-base leading-relaxed text-white/75 sm:text-lg"><?php echo esc_html($description); ?></p>
         <?php endif; ?>
 
         <!-- bouton voir plus -->
