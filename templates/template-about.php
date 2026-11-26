@@ -3,35 +3,20 @@
 Template Name: À propos
 */
 
-/*
- * ============================================================
- *  PAGE "À PROPOS" - QUICK GUIDE :)
- * ============================================================
- *  File layout (top to bottom):
+/* ㄟ(≧◇≦)ㄏ
+ *  File layout: 
  *    1. Queries -> get the animators, team members and partners
  *    2. Helpers -> small functions that print the cards, popups and carousels
  *    3. Data preparation -> clean arrays built from the queries + the page fields
  *    4. !! Page markup -> <main> - HTML of the page !!
  *    5. Script -> carousel loop, arrows and "Voir plus" popups
- *
- *  WANT TO CHANGE THE LOOK?
- *    - Page layout, colors, spacing, text sizes
- *        -> Tailwind classes in the <main> tag down
- *           (carousel cards & popups -> inside the helper functions)
- *    - Carousel sizes 
- *        -> card width, space between cards, big icons, popup width, edge fade
- *        -> main.css (classes starting with "radio-")
- *    - Text and images
- *        -> WordPress
- * ============================================================
+ * ᓚᘏᗢ
  */
 
 get_header();
 
 /* ------------------------------------------------------------
    1. QUERIES
-   Get every published animator, team member and partner,
-   sorted by "order" then by title.
 ------------------------------------------------------------ */
 $query_args = [
     'post_status' => 'publish',
@@ -45,10 +30,7 @@ $all_partners = get_posts($query_args + ['post_type' => 'partenaire']);
 
 /* ------------------------------------------------------------
    2. HELPERS
-   Each function is wrapped in function_exists() so it is only
-   declared once.
------------------------------------------------------------- */
-
+   ------------------------------------------------------------ */
 // Turns an SCF image field (array, id or url) into ['url' => ..., 'alt' => ...]
 if (!function_exists('radio_image')) {
     function radio_image($field, $fallback_alt = '')

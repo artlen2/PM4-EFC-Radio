@@ -96,6 +96,47 @@ add_action('pre_get_posts', function ($query) {
     }
 });
 
+// Fromulaire benevolat
+function efc_handle_benevolat_submit()
+{
+    $redirect_base = !empty($_POST['redirect_to'])
+        ? esc_url_raw(wp_unslash($_POST['redirect_to']))
+        : home_url('/');
+
+    if (
+        !isset($_POST['efc_benevolat_nonce']) ||
+        !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['efc_benevolat_nonce'])), 'efc_benevolat_action') ||
+        !empty($_POST['site_web'])
+    ) {
+        wp_safe_redirect(add_query_arg('benevolat', 'erreur', $redirect_base) . '#benevolat');
+        exit;
+    }
+
+    $nom      = sanitize_text_field(wp_unslash($_POST['nom'] ?? ''));
+    $courriel = sanitize_email(wp_unslash($_POST['courriel'] ?? ''));
+    $tel      = sanitize_text_field(wp_unslash($_POST['telephone'] ?? ''));
+    $interet  = sanitize_text_field(wp_unslash($_POST['interet'] ?? ''));
+    $message  = sanitize_textarea_field(wp_unslash($_POST['message'] ?? ''));
+
+    if (!$nom || !is_email($courriel) || !$message) {
+        wp_safe_redirect(add_query_arg('benevolat', 'erreur', $redirect_base) . '#benevolat');
+        exit;
+    }
+
+    $to      = get_option('admin_email');
+    $subject = 'Nouvelle candidature bénévole — ' . $nom;
+    $body    = "Nom : {$nom}\nCourriel : {$courriel}\nTéléphone : {$tel}\nIntérêt : {$interet}\n\nMessage :\n{$message}";
+    $headers = ['Reply-To: ' . $nom . ' <' . $courriel . '>'];
+
+    $sent   = wp_mail($to, $subject, $body, $headers);
+    $status = $sent ? 'succes' : 'erreur';
+
+    wp_safe_redirect(add_query_arg('benevolat', $status, $redirect_base) . '#benevolat');
+    exit;
+}
+add_action('admin_post_nopriv_efc_benevolat_submit', 'efc_handle_benevolat_submit');
+add_action('admin_post_efc_benevolat_submit', 'efc_handle_benevolat_submit');
+
 // formulaire pour déposer son projet
 
 function efc_redirect_project_submission($status)
