@@ -1022,3 +1022,33 @@ main.container > *:not(.w-screen, .full-bleed) {
     --wave-h: 2.4rem;
   } /* 40% de md:h-24 */
 }
+
+/* footer qui remonte sous la vague juste avant lui (le fond texturé passe derrière la vague) */
+.hero-wave:has(+ footer) {
+  position: relative;
+  z-index: 1;
+  margin-bottom: -4rem; /* h-16 */
+}
+.hero-wave:has(+ footer) + footer {
+  padding-top: 8rem; /* py-16 + hauteur de la vague */
+}
+.hero-wave.h-12:has(+ footer) {
+  margin-bottom: -3rem;
+}
+.hero-wave.h-12:has(+ footer) + footer {
+  padding-top: 7rem;
+}
+@media (width >= 48rem) {
+  .hero-wave:has(+ footer) {
+    margin-bottom: -6rem; /* md:h-24 */
+  }
+  .hero-wave:has(+ footer) + footer {
+    padding-top: 12rem; /* md:py-24 + vague */
+  }
+  .hero-wave.h-12:has(+ footer) {
+    margin-bottom: -4rem; /* md:h-16 */
+  }
+  .hero-wave.h-12:has(+ footer) + footer {
+    padding-top: 10rem;
+  }
+}
