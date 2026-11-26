@@ -83,3 +83,5 @@
                 </div>
             <?php endif; ?>
         </section>
+
+    </div>

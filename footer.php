@@ -1,5 +1,3 @@
-</main>
-
 <footer class="py-16 md:py-24 px-4 bg-[#fff] bg-cover bg-center bg-no-repeat" style="background-image: url('<?php echo esc_url(get_template_directory_uri() . '/assets/objets/overlay-texturepapier.png'); ?>');">
   <!-- card footer container -->
   <div class="card-container bg-beige max-w-[1600px] mx-auto rounded-[24px] md:rounded-[40px] p-6 md:p-10 border-t-2 border-x-2 border-b-8 border-black lg:scale-115 ">
