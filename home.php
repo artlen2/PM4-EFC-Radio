@@ -81,6 +81,20 @@ $news = $wp_query;
                     <article class="news-card group relative grid h-full min-w-0 grid-cols-1 overflow-hidden rounded-[2.5rem] border-[3px] border-purple bg-white <?php echo has_post_thumbnail() ? 'sm:grid-cols-2' : ''; ?>">
                         <!-- Text -->
                         <div class="flex min-w-0 flex-col p-6 sm:p-7 xl:p-8">
+                            <?php $card_categories = get_the_category(); ?>
+
+                            <?php if ($card_categories) : ?>
+                                <ul
+                                    class="mb-3 flex list-none flex-wrap gap-2 p-0"
+                                    aria-label="Catégories">
+                                    <?php foreach ($card_categories as $card_category) : ?>
+                                        <li class="max-w-full rounded-full border border-purple bg-purple px-3 py-1 text-xs font-bold leading-tight text-white wrap-anywhere">
+                                            <?php echo esc_html($card_category->name); ?>
+                                        </li>
+                                    <?php endforeach; ?>
+                                </ul>
+                            <?php endif; ?>
+
                             <time
                                 datetime="<?php echo esc_attr(get_the_date('c')); ?>"
                                 class="mb-2 block text-sm font-semibold text-black/70">
