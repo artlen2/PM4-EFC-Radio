@@ -74,8 +74,8 @@ $ellipse_yel   = $theme_asset('assets/objets/Ellipse8.png');
 $ellipse_purp  = $theme_asset('assets/objets/Ellipse9.png');
 $paper_tex_url = $theme_asset('assets/objets/overlay-texturepapier.png');
 
-// Onglets Vitrine locale
-$vitrine_tabs = [
+// Catégories de la Vitrine locale (slug => texte affiché)
+$vitrine_categories = [
     'commerces'     => 'Commerces',
     'avis-deces'    => 'Avis de décès',
     'anniversaires' => 'Anniversaires',
@@ -83,9 +83,13 @@ $vitrine_tabs = [
     'annonces'      => 'Annonces',
 ];
 
-$active_vitrine = isset($_GET['vitrine']) ? sanitize_key(wp_unslash($_GET['vitrine'])) : 'commerces';
+// Onglets = "Tous" (toutes les publications) + les catégories
+$vitrine_tabs = ['tous' => 'Tous'] + $vitrine_categories;
+
+// Onglet ouvert : celui de l'URL (?vitrine=emplois), sinon "Tous"
+$active_vitrine = isset($_GET['vitrine']) ? sanitize_key(wp_unslash($_GET['vitrine'])) : 'tous';
 if (!isset($vitrine_tabs[$active_vitrine])) {
-    $active_vitrine = 'commerces';
+    $active_vitrine = 'tous';
 }
 
 $benevolat_status = isset($_GET['benevolat']) ? sanitize_key(wp_unslash($_GET['benevolat'])) : '';
@@ -98,7 +102,15 @@ $benevolat_status = isset($_GET['benevolat']) ? sanitize_key(wp_unslash($_GET['b
         d="M0 40 Q 60 0 120 40 T 240 40 T 360 40 T 480 40 T 600 40 T 720 40 T 840 40 T 960 40 T 1080 40 T 1200 40 T 1320 40 T 1440 40 V100 H0 Z" />
 </svg>
 
-<main class="container bg-beige font-sans text-black">
+<?php
+/*
+ * Structure de la page (comme les autres templates) :
+ *   <main> pleine largeur  ->  des sections pleine largeur (fond de couleur)
+ *   et dans chaque section un <div class="container mx-auto px-10 py-12 md:py-16"> pour le contenu.
+ * Pas de pb-12 sur <main> : la dernière section a un fond texturé qui doit toucher le footer.
+ */
+?>
+<main class="overflow-x-clip bg-beige font-sans text-black">
 
     <!-- ============================================================
          1. CONCOURS EN COURS (Beige + Boombox + Cartes décalées)
@@ -143,7 +155,8 @@ $benevolat_status = isset($_GET['benevolat']) ? sanitize_key(wp_unslash($_GET['b
     $extra_concours    = array_slice($concours_actifs, 2);
     ?>
 
-    <section id="concours" class="full-bleed relative -mt-16 overflow-hidden bg-beige pt-24 pb-16 md:-mt-24 md:pt-32 md:pb-24">
+    <!-- -mt remonte la section sous la vague (même hauteur que la vague), pt compense -->
+    <section id="concours" class="relative -mt-16 overflow-hidden bg-beige pt-16 md:-mt-24 md:pt-24">
 
         <?php if ($concours_bg_url) : ?>
             <div class="pointer-events-none absolute inset-y-0 left-0 hidden w-2/5 lg:block" aria-hidden="true">
@@ -153,11 +166,11 @@ $benevolat_status = isset($_GET['benevolat']) ? sanitize_key(wp_unslash($_GET['b
             </div>
         <?php endif; ?>
 
-        <div class="relative z-10 mx-auto max-w-6xl px-4">
+        <div class="relative z-10 container mx-auto px-10 py-12 md:py-16">
             <div class="grid grid-cols-1 items-center gap-10 lg:grid-cols-12">
 
                 <!-- Mascotte Boombox (Personnage.png) -->
-                <div class="flex justify-center lg:col-span-5 lg:justify-start">
+                <div class="flex justify-center lg:col-span-4 lg:justify-start">
                     <?php if ($boombox_url) : ?>
                         <img src="<?php echo esc_url($boombox_url); ?>"
                             alt="Mascotte boombox de la radio"
@@ -167,14 +180,15 @@ $benevolat_status = isset($_GET['benevolat']) ? sanitize_key(wp_unslash($_GET['b
                 </div>
 
                 <!-- Titre + Éclats violets + Intro + Cartes décalées -->
-                <div class="lg:col-span-7">
+                <div class="lg:col-span-8">
                     <div class="relative mb-4 inline-block">
                         <svg class="pointer-events-none absolute -top-1 -left-8 hidden h-9 w-6 text-violet sm:block" viewBox="0 0 28 40" fill="none" aria-hidden="true">
                             <path d="M24 6L6 2M22 18L2 18M24 30L6 36" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" />
                         </svg>
-                        <h1 class="block max-w-full wrap-break-word font-title text-4xl font-black uppercase leading-tight text-orange sm:text-5xl lg:text-6xl">
+                        <!-- h2 (le h1 de la page est dans le hero du header) -->
+                        <h2 class="block max-w-full wrap-break-word font-title text-4xl font-black uppercase leading-tight text-orange sm:text-5xl xl:text-6xl">
                             Concours en cours
-                        </h1>
+                        </h2>
                         <svg class="pointer-events-none absolute -top-1 -right-8 hidden h-9 w-6 text-violet sm:block" viewBox="0 0 28 40" fill="none" aria-hidden="true">
                             <path d="M4 6L22 2M6 18L26 18M4 30L22 36" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" />
                         </svg>
@@ -216,9 +230,9 @@ $benevolat_status = isset($_GET['benevolat']) ? sanitize_key(wp_unslash($_GET['b
                                                 <?php endif; ?>
                                             </div>
 
-                                            <h2 class="mb-1 font-title text-lg font-black uppercase leading-snug text-black sm:text-xl">
+                                            <h3 class="mb-1 font-title text-lg font-black uppercase leading-snug text-black sm:text-xl">
                                                 <?php echo esc_html(get_the_title($c_post->ID)); ?>
-                                            </h2>
+                                            </h3>
 
                                             <?php if ($excerpt) : ?>
                                                 <p class="text-xs leading-relaxed text-black/80 sm:text-sm">
@@ -251,9 +265,9 @@ $benevolat_status = isset($_GET['benevolat']) ? sanitize_key(wp_unslash($_GET['b
             <!-- Grille supplémentaire si plus de 2 concours actifs -->
             <?php if (!empty($extra_concours)) : ?>
                 <div class="mt-20 border-t-2 border-black/10 pt-12">
-                    <h2 class="mb-6 font-title text-2xl font-black uppercase text-purple sm:text-3xl">
+                    <h3 class="mb-6 font-title text-2xl font-black uppercase text-purple sm:text-3xl">
                         Autres concours en cours
-                    </h2>
+                    </h3>
 
                     <ul class="grid list-none grid-cols-1 gap-8 p-0 sm:grid-cols-2 lg:grid-cols-3">
                         <?php foreach ($extra_concours as $item) :
@@ -273,9 +287,9 @@ $benevolat_status = isset($_GET['benevolat']) ? sanitize_key(wp_unslash($_GET['b
                                         </div>
                                     <?php endif; ?>
 
-                                    <h3 class="mb-2 font-title text-lg font-black uppercase leading-snug text-orange">
+                                    <h4 class="mb-2 font-title text-lg font-black uppercase leading-snug text-orange">
                                         <?php echo esc_html(get_the_title($c_post->ID)); ?>
-                                    </h3>
+                                    </h4>
 
                                     <?php if ($excerpt) : ?>
                                         <p class="mb-4 text-sm leading-relaxed text-black/80">
@@ -314,7 +328,7 @@ $benevolat_status = isset($_GET['benevolat']) ? sanitize_key(wp_unslash($_GET['b
     </section>
 
     <!-- Vague Beige -> Violet -->
-    <svg class="full-bleed -mt-px -mb-px block h-12 w-full bg-violet text-beige md:h-20"
+    <svg class="-mt-px -mb-px block h-12 w-full bg-violet text-beige md:h-20"
         viewBox="0 0 1440 100" preserveAspectRatio="none" aria-hidden="true">
         <path fill="currentColor"
             d="M0 0 H1440 V58 Q1380 100 1320 58 T1200 58 T1080 58 T960 58 T840 58 T720 58 T600 58 T480 58 T360 58 T240 58 T120 58 T0 58 Z" />
@@ -338,9 +352,9 @@ $benevolat_status = isset($_GET['benevolat']) ? sanitize_key(wp_unslash($_GET['b
     ?>
 
     <section id="radio-bingo"
-        class="full-bleed relative overflow-hidden bg-violet bg-[linear-gradient(to_right,rgba(255,255,255,0.08)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.08)_1px,transparent_1px)] bg-[size:3.5rem_3.5rem] px-4 py-14 text-white md:py-20">
+        class="relative overflow-hidden bg-violet bg-[linear-gradient(to_right,rgba(255,255,255,0.08)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.08)_1px,transparent_1px)] bg-[size:3.5rem_3.5rem] text-white">
 
-        <div class="relative z-10 mx-auto max-w-6xl">
+        <div class="relative z-10 container mx-auto px-10 py-12 md:py-16">
             <div class="flex flex-col gap-10 lg:flex-row lg:items-start">
 
                 <?php if ($pub_img_url) : ?>
@@ -397,8 +411,8 @@ $benevolat_status = isset($_GET['benevolat']) ? sanitize_key(wp_unslash($_GET['b
                             <?php endif; ?>
                         </div>
 
-                        <!-- Bulle blanche RÈGLEMENTS + Personnage3.png bien dégagé au-dessus -->
-                        <div class="relative pt-24 lg:col-span-7 lg:pt-28">
+                        <!-- Bulle blanche RÈGLEMENTS + Personnage3.png au-dessus (le pt laisse la place à l'étoile) -->
+                        <div class="relative pt-48 lg:col-span-7 lg:pt-56">
                             <?php if ($ellipse_purp) : ?>
                                 <img src="<?php echo esc_url($ellipse_purp); ?>" alt=""
                                     class="pointer-events-none absolute top-4 right-4 z-0 w-32 sm:right-6 sm:w-36"
@@ -460,7 +474,7 @@ $benevolat_status = isset($_GET['benevolat']) ? sanitize_key(wp_unslash($_GET['b
     </section>
 
     <!-- Vague Violet -> Orange -->
-    <svg class="full-bleed -mt-px -mb-px block h-12 w-full bg-orange text-violet md:h-20"
+    <svg class="-mt-px -mb-px block h-12 w-full bg-orange text-violet md:h-20"
         viewBox="0 0 1440 100" preserveAspectRatio="none" aria-hidden="true">
         <path fill="currentColor"
             d="M0 0 H1440 V58 Q1380 100 1320 58 T1200 58 T1080 58 T960 58 T840 58 T720 58 T600 58 T480 58 T360 58 T240 58 T120 58 T0 58 Z" />
@@ -481,8 +495,8 @@ $benevolat_status = isset($_GET['benevolat']) ? sanitize_key(wp_unslash($_GET['b
     }
     ?>
 
-    <section id="achat-cartes" class="full-bleed relative overflow-hidden bg-orange px-4 py-14 text-white md:py-20">
-        <div class="relative mx-auto max-w-6xl">
+    <section id="achat-cartes" class="relative overflow-hidden bg-orange text-white">
+        <div class="relative container mx-auto px-10 py-12 md:py-16">
             <!-- Cercle décoratif derrière le titre (comme sur communauté.png) -->
             <div class="pointer-events-none absolute -top-10 left-1/2 hidden h-44 w-44 rounded-full bg-white/15 lg:block" aria-hidden="true"></div>
 
@@ -550,7 +564,7 @@ $benevolat_status = isset($_GET['benevolat']) ? sanitize_key(wp_unslash($_GET['b
     </section>
 
     <!-- Vague Orange -> Fond papier texturé -->
-    <svg class="full-bleed -mt-px -mb-px block h-12 w-full bg-[#f8f7f3] bg-[linear-gradient(to_right,rgba(15,14,15,0.04)_1px,transparent_1px),linear-gradient(to_bottom,rgba(15,14,15,0.04)_1px,transparent_1px)] bg-[size:2.75rem_2.75rem] text-orange md:h-20"
+    <svg class="-mt-px -mb-px block h-12 w-full bg-[#f8f7f3] bg-[linear-gradient(to_right,rgba(15,14,15,0.04)_1px,transparent_1px),linear-gradient(to_bottom,rgba(15,14,15,0.04)_1px,transparent_1px)] bg-[size:2.75rem_2.75rem] text-orange md:h-20"
         viewBox="0 0 1440 100" preserveAspectRatio="none" aria-hidden="true">
         <path fill="currentColor"
             d="M0 0 H1440 V58 Q1380 100 1320 58 T1200 58 T1080 58 T960 58 T840 58 T720 58 T600 58 T480 58 T360 58 T240 58 T120 58 T0 58 Z" />
@@ -558,6 +572,7 @@ $benevolat_status = isset($_GET['benevolat']) ? sanitize_key(wp_unslash($_GET['b
 
     <!-- ============================================================
          4. VITRINE LOCALE (Fond papier texturé)
+         Onglet "Tous" = toutes les publications, les autres = une catégorie
          ============================================================ -->
     <?php
     $vitrine_posts = get_posts([
@@ -568,22 +583,36 @@ $benevolat_status = isset($_GET['benevolat']) ? sanitize_key(wp_unslash($_GET['b
         'order'          => 'DESC',
     ]);
 
-    $vitrine_grouped = array_fill_keys(array_keys($vitrine_tabs), []);
+    // Chaque publication une seule fois, avec ses catégories (slugs + textes)
+    $vitrine_items = [];
     foreach ($vitrine_posts as $v_post) {
-        $raw_cat = $get_acf('vitrine_categorie', $v_post->ID);
-        foreach ($extract_vitrine_slugs($raw_cat) as $cat_slug) {
-            if (isset($vitrine_grouped[$cat_slug])) {
-                $vitrine_grouped[$cat_slug][] = $v_post;
-            }
-        }
+        $v_slugs = array_values(array_filter(
+            $extract_vitrine_slugs($get_acf('vitrine_categorie', $v_post->ID)),
+            static fn($slug) => isset($vitrine_categories[$slug])
+        ));
+
+        $vitrine_items[] = [
+            'post'   => $v_post,
+            'slugs'  => $v_slugs,
+            'labels' => array_map(static fn($slug) => $vitrine_categories[$slug], $v_slugs),
+        ];
+    }
+
+    // Publications de chaque onglet : "tous" = tout, sinon celles de la catégorie
+    $vitrine_by_tab = ['tous' => $vitrine_items];
+    foreach ($vitrine_categories as $cat_slug => $cat_label) {
+        $vitrine_by_tab[$cat_slug] = array_values(array_filter(
+            $vitrine_items,
+            static fn($item) => in_array($cat_slug, $item['slugs'], true)
+        ));
     }
     ?>
 
     <section id="vitrine-locale"
-        class="full-bleed relative bg-[#f8f7f3] bg-[linear-gradient(to_right,rgba(15,14,15,0.04)_1px,transparent_1px),linear-gradient(to_bottom,rgba(15,14,15,0.04)_1px,transparent_1px)] bg-[size:2.75rem_2.75rem] px-4 pt-14 pb-12 md:pt-20 md:pb-16"
+        class="relative bg-[#f8f7f3] bg-[linear-gradient(to_right,rgba(15,14,15,0.04)_1px,transparent_1px),linear-gradient(to_bottom,rgba(15,14,15,0.04)_1px,transparent_1px)] bg-[size:2.75rem_2.75rem]"
         <?php echo $paper_tex_url ? 'style="background-image: url(' . esc_url($paper_tex_url) . '); background-size: cover;"' : ''; ?>>
 
-        <div class="relative z-10 mx-auto max-w-6xl">
+        <div class="relative z-10 container mx-auto px-10 py-12 md:py-16">
             <h2 class="mb-3 block max-w-full wrap-break-word font-title text-4xl font-black uppercase leading-tight text-purple sm:text-5xl lg:text-6xl">
                 Vitrine locale
             </h2>
@@ -595,7 +624,7 @@ $benevolat_status = isset($_GET['benevolat']) ? sanitize_key(wp_unslash($_GET['b
             <div role="tablist" aria-label="Catégories de la vitrine locale" class="mb-10 flex flex-wrap gap-3">
                 <?php foreach ($vitrine_tabs as $slug => $label) :
                     $is_active = ($active_vitrine === $slug);
-                    $count     = count($vitrine_grouped[$slug]);
+                    $count     = count($vitrine_by_tab[$slug]);
                 ?>
                     <button type="button"
                         role="tab"
@@ -612,10 +641,10 @@ $benevolat_status = isset($_GET['benevolat']) ? sanitize_key(wp_unslash($_GET['b
                 <?php endforeach; ?>
             </div>
 
-            <!-- Panneaux -->
+            <!-- Panneaux (un par onglet, un seul visible à la fois) -->
             <?php foreach ($vitrine_tabs as $slug => $label) :
                 $is_active = ($active_vitrine === $slug);
-                $items     = $vitrine_grouped[$slug];
+                $items     = $vitrine_by_tab[$slug];
             ?>
                 <div role="tabpanel"
                     id="panel-<?php echo esc_attr($slug); ?>"
@@ -625,7 +654,10 @@ $benevolat_status = isset($_GET['benevolat']) ? sanitize_key(wp_unslash($_GET['b
 
                     <?php if (!empty($items)) : ?>
                         <ul class="grid list-none grid-cols-1 gap-8 p-0 sm:grid-cols-2 lg:grid-cols-3">
-                            <?php foreach ($items as $v_post) :
+                            <?php foreach ($items as $item) :
+                                $v_post   = $item['post'];
+                                $v_labels = $item['labels'];
+
                                 $v_img     = $get_acf('vitrine_image', $v_post->ID);
                                 $v_img_url = is_array($v_img) ? ($v_img['url'] ?? '') : $v_img;
                                 $v_img_alt = is_array($v_img) && !empty($v_img['alt']) ? $v_img['alt'] : get_the_title($v_post->ID);
@@ -645,9 +677,16 @@ $benevolat_status = isset($_GET['benevolat']) ? sanitize_key(wp_unslash($_GET['b
                                             </div>
                                         <?php endif; ?>
 
-                                        <span class="mb-2 inline-block w-fit rounded-full bg-purple px-3 py-1 text-xs font-bold uppercase text-white">
-                                            <?php echo esc_html($label); ?>
-                                        </span>
+                                        <!-- Catégorie(s) de la publication (utile dans l'onglet "Tous") -->
+                                        <?php if ($v_labels) : ?>
+                                            <div class="mb-2 flex flex-wrap gap-2">
+                                                <?php foreach ($v_labels as $v_label) : ?>
+                                                    <span class="inline-block w-fit rounded-full bg-purple px-3 py-1 text-xs font-bold uppercase text-white">
+                                                        <?php echo esc_html($v_label); ?>
+                                                    </span>
+                                                <?php endforeach; ?>
+                                            </div>
+                                        <?php endif; ?>
 
                                         <h3 class="mb-2 font-title text-xl font-black leading-snug text-orange">
                                             <?php echo esc_html(get_the_title($v_post->ID)); ?>
@@ -682,7 +721,11 @@ $benevolat_status = isset($_GET['benevolat']) ? sanitize_key(wp_unslash($_GET['b
                     <?php else : ?>
                         <div class="rounded-[2rem] border-2 border-black bg-white p-8 shadow-[0_6px_0_#0f0e0f]">
                             <p class="text-base font-semibold text-black">
-                                Aucune publication dans « <?php echo esc_html($label); ?> » pour le moment.
+                                <?php if ($slug === 'tous') : ?>
+                                    Aucune publication pour le moment.
+                                <?php else : ?>
+                                    Aucune publication dans « <?php echo esc_html($label); ?> » pour le moment.
+                                <?php endif; ?>
                             </p>
                         </div>
                     <?php endif; ?>
@@ -694,12 +737,14 @@ $benevolat_status = isset($_GET['benevolat']) ? sanitize_key(wp_unslash($_GET['b
 
     <!-- ============================================================
          5. FORMULAIRE BÉNÉVOLAT
+         (pas de padding en haut : la section est collée sous la Vitrine, même fond)
+         Le formulaire est traité par includes/forms.php
          ============================================================ -->
     <section id="benevolat"
-        class="full-bleed relative bg-[#f8f7f3] bg-[linear-gradient(to_right,rgba(15,14,15,0.04)_1px,transparent_1px),linear-gradient(to_bottom,rgba(15,14,15,0.04)_1px,transparent_1px)] bg-[size:2.75rem_2.75rem] px-4 pt-6 pb-20 md:pb-24"
+        class="relative bg-[#f8f7f3] bg-[linear-gradient(to_right,rgba(15,14,15,0.04)_1px,transparent_1px),linear-gradient(to_bottom,rgba(15,14,15,0.04)_1px,transparent_1px)] bg-[size:2.75rem_2.75rem]"
         <?php echo $paper_tex_url ? 'style="background-image: url(' . esc_url($paper_tex_url) . '); background-size: cover;"' : ''; ?>>
 
-        <div class="relative z-10 mx-auto max-w-6xl">
+        <div class="relative z-10 container mx-auto px-10 pb-12 md:pb-16">
             <div class="grid grid-cols-1 overflow-hidden rounded-[2.5rem] border-[3px] border-black bg-white shadow-[0_8px_0_#0f0e0f] lg:grid-cols-12">
 
                 <div class="flex flex-col justify-between bg-yellow p-8 text-black lg:col-span-5 lg:p-10">
@@ -812,6 +857,7 @@ $benevolat_status = isset($_GET['benevolat']) ? sanitize_key(wp_unslash($_GET['b
 </main>
 
 <script>
+    // Onglets de la Vitrine locale : affiche le panneau choisi et met l'URL à jour (?vitrine=...)
     document.addEventListener('DOMContentLoaded', () => {
         const tabs = document.querySelectorAll('[data-vitrine-tab]');
         const panels = document.querySelectorAll('[data-vitrine-panel]');
