@@ -291,20 +291,18 @@ function efc_soutenir_admin_fields_html($post)
         'member_text' => 'Texte descriptif',
         'member_button' => 'Texte du bouton',
         'member_url' => 'URL du bouton',
-        'benefit_title' => 'Avantages — titre',
-        'benefit_badge' => 'Avantages — étiquette',
-        'benefit_text' => 'Avantages — texte',
-        'partner_title' => 'Partenaire — titre',
-        'partner_text' => 'Partenaire — texte',
-        'partner_button' => 'Partenaire — texte du bouton',
-        'partner_url' => 'Partenaire — URL du bouton',
+        'donate_title' => 'Don — titre',
+        'donate_badge' => 'Don — étiquette',
+        'donate_text' => 'Don — texte descriptif',
+        'donate_form_shortcode' => 'Don — shortcode du formulaire de paiement',
     ];
 
     echo '<p><strong>Modifiez ici le contenu des sections de la page Soutenir.</strong></p>';
+    echo '<p>Le formulaire de paiement doit provenir du plugin de dons choisi. Ne saisissez jamais de données de carte bancaire dans ce thème.</p>';
     foreach ($fields as $key => $label) {
         $value = get_post_meta($post->ID, '_efc_' . $key, true);
         echo '<p><label for="efc-' . esc_attr($key) . '" style="display:block;font-weight:600;margin-bottom:4px">' . esc_html($label) . '</label>';
-        $textarea = in_array($key, ['member_text', 'benefit_text', 'partner_text'], true);
+        $textarea = in_array($key, ['member_text', 'donate_text', 'donate_form_shortcode'], true);
         if ($textarea) {
             echo '<textarea id="efc-' . esc_attr($key) . '" name="efc_' . esc_attr($key) . '" rows="4" style="width:100%">' . esc_textarea($value) . '</textarea>';
         } else {
@@ -332,16 +330,13 @@ function efc_save_soutenir_fields($post_id)
         'member_text',
         'member_button',
         'member_url',
-        'benefit_title',
-        'benefit_badge',
-        'benefit_text',
-        'partner_title',
-        'partner_text',
-        'partner_button',
-        'partner_url',
+        'donate_title',
+        'donate_badge',
+        'donate_text',
+        'donate_form_shortcode',
     ];
-    $text_fields = ['member_text', 'benefit_text', 'partner_text'];
-    $url_fields = ['member_url', 'partner_url'];
+    $text_fields = ['member_text', 'donate_text', 'donate_form_shortcode'];
+    $url_fields = ['member_url'];
 
     foreach ($keys as $key) {
         if (!isset($_POST['efc_' . $key])) {

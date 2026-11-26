@@ -23,19 +23,13 @@ while (have_posts()) : the_post();
     );
     $member_button = efc_soutenir_field('member_button', 'S’inscrire');
     $member_url = efc_soutenir_field('member_url', '#');
-    $benefit_title = efc_soutenir_field('benefit_title', 'Quels avantages ?');
-    $benefit_badge = efc_soutenir_field('benefit_badge', 'En cours');
-    $benefit_text = efc_soutenir_field(
-        'benefit_text',
-        'Envoyez-nous votre plus belle photo du phare de Matane et courez la chance de gagner un souper pour deux, des billets pour le Festival de la crevette.'
+    $donate_title = efc_soutenir_field('donate_title', 'Faites un don');
+    $donate_badge = efc_soutenir_field('donate_badge', 'Chaque geste compte');
+    $donate_text = efc_soutenir_field(
+        'donate_text',
+        'Votre don aide notre radio communautaire à faire vivre une programmation locale, vivante et proche des gens.'
     );
-    $partner_title = efc_soutenir_field('partner_title', 'Devenir partenaire');
-    $partner_text = efc_soutenir_field(
-        'partner_text',
-        'Associez votre entreprise à une radio bien ancrée dans sa communauté et faites connaître vos services en Matanie.'
-    );
-    $partner_button = efc_soutenir_field('partner_button', 'En savoir plus');
-    $partner_url = efc_soutenir_field('partner_url', '#');
+    $donate_form_shortcode = efc_soutenir_field('donate_form_shortcode', '');
 ?>
 
 <!--  -->
@@ -84,45 +78,67 @@ while (have_posts()) : the_post();
         </div>
     </section>
 
-    <!-- la partie quels avantages -->
-
-    <section class="relative left-1/2 z-10 mt-16 w-screen -translate-x-1/2 overflow-x-clip bg-violet px-5 pb-12 pt-16 text-white md:mt-24 md:pb-20 md:pt-24" aria-label="Devenir partenaire et avantages">
-        <svg class="pointer-events-none absolute -top-14 left-0 z-20 h-16 w-full text-violet md:-top-20 md:h-24"
-            viewBox="0 0 1440 100" preserveAspectRatio="none" aria-hidden="true">
-            <path fill="currentColor"
-                d="M0 40 Q60 0 120 40 T240 40 T360 40 T480 40 T600 40 T720 40 T840 40 T960 40 T1080 40 T1200 40 T1320 40 T1440 40 V100 H0 Z" />
+    <section class="donation-scene relative isolate left-1/2 z-10 w-screen -translate-x-1/2 overflow-hidden bg-orange px-5 py-16 text-black sm:px-8 md:py-20" aria-labelledby="donate-title">
+        <svg class="pointer-events-none absolute inset-x-0 top-0 h-9 w-full text-violet sm:h-12" viewBox="0 0 1440 100" preserveAspectRatio="none" aria-hidden="true">
+            <path fill="currentColor" d="M0 0 H1440 V45 Q1380 100 1320 45 T1200 45 T1080 45 T960 45 T840 45 T720 45 T600 45 T480 45 T360 45 T240 45 T120 45 T0 45 Z" />
         </svg>
-        <img src="<?php echo esc_url($asset . 'vecteur.png'); ?>" alt="" aria-hidden="true"
-            class="pointer-events-none absolute left-0 top-1/2 z-0 w-full -translate-y-1/2 opacity-40">
-        <img src="<?php echo esc_url($asset . 'Ellipse9.png'); ?>" alt="" aria-hidden="true"
-            class="pointer-events-none absolute left-[28%] top-8 z-0 w-36 opacity-70 md:w-48">
-        <img src="<?php echo esc_url($asset . 'Star5.png'); ?>" alt="" aria-hidden="true"
-            class="pointer-events-none absolute bottom-6 right-4 z-0 w-[clamp(7rem,16vw,13rem)] opacity-60 md:bottom-8 md:right-[5%]">
+        <div class="donation-spark donation-spark-one" aria-hidden="true"></div>
+        <div class="donation-spark donation-spark-two" aria-hidden="true"></div>
+        <img src="<?php echo esc_url($asset . 'Star3.png'); ?>" alt="" aria-hidden="true"
+            class="donation-float pointer-events-none absolute left-[4%] top-20 z-0 w-16 sm:left-[7%] sm:w-20">
+        <img src="<?php echo esc_url($asset . 'Star.png'); ?>" alt="" aria-hidden="true"
+            class="donation-float donation-float-delayed pointer-events-none absolute right-[4%] top-24 z-0 w-10 sm:right-[8%] sm:w-14">
 
-        <div class="relative z-10 mx-auto grid w-full max-w-7xl items-center gap-12 sm:gap-16 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:gap-20">
-            <article class="btn-press relative z-10 w-full max-w-[34rem] cursor-pointer -rotate-3 rounded-3xl bg-white p-5 text-black sm:p-6 md:p-8">
-                <span class="mb-4 inline-block -rotate-2 rounded-full bg-yellow px-4 py-1 text-xs font-black uppercase text-white">
-                    <?php echo esc_html($benefit_badge); ?>
+        <div class="relative z-10 mx-auto grid w-full max-w-7xl items-center gap-8 pt-5 md:min-h-[42rem] md:grid-cols-[minmax(0,1fr)_minmax(20rem,0.92fr)] md:gap-10 lg:gap-16">
+            <div class="relative flex flex-col items-start md:min-h-[42rem]">
+                <span class="inline-flex rounded-full bg-yellow px-4 py-1.5 text-xs font-black uppercase text-white shadow-sm sm:text-sm">
+                    <?php echo esc_html($donate_badge); ?>
                 </span>
-                <h2 class="font-title text-2xl font-black uppercase md:text-3xl"><?php echo esc_html($benefit_title); ?></h2>
-                <p class="mt-3 text-base leading-snug md:text-lg"><?php echo esc_html($benefit_text); ?></p>
-            </article>
+                <h2 id="donate-title" class="relative z-10 mt-4 max-w-xl font-title text-4xl font-black uppercase leading-none text-white drop-shadow-sm sm:text-5xl md:text-6xl lg:text-7xl">
+                    <?php echo esc_html($donate_title); ?>
+                </h2>
+                <p class="relative z-10 mt-4 max-w-lg text-base font-semibold leading-relaxed text-black/80 sm:text-lg md:pb-80">
+                    <?php echo esc_html($donate_text); ?>
+                </p>
+                <img src="<?php echo esc_url($asset . 'noir_et_blanc.png'); ?>" alt="" aria-hidden="true"
+                    class="pointer-events-none relative mt-6 block h-auto w-full max-w-[34rem] self-center md:absolute md:bottom-0 md:left-0 md:z-0 md:mt-0 md:w-[min(58vw,46rem)] md:max-w-none md:self-start">
+            </div>
 
-            <div class="relative mx-auto w-full max-w-[34rem] lg:-translate-y-4">
-                <div class="soutenir-union relative z-10 flex min-h-[19rem] flex-col justify-center px-[12%] py-10 sm:px-[14%] md:min-h-[22rem] md:px-[15%] md:py-14">
-                    <h2 class="max-w-[90%] font-title text-2xl font-black uppercase leading-tight text-orange sm:text-3xl md:text-4xl">
-                        <?php echo esc_html($partner_title); ?>
-                    </h2>
-                    <p class="mt-3 max-w-[90%] text-sm font-bold leading-snug text-orange sm:text-base md:text-lg">
-                        <?php echo esc_html($partner_text); ?>
-                    </p>
-                    <a href="<?php echo esc_url($partner_url); ?>"
-                        class="btn-press mt-5 inline-flex w-fit rounded-full bg-yellow px-6 py-2.5 font-bold text-white no-underline">
-                        <?php echo esc_html($partner_button); ?>
-                    </a>
+            <div class="relative z-10 mx-auto w-full max-w-xl">
+                <img src="<?php echo esc_url($asset . 'phone1.png'); ?>" alt="" aria-hidden="true"
+                    class="pointer-events-none absolute -right-2 -top-7 z-20 w-16 -rotate-6 sm:-right-4 sm:w-20">
+                <div class="btn-press relative rounded-[1.75rem] bg-white/95 p-5 sm:rounded-[2rem] sm:p-7 md:p-8">
+                    <?php if ($donate_form_shortcode !== '') : ?>
+                        <div class="mb-5">
+                            <span class="inline-flex rounded-full bg-yellow px-6 py-2 text-sm font-black uppercase text-white shadow-sm sm:px-7 sm:py-2.5 sm:text-base">
+                                <?php echo esc_html($donate_badge); ?>
+                            </span>
+                            <h3 class="mt-4 font-title text-2xl font-black uppercase sm:text-3xl"><?php echo esc_html($donate_title); ?></h3>
+                            <p class="mt-2 text-sm font-semibold leading-relaxed text-black/70 sm:text-base"><?php echo esc_html($donate_text); ?></p>
+                        </div>
+                        <div class="donation-form-content">
+                            <?php echo do_shortcode($donate_form_shortcode); ?>
+                        </div>
+                    <?php else : ?>
+                        <span class="inline-flex rounded-full bg-yellow px-4 py-1 text-xs font-black uppercase text-white">
+                            Formulaire de don
+                        </span>
+                        <h3 class="mt-4 font-title text-2xl font-black uppercase sm:text-3xl">Le paiement par carte s'en vient !</h3>
+                        <p class="mt-3 text-sm font-semibold leading-relaxed text-black/70 sm:text-base">
+                            Le formulaire de don apparaîtra ici dès qu'un plugin de paiement sécurisé sera choisi et connecté.
+                        </p>
+                        <div class="mt-6 flex items-center gap-3 rounded-2xl bg-beige p-4 text-sm font-bold text-black/75">
+                            <span class="flex size-11 shrink-0 items-center justify-center rounded-full bg-violet text-xl text-white" aria-hidden="true">♡</span>
+                            <span>Vos informations de paiement seront traitées de façon sécurisée par le prestataire choisi.</span>
+                        </div>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
+
+        <svg class="pointer-events-none absolute inset-x-0 bottom-0 z-20 h-10 w-full text-white sm:h-14" viewBox="0 0 1440 100" preserveAspectRatio="none" aria-hidden="true">
+            <path fill="currentColor" d="M0 55 Q60 0 120 55 T240 55 T360 55 T480 55 T600 55 T720 55 T840 55 T960 55 T1080 55 T1200 55 T1320 55 T1440 55 V100 H0 Z" />
+        </svg>
     </section>
 
 <?php endwhile; ?>
