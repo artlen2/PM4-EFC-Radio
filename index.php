@@ -3,4 +3,6 @@
 
 <?php get_template_part('templates/main-loop'); ?>
 
+</main>
+
 <?php get_footer(); ?>
