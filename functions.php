@@ -262,6 +262,21 @@ function efc_jour_emission($post_id){
     return $jours[(int) $date->format('w')];
 }
 
+function efc_image_en_cours($post_id){
+    $image = get_field('image', $post_id);
+    if(is_array($image) && !empty($image['url'])){
+        return $image['url']; //tableau acf
+    }
+    if(is_numeric($image)){
+        return wp_get_attachment_image_url((int)$image, 'large'); //id d'image
+    }
+    if(is_string($image) && $image !== ''){
+        return $image; // si deja une url 
+    }
+
+    return get_the_post_thumbnail_url($post_id, 'large') ?: ''; // plan B : image à la une, sinon vide
+}
+
 add_action("after_setup_theme", "efc_setup_scripts");
 
 /* champs pages soutenir */
