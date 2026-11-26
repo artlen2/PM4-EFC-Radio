@@ -161,6 +161,55 @@ function efc_setup_scripts()
     register_nav_menu("main-menu", __("Menu principal"));
 }
 
+/**
+ * Convertit une heure en minutes depuis minuit
+ * Retourne null si l'heure est vide
+ */
+function efc_heure_en_minutes($heure)
+{
+    if (!is_string($heure) || trim($heure) === '') {
+        return null;
+    }
+
+    if (!preg_match('/(\d{1,2})\s*[:h]\s*(\d{2})?\s*(am|pm)?/i', $heure, $morceaux)) {
+        return null;
+    }
+
+    $heures  = (int) $morceaux[1];
+    $minutes = isset($morceaux[2]) && $morceaux[2] !== '' ? (int) $morceaux[2] : 0;
+    $ampm    = isset($morceaux[3]) ? strtolower($morceaux[3]) : '';
+
+    if ($ampm === 'pm' && $heures < 12) {
+        $heures += 12;
+    }
+    if ($ampm === 'am' && $heures === 12) {
+        $heures = 0;
+    }
+
+    return $heures * 60 + $minutes;
+}
+/**
+ * Retourne le jour de la semaine d'une émission
+ * à partir de son champ "date"
+ * Retourne null si la date est vide 
+ */
+function efc_jour_emission($post_id){
+    $date_texte = get_field('date', $post_id);
+
+    if (!is_string($date_texte) || trim($date_texte) === '') {
+        return null;
+    }
+
+    $date = DateTime::createFromFormat('d/m/Y', $date_texte, wp_timezone());
+
+    if (!$date) {
+        return null;
+    }
+
+    $jours = ['dimanche', 'lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi'];
+    return $jours[(int) $date->format('w')];
+}
+
 add_action("after_setup_theme", "efc_setup_scripts");
 
 // CLEANINGGG #SqueakyClean
