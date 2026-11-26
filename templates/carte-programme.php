@@ -19,19 +19,19 @@ if (is_array($date)) {
 }
 
 $image_alt = get_the_title();
-$figure_order = $reverse ? 'order-2' : 'order-1';
-$content_order = $reverse ? 'order-1' : 'order-2';
+$figure_order = $reverse ? 'order-1 lg:order-2' : 'order-1';
+$content_order = $reverse ? 'order-2 lg:order-1' : 'order-2';
 $grid_columns = !$has_image
     ? 'grid-cols-1'
     : ($reverse
-        ? 'grid-cols-[minmax(0,1fr)_minmax(0,1fr)] md:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)]'
-        : 'grid-cols-[minmax(0,1fr)_minmax(0,1fr)] md:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)]');
+        ? 'grid-cols-1 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)]'
+        : 'grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)]');
 ?>
 
-<article class="grid grid-cols-1 overflow-hidden rounded-[2.5rem] bg-black text-white shadow-sm transition-[scale,transform,box-shadow] duration-300 ease-out hover:shadow-lg motion-reduce:transition-none md:min-h-40 <?php echo esc_attr($grid_columns); ?>">
+<article class="grid grid-cols-1 overflow-hidden rounded-3xl bg-black text-white shadow-sm transition-[scale,transform,box-shadow] duration-300 ease-out hover:shadow-lg motion-reduce:transition-none sm:rounded-[2.5rem] lg:min-h-40 <?php echo esc_attr($grid_columns); ?>">
 
     <?php if ($image) : ?>
-        <figure class="<?php echo esc_attr($figure_order); ?> relative aspect-[16/9] min-h-44 min-w-0 overflow-hidden p-2 md:aspect-auto md:min-h-72">
+        <figure class="<?php echo esc_attr($figure_order); ?> relative aspect-[16/9] min-h-44 min-w-0 overflow-hidden p-2 lg:aspect-auto lg:min-h-72">
             <?php if (is_array($image) && !empty($image['ID'])) : ?>
                 <?php
                 $image_alt = !empty($image['alt']) ? $image['alt'] : $image_alt;
@@ -59,12 +59,12 @@ $grid_columns = !$has_image
             <?php endif; ?>
         </figure>
     <?php elseif (has_post_thumbnail()) : ?>
-        <figure class="<?php echo esc_attr($figure_order); ?> relative aspect-[16/9] min-h-44 min-w-0 overflow-hidden p-2 md:aspect-auto md:min-h-72">
+        <figure class="<?php echo esc_attr($figure_order); ?> relative aspect-[16/9] min-h-44 min-w-0 overflow-hidden p-2 lg:aspect-auto lg:min-h-72">
             <?php the_post_thumbnail('large', ['alt' => $image_alt, 'class' => 'block size-full transform-none rounded-[1.75rem] object-cover object-center']); ?>
         </figure>
     <?php endif; ?>
 
-    <div class="<?php echo esc_attr($content_order); ?> flex min-w-0 flex-col items-start justify-center gap-2 p-4 text-left sm:gap-3 sm:p-5 md:p-8 <?php echo $reverse ? 'items-end text-right' : ''; ?>">
+    <div class="<?php echo esc_attr($content_order); ?> flex min-w-0 flex-col items-start justify-center gap-2 p-4 text-left sm:gap-3 sm:p-5 md:p-6 lg:p-8">
         <div class="flex flex-wrap items-baseline gap-x-2 gap-y-1">
             <h2 class="min-w-0 break-words font-title text-left text-2xl font-black uppercase leading-tight text-white sm:text-3xl lg:text-4xl"><?php echo esc_html($title); ?></h2>
             <?php if ($date || $time_start || $time_end) : ?>

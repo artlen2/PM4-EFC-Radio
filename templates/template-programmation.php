@@ -11,6 +11,8 @@ get_header();
 
 <main class="container mx-auto px-4 py-12 bg-beige">
 
+
+
     <section class="relative left-1/2 w-screen -translate-x-1/2 px-4 py-12">
         <div class="mx-auto max-w-6xl">
             <h2 class="mb-6 block max-w-full break-words font-bold uppercase leading-tight text-orange text-4xl sm:mb-8 sm:text-5xl lg:text-6xl archivo"><?php the_title(); ?></h2>
@@ -154,6 +156,7 @@ get_header();
                             }
                         }
 
+                        // images pour le site 
                         $programme_day_slugs = array_values(array_unique(array_filter($programme_day_slugs)));
                     ?>
                         <div class="programme-card relative mx-auto w-full transition-all duration-300 ease-out md:w-[91%] md:hover:scale-[1.02] <?php echo $reverse ? 'md:mr-auto' : 'md:ml-auto'; ?>" data-programme-days="<?php echo esc_attr(implode(' ', $programme_day_slugs)); ?>">
