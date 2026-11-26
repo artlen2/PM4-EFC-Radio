@@ -175,8 +175,12 @@ function efc_setup_scripts()
 add_action("after_setup_theme", "efc_setup_scripts");
 
 /* champs pages soutenir */
-function efc_soutenir_admin_fields()
+function efc_soutenir_admin_fields($post_type, $post)
 {
+    if ($post_type !== 'page' || !$post || $post->post_name !== 'soutenir') {
+        return;
+    }
+
     add_meta_box(
         'efc-soutenir-fields',
         'Contenu de la page Soutenir',
@@ -186,29 +190,36 @@ function efc_soutenir_admin_fields()
         'high'
     );
 }
-add_action('add_meta_boxes', 'efc_soutenir_admin_fields');
+add_action('add_meta_boxes', 'efc_soutenir_admin_fields', 10, 2);
 
 function efc_soutenir_admin_fields_html($post)
 {
     wp_nonce_field('efc_save_soutenir_fields', 'efc_soutenir_nonce');
 
     $fields = [
-        'member_title' => 'Membre — titre',
-        'member_text' => 'Membre — texte',
-        'member_button' => 'Membre — texte du bouton',
-        'member_url' => 'Membre — lien du bouton',
-        'member_image' => 'Membre — URL de l’image',
+        'member_title' => 'Titre de l’article',
+        'member_text' => 'Texte descriptif',
+        'member_button' => 'Texte du bouton',
+        'member_url' => 'URL du bouton',
+        'benefit_title' => 'Avantages — titre',
+        'benefit_badge' => 'Avantages — étiquette',
+        'benefit_text' => 'Avantages — texte',
+        'partner_title' => 'Partenaire — titre',
+        'partner_text' => 'Partenaire — texte',
+        'partner_button' => 'Partenaire — texte du bouton',
+        'partner_url' => 'Partenaire — URL du bouton',
     ];
 
-    echo '<p><strong>Ces champs sont utilisés uniquement par le modèle « Soutenir ».</strong></p>';
+    echo '<p><strong>Modifiez ici le contenu des sections de la page Soutenir.</strong></p>';
     foreach ($fields as $key => $label) {
         $value = get_post_meta($post->ID, '_efc_' . $key, true);
         echo '<p><label for="efc-' . esc_attr($key) . '" style="display:block;font-weight:600;margin-bottom:4px">' . esc_html($label) . '</label>';
-        $textarea = $key === 'member_text';
+        $textarea = in_array($key, ['member_text', 'benefit_text', 'partner_text'], true);
         if ($textarea) {
             echo '<textarea id="efc-' . esc_attr($key) . '" name="efc_' . esc_attr($key) . '" rows="4" style="width:100%">' . esc_textarea($value) . '</textarea>';
         } else {
-            echo '<input id="efc-' . esc_attr($key) . '" name="efc_' . esc_attr($key) . '" type="text" value="' . esc_attr($value) . '" style="width:100%">';
+            $input_type = in_array($key, ['member_url', 'partner_url'], true) ? 'url' : 'text';
+            echo '<input id="efc-' . esc_attr($key) . '" name="efc_' . esc_attr($key) . '" type="' . esc_attr($input_type) . '" value="' . esc_attr($value) . '" style="width:100%">';
         }
         echo '</p>';
     }
@@ -226,32 +237,38 @@ function efc_save_soutenir_fields($post_id)
         return;
     }
 
-    $keys = ['member_title', 'member_text', 'member_button', 'member_url', 'member_image'];
+    $keys = [
+        'member_title',
+        'member_text',
+        'member_button',
+        'member_url',
+        'benefit_title',
+        'benefit_badge',
+        'benefit_text',
+        'partner_title',
+        'partner_text',
+        'partner_button',
+        'partner_url',
+    ];
+    $text_fields = ['member_text', 'benefit_text', 'partner_text'];
+    $url_fields = ['member_url', 'partner_url'];
 
     foreach ($keys as $key) {
         if (!isset($_POST['efc_' . $key])) {
             continue;
         }
-        $value = $key === 'member_text'
-            ? sanitize_textarea_field(wp_unslash($_POST['efc_' . $key]))
-            : sanitize_text_field(wp_unslash($_POST['efc_' . $key]));
+        $raw_value = wp_unslash($_POST['efc_' . $key]);
+        if (in_array($key, $text_fields, true)) {
+            $value = sanitize_textarea_field($raw_value);
+        } elseif (in_array($key, $url_fields, true)) {
+            $value = esc_url_raw($raw_value);
+        } else {
+            $value = sanitize_text_field($raw_value);
+        }
         update_post_meta($post_id, '_efc_' . $key, $value);
     }
 }
 add_action('save_post_page', 'efc_save_soutenir_fields');
-
-function efc_soutenir_page_template($template)
-{
-    if (is_page('soutenir') && get_page_template_slug() === '') {
-        $soutenir_template = locate_template('templates/template-soutenir.php');
-        if ($soutenir_template) {
-            return $soutenir_template;
-        }
-    }
-
-    return $template;
-}
-add_filter('template_include', 'efc_soutenir_page_template');
 
 // CLEANINGGG #SqueakyClean
 

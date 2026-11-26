@@ -133,6 +133,18 @@ Version: 1.0
   }
 }
 
+.soutenir-union {
+  background-color: var(--color-beige);
+  -webkit-mask-image: url("./assets/objets/Union.png");
+  mask-image: url("./assets/objets/Union.png");
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+}
+
 /* btn qui s'enfonce au hover */
 @utility btn-press {
   border: 2px solid var(--color-black);
