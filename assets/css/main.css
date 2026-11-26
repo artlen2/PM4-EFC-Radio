@@ -144,6 +144,113 @@ Version: 1.0
   mask-size: 100% 100%;
 }
 
+/* animations pour soutenir/devenir membre/ sur la page */
+
+.donation-scene {
+  isolation: isolate;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+.donation-float {
+  animation: donation-float 4s ease-in-out infinite;
+}
+
+.donation-float-delayed {
+  animation-delay: -1.7s;
+}
+
+.donation-spark {
+  position: absolute;
+  z-index: 0;
+  width: 1.15rem;
+  aspect-ratio: 1;
+  background-color: var(--color-yellow);
+  clip-path: polygon(50% 0, 62% 36%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0 50%, 38% 36%);
+  pointer-events: none;
+  animation: donation-twinkle 2.4s ease-in-out infinite;
+}
+
+.donation-spark-one {
+  top: 43%;
+  left: 44%;
+}
+
+.donation-spark-two {
+  right: 7%;
+  bottom: 23%;
+  width: 0.8rem;
+  animation-delay: -1.2s;
+}
+
+.donation-form-content :is(input[type="text"], input[type="email"], input[type="number"], input[type="tel"], select, textarea) {
+  width: 100%;
+  min-height: 2.75rem;
+  border: 2px solid var(--color-black);
+  border-radius: 0.75rem;
+  background: white;
+  padding: 0.65rem 0.8rem;
+}
+
+.donation-form-content :is(input[type="submit"], button[type="submit"], .give-btn, .wpforms-submit, .simpay-payment-btn, .woocommerce button.button) {
+  min-height: 3.5rem;
+  border: 2px solid var(--color-black);
+  border-radius: 9999px;
+  background: var(--color-violet);
+  padding: 0.9rem 2rem;
+  color: white;
+  font: inherit;
+  font-size: 1.1rem;
+  font-weight: 900;
+  cursor: pointer;
+  box-shadow: 0 6px 0 var(--color-black);
+  transition: transform 150ms ease-out, box-shadow 150ms ease-out;
+}
+
+.donation-form-content :is(input[type="submit"], button[type="submit"], .give-btn, .wpforms-submit, .simpay-payment-btn, .woocommerce button.button):hover {
+  transform: translateY(6px);
+  box-shadow: 0 0 0 var(--color-black);
+}
+
+.donation-form-content :is(input[type="submit"], button[type="submit"], .give-btn, .wpforms-submit, .simpay-payment-btn, .woocommerce button.button):active {
+  transform: translateY(6px);
+  box-shadow: 0 0 0 var(--color-black);
+}
+
+.donation-form-content :is(input[type="submit"], button[type="submit"], .give-btn, .wpforms-submit, .simpay-payment-btn, .woocommerce button.button):focus-visible {
+  outline: 3px solid var(--color-purple);
+  outline-offset: 3px;
+}
+
+@keyframes donation-float {
+  0%, 100% {
+    transform: translateY(0) rotate(-5deg);
+  }
+  50% {
+    transform: translateY(-0.65rem) rotate(5deg);
+  }
+}
+
+@keyframes donation-twinkle {
+  0%, 100% {
+    opacity: 0.45;
+    transform: scale(0.75) rotate(0);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.1) rotate(45deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .donation-float,
+  .donation-spark {
+    animation: none;
+  }
+}
+
 /* btn qui s'enfonce au hover */
 @utility btn-press {
   border: 2px solid var(--color-black);

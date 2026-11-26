@@ -237,33 +237,118 @@
         // heure actuelle en minutes depuis minuit
         $minutes_actuelles = (int) $maintenant->format('G') * 60 + (int) $maintenant->format('i');
 
-        // test
-        echo '<pre>';
-        var_dump(efc_heure_en_minutes('15:30'));    // 930
-        var_dump(efc_heure_en_minutes('3:30 pm'));  // 930
-        var_dump(efc_heure_en_minutes('15h30'));    // 930
-        var_dump(efc_heure_en_minutes('08:00:00')); // 480
-        var_dump(efc_heure_en_minutes(''));         // NULL
-        
-        // test pour efc_jour_emission
-        $test = get_posts(['post_type' => 'programme', 'numberposts' => 1]);
-        var_dump(get_field('time_start', $test[0]->ID));
-        var_dump(efc_heure_en_minutes(get_field('time_start', $test[0]->ID)));
-        var_dump(get_field('date', $test[0]->ID));
-        var_dump(get_field('time_end', $test[0]->ID));
-        echo '</pre>';
+        // liste des émissions d'aujourd'hui
+        $emissions_du_jour = [];
 
-        $test = get_posts(['post_type' => 'programme', 'numberposts' => -1]);
+        $toutes_les_emissions = get_posts(['post_type' => 'programme', 'numberposts' => -1]);
 
-        foreach ($test as $emission) {
-            var_dump(
-                get_the_title($emission),
-                efc_jour_emission($emission->ID),
-                efc_heure_en_minutes(get_field('time_start', $emission->ID)),
-                efc_heure_en_minutes(get_field('time_end', $emission->ID))
-            );
+        foreach ($toutes_les_emissions as $emission) {
+            // pas le bon jour 
+            if (efc_jour_emission($emission->ID) !== $jour_actuel) {
+                continue;
+            }
+
+            $debut = efc_heure_en_minutes(get_field('time_start', $emission->ID));
+            $fin   = efc_heure_en_minutes(get_field('time_end', $emission->ID));
+
+            // heure manquante 
+            if ($debut === null || $fin === null) {
+                continue;
+            }
+
+            // émission qui passe minuit
+            if ($fin <= $debut) {
+                $fin += 1440;
+            }
+
+            $emissions_du_jour[] = [
+                'id'    => $emission->ID,
+                'titre' => get_the_title($emission),
+                'debut' => $debut,
+                'fin'   => $fin,
+            ];
         }
+
+        // trier de la plus tôt à la plus tard
+        usort($emissions_du_jour, function ($a, $b) {
+            return $a['debut'] <=> $b['debut'];
+        });
+
+        // trouver l'index de l'émission en cours
+        $index_en_cours = null;
+
+        foreach ($emissions_du_jour as $index => $emission) {
+            if ($emission['debut'] <= $minutes_actuelles && $minutes_actuelles < $emission['fin']) {
+                $index_en_cours = $index;
+                break;
+            }
+        }
+
+        // aucune en ondes 
+        if ($index_en_cours === null) {
+            foreach ($emissions_du_jour as $index => $emission) {
+                if ($emission['debut'] > $minutes_actuelles) {
+                    $index_en_cours = $index;
+                    break;
+                }
+            }
+        }
+
         ?>
+
+        <?php if ($index_en_cours !== null) : // rien à afficher s'il n'y a pas d'émission ?>
+            <?php
+            // id de l'émission en cours
+            $id_en_cours = $emissions_du_jour[$index_en_cours]['id'];
+            // on commence une case avant (max = jamais en dessous de 0)
+            $depart = max(0, $index_en_cours - 1);
+            // 4 émissions : avant, maintenant, après, après
+            $cartes = array_slice($emissions_du_jour, $depart, 4);
+            ?>
+
+            <div class="flex items-end gap-4 overflow-x-auto px-4 pb-4 md:justify-center">
+                <?php foreach ($cartes as $carte) :
+                    // vrai si c'est l'émission en cours
+                    $est_en_cours = $carte['id'] === $id_en_cours;
+                    // vrai si l'émission est déjà finie
+                    $est_passee = $carte['fin'] <= $minutes_actuelles;
+                    $image = efc_image_en_cours($carte['id']);
+                    // minutes -> "15:30"
+                    $heure = sprintf('%02d:%02d', intdiv($carte['debut'], 60) % 24, $carte['debut'] % 60);
+                ?>
+                    <!-- card (plus large si en cours, transparente si passée) -->
+                    <a href="<?php echo esc_url(get_permalink($carte['id'])); ?>"
+                        class="shrink-0 no-underline <?php echo $est_en_cours ? 'w-[85vw] md:w-[520px]' : 'w-[200px]'; ?> <?php echo $est_passee ? 'opacity-40' : ''; ?>">
+
+                        <!-- heure (violet si en cours) -->
+                        <p class="archivo mb-2 text-3xl <?php echo $est_en_cours ? 'text-violet' : 'text-gray-400'; ?>">
+                            <?php echo esc_html($heure); ?>
+                        </p>
+
+                        <div class="flex h-[180px] overflow-hidden rounded-[1.5rem] <?php echo $est_en_cours ? 'bg-black' : 'bg-gray-200'; ?>">
+                            <!-- image -->
+                            <?php if ($image) : ?>
+                                <img src="<?php echo esc_url($image); ?>" alt="<?php echo esc_attr($carte['titre']); ?>"
+                                    class="h-full object-cover rounded-[1.5rem] <?php echo $est_en_cours ? 'w-[45%]' : 'w-full'; ?>">
+                            <?php endif; ?>
+
+                            <!-- infos, seulement pour l'émission en cours -->
+                            <?php if ($est_en_cours) :
+                                // description, sinon le contenu
+                                $description = get_field('description', $carte['id']) ?: get_post_field('post_content', $carte['id']);
+                            ?>
+                                <div class="flex flex-1 flex-col justify-center gap-2 p-5 text-white">
+                                    <span class="self-start rounded-full bg-orange px-3 py-1 text-xs font-bold uppercase">Maintenant</span>
+                                    <h3 class="archivo text-xl uppercase"><?php echo esc_html($carte['titre']); ?></h3>
+                                    <!-- coupe à 25 mots -->
+                                    <p class="text-sm"><?php echo esc_html(wp_trim_words(wp_strip_all_tags($description), 25)); ?></p>
+                                </div>
+                            <?php endif; ?>
+                        </div>
+                    </a>
+                <?php endforeach; ?>
+            </div>
+        <?php endif; ?>
 
     </section>
 
