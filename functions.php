@@ -39,6 +39,17 @@ function efc_enqueue_scripts()
         );
     }
 
+    if (is_page('soutenir') || is_page_template('templates/template-soutenir.php')) {
+        $soutenir_mascot_script = get_template_directory() . '/assets/scripts/soutenir-mascot.js';
+        wp_enqueue_script(
+            'efc-soutenir-mascot',
+            get_template_directory_uri() . '/assets/scripts/soutenir-mascot.js',
+            [],
+            filemtime($soutenir_mascot_script),
+            true
+        );
+    }
+
     // Vue.js 
     if (is_page_template("templates/template-evenements-vue.php")) {
         wp_enqueue_script("vue-lib", "https://unpkg.com/vue@3/dist/vue.global.js");
@@ -162,6 +173,85 @@ function efc_setup_scripts()
 }
 
 add_action("after_setup_theme", "efc_setup_scripts");
+
+/* champs pages soutenir */
+function efc_soutenir_admin_fields()
+{
+    add_meta_box(
+        'efc-soutenir-fields',
+        'Contenu de la page Soutenir',
+        'efc_soutenir_admin_fields_html',
+        'page',
+        'normal',
+        'high'
+    );
+}
+add_action('add_meta_boxes', 'efc_soutenir_admin_fields');
+
+function efc_soutenir_admin_fields_html($post)
+{
+    wp_nonce_field('efc_save_soutenir_fields', 'efc_soutenir_nonce');
+
+    $fields = [
+        'member_title' => 'Membre — titre',
+        'member_text' => 'Membre — texte',
+        'member_button' => 'Membre — texte du bouton',
+        'member_url' => 'Membre — lien du bouton',
+        'member_image' => 'Membre — URL de l’image',
+    ];
+
+    echo '<p><strong>Ces champs sont utilisés uniquement par le modèle « Soutenir ».</strong></p>';
+    foreach ($fields as $key => $label) {
+        $value = get_post_meta($post->ID, '_efc_' . $key, true);
+        echo '<p><label for="efc-' . esc_attr($key) . '" style="display:block;font-weight:600;margin-bottom:4px">' . esc_html($label) . '</label>';
+        $textarea = $key === 'member_text';
+        if ($textarea) {
+            echo '<textarea id="efc-' . esc_attr($key) . '" name="efc_' . esc_attr($key) . '" rows="4" style="width:100%">' . esc_textarea($value) . '</textarea>';
+        } else {
+            echo '<input id="efc-' . esc_attr($key) . '" name="efc_' . esc_attr($key) . '" type="text" value="' . esc_attr($value) . '" style="width:100%">';
+        }
+        echo '</p>';
+    }
+}
+
+function efc_save_soutenir_fields($post_id)
+{
+    if (!isset($_POST['efc_soutenir_nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['efc_soutenir_nonce'])), 'efc_save_soutenir_fields')) {
+        return;
+    }
+    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+        return;
+    }
+    if (!current_user_can('edit_post', $post_id)) {
+        return;
+    }
+
+    $keys = ['member_title', 'member_text', 'member_button', 'member_url', 'member_image'];
+
+    foreach ($keys as $key) {
+        if (!isset($_POST['efc_' . $key])) {
+            continue;
+        }
+        $value = $key === 'member_text'
+            ? sanitize_textarea_field(wp_unslash($_POST['efc_' . $key]))
+            : sanitize_text_field(wp_unslash($_POST['efc_' . $key]));
+        update_post_meta($post_id, '_efc_' . $key, $value);
+    }
+}
+add_action('save_post_page', 'efc_save_soutenir_fields');
+
+function efc_soutenir_page_template($template)
+{
+    if (is_page('soutenir') && get_page_template_slug() === '') {
+        $soutenir_template = locate_template('templates/template-soutenir.php');
+        if ($soutenir_template) {
+            return $soutenir_template;
+        }
+    }
+
+    return $template;
+}
+add_filter('template_include', 'efc_soutenir_page_template');
 
 // CLEANINGGG #SqueakyClean
 

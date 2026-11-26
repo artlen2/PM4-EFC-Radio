@@ -30,7 +30,7 @@
           <li><a href="<?php echo esc_url(home_url('/programmation/')); ?>" class="hover:text-orange ease-in-out duration-200 text-[1.25rem]">Programmation</a></li>
           <li><a href="<?php echo esc_url(home_url('/communaute/')); ?>" class="hover:text-orange ease-in-out duration-200 text-[1.25rem]">Communauté</a></li>
           <li><a href="<?php echo esc_url(home_url('/a-propos/')); ?>" class="hover:text-orange ease-in-out duration-200 text-[1.25rem]">À propos</a></li>
-          <li><a href="<?php echo esc_url(home_url('/nous-soutenir/')); ?>" class="hover:text-orange ease-in-out duration-200 text-[1.25rem]">Nous soutenir</a></li>
+          <li><a href="<?php echo esc_url(home_url('/soutenir/')); ?>" class="hover:text-orange ease-in-out duration-200 text-[1.25rem]">Nous soutenir</a></li>
         </ul>
       </nav>
 
