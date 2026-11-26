@@ -18,6 +18,9 @@ get_header();
             <h2 class="mb-6 block max-w-full break-words font-bold uppercase leading-tight text-orange text-4xl sm:mb-8 sm:text-5xl lg:text-6xl archivo"><?php the_title(); ?></h2>
             <p class="mb-10 max-w-4xl text-base font-light leading-relaxed sm:mb-12 sm:text-lg md:text-xl">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi at urna eget justo sollicitudin malesuada. Pellentesque volutpat ante quis orci pharetra, ac aliquam sapien congue. Fusce lacinia nisi tincidunt risus pellentesque, sit amet scelerisque diam suscipit. Fusce rhoncus eleifend lectus quis vulputate.</p>
 
+
+
+
             <?php
             $programmes = new WP_Query([
                 'post_type' => 'programme',
@@ -84,7 +87,7 @@ get_header();
                         <?php endforeach; ?>
                     </div>
                 </nav>
-
+            
 
                 <div class="grid gap-12 md:gap-16">
                     <?php
