@@ -14,6 +14,9 @@ while (have_posts()) :
     $time_end = function_exists('get_field') ? (get_field('time_end') ?: get_field('heure_fin')) : '';
     $image = function_exists('get_field') ? get_field('image') : null;
     $description = function_exists('get_field') ? (get_field('description') ?: get_the_content()) : get_the_content();
+    $description_text = is_scalar($description) ? wp_strip_all_tags((string) $description) : '';
+    preg_match_all('/[\p{L}\p{N}]+/u', $description_text, $description_words);
+    $description_is_long = count($description_words[0]) > 80;
     $previous_episodes = function_exists('get_field') ? get_field('episodes_precedents') : [];
 
     if (is_array($date)) {
@@ -98,9 +101,6 @@ while (have_posts()) :
                 alt=""
                 aria-hidden="true"
             >
-        <?php if ($animateurs) : ?>
-      
-        <?php endif; ?>
         <div class="relative z-10 mx-auto w-full max-w-screen-2xl">
             <a href="<?php echo esc_url($back_url); ?>"
                 class="mb-10 inline-flex items-center gap-2 rounded-full border border-white/25 px-5 py-3 font-bold bg-orange text-white no-underline transition-colors duration-200 btn-border hover:bg-yellow hover:text-black focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange">
@@ -119,9 +119,9 @@ while (have_posts()) :
                                 <?php echo esc_html($title); ?>
                             </span>
                         </h1>
-                        <p class="mt-6 text-base leading-relaxed text-beige sm:mt-8 sm:text-lg lg:text-xl">
-                            <?php echo esc_html($description); ?>
-                        </p>
+                        <div class="programme-description mt-6 text-base leading-relaxed text-beige sm:mt-8 sm:text-lg lg:text-xl <?php echo $description_is_long ? 'programme-description--columns' : ''; ?>">
+                            <?php echo wp_kses_post(wpautop((string) $description)); ?>
+                        </div>
                     </header>
 
                 <?php if ($image_id || $image_url) : ?>
